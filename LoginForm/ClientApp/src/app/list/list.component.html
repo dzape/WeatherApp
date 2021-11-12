@@ -1,9 +1,9 @@
-
+<table>
   <thead>
     <tr>
       <th scope="col">Id</th>
       <th scope="col">Username</th>
-      <th scope="col" >Password</th>
+      <th scope="col">Password</th>
     </tr>
   </thead>
   <tbody *ngFor="let i of li">
@@ -11,5 +11,4 @@
     <td>{{ i.username }}</td>
     <td>{{ i.password}}</td>
   </tbody>
-  <button (click)="listUserById()" ></button>
-
+</table>

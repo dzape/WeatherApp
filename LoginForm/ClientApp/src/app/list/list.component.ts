@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ListService } from '../services/list/list.service'
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
+  templateUrl: './list.component.html',
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
+
   constructor(private listSrv: ListService, private http: HttpClient) { }
 
-  baseurl: string = 'https://localhost:44306/api/Accounts'
+  baseurl: string = 'https://localhost:44316/api/Accounts'
   li: any;
   lis = [];
 
-  listUserById() {
+  ngOnInit() {
     this.http.get(this.baseurl).subscribe(Response => {
       if (Response === null) {
         error();

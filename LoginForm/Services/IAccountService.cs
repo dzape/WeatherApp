@@ -9,10 +9,6 @@ namespace LoginForm.Services
     public interface IAccountService
     {
         public bool UserDoesExist(string usernmae);
-        //LOGIN
-
-        //Register
-
     }
 
     public class AccountService : IAccountService

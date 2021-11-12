@@ -13,11 +13,13 @@ export class RegisterComponent {
   baseUrl = 'https://localhost:44316/api/Accounts/'
 
   registerUser(acc: Account) {
-    
+    this.http.post(this.baseUrl, {acc}).subscribe(Response => {
+      console.log(Response);
+    });
   }
 }
 
-export interface Account {
+export class Account {
   username: string;
   password: string;
 }
