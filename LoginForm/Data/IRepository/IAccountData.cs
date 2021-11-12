@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LoginForm.Services;
 
 namespace LoginForm.Data.IRepository
 {
@@ -15,7 +16,6 @@ namespace LoginForm.Data.IRepository
     public class InMemoryData : IAccountData
     {
         readonly List<Account> accounts;
-
         public InMemoryData()
         {
             accounts = new List<Account>
@@ -34,15 +34,17 @@ namespace LoginForm.Data.IRepository
         {
             return accounts;
         }
-        
+
         public Account GetUserByName(string username)
         {
-            var query = from r in accounts
-                   where r.Username.StartsWith(username)
-                   orderby r.Username
-                   select r;
-            
-            return query.First();
+            throw new NotImplementedException();
         }
+
+        //public Account GetUserByName(string username)
+        //{
+
+
+        //    return query.First();
+        //}
     }
 }

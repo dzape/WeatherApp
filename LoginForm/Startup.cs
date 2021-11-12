@@ -1,5 +1,6 @@
 using LoginForm.Data;
 using LoginForm.Data.IRepository;
+using LoginForm.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +37,7 @@ namespace LoginForm
             });
 
             services.AddScoped<IAccountData, InMemoryData>();
+            services.AddScoped<IAccountService, AccountService>();
 
         }
 
