@@ -18,7 +18,7 @@ import { ListComponent } from './list/list.component'
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ListComponent
+    ListComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

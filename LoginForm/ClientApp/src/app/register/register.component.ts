@@ -1,6 +1,5 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -8,18 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class RegisterComponent {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   baseUrl = 'https://localhost:44316/api/Accounts/'
 
-  registerUser(acc: Account) {
-    this.http.post(this.baseUrl, {acc}).subscribe(Response => {
-      console.log(Response);
+  registerUser(a: string, b: string) {
+    this.http.post(this.baseUrl, { username: a, password: b }).subscribe(res => {
+      console.log(res);
     });
   }
-}
-
-export class Account {
-  username: string;
-  password: string;
 }

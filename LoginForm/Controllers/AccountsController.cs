@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LoginForm.Data;
-using LoginForm.Services;
+using BC = BCrypt.Net.BCrypt;
 
 namespace LoginForm.Controllers
 {
@@ -79,6 +77,7 @@ namespace LoginForm.Controllers
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {
+            account.Password = BC.HashPassword(account.Password);
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 

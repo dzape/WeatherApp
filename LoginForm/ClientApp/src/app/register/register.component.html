@@ -1,10 +1,10 @@
 <div style="text-align:center">
-  <form #acc id="acc" name="acc" class="popup-form" style="text-align: center">
+  <form style="text-align: center">
     <label>Username : </label>
     <input #username name="username" id="username" required /> <br />
 
     <label>Password : </label>
     <input #passwrod name="password" id="password" type="password" required /> <br />
   </form>
-  <button (click)="registerUser(acc.username.value = username.value, acc.password.value = passwrod.value)">Register</button>
+  <button (click)="registerUser(username.value, passwrod.value)">Register</button>
 </div>
