@@ -46,12 +46,11 @@ namespace LoginForm.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<Account>> GetByUsername(string username)
         {
-            if (_accountService.DoesUsernameExist(username))
+            if (_accountService.DoesUserExist(username))
             {
                 var account = _accountService.GetUserByUsername(username);
                 return account;
             }
-
             return NotFound();
         }
 
@@ -89,7 +88,7 @@ namespace LoginForm.Controllers
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {
-            if (!_accountService.DoesUsernameExist(account.Username))
+            if (!_accountService.DoesUserExist(account.Username))
             {
                 account.Password = BC.HashPassword(account.Password);
                 _context.Accounts.Add(account);
@@ -97,7 +96,6 @@ namespace LoginForm.Controllers
 
                 return CreatedAtAction("GetAccount", new { id = account.Id }, account);
             }
-
             return StatusCode(201);
         }
 
