@@ -1,5 +1,4 @@
 using LoginForm.Data;
-using LoginForm.Data.IRepository;
 using LoginForm.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +23,8 @@ namespace LoginForm
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IAccountService, AccountService>();
+
             services.AddDbContext<AccountDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("AccountCS"));
@@ -35,10 +36,6 @@ namespace LoginForm
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            services.AddScoped<IAccountData, InMemoryData>();
-            services.AddScoped<IAccountService, AccountService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LoginForm.Data;
+using LoginForm.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LoginForm.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
 
 namespace LoginForm.Controllers
@@ -13,10 +14,12 @@ namespace LoginForm.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly AccountDbContext _context;
+        private readonly IAccountService _accountService;
 
-        public AccountsController(AccountDbContext context)
+        public AccountsController(AccountDbContext context, IAccountService accountService)
         {
-            _context = context;
+            this._context = context;
+            this._accountService = accountService;
         }
 
         // GET: api/Accounts
@@ -26,8 +29,8 @@ namespace LoginForm.Controllers
             return await _context.Accounts.ToListAsync();
         }
 
-        // GET: api/Accounts/5
-        [HttpGet("{id}")]
+        // GET: api/Accounts/58
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Account>> GetAccount(int id)
         {
             var account = await _context.Accounts.FindAsync(id);
@@ -40,9 +43,19 @@ namespace LoginForm.Controllers
             return account;
         }
 
+        [HttpGet("{username}")]
+        public async Task<ActionResult<Account>> GetByUsername(string username)
+        {
+            if (_accountService.DoesUsernameExist(username))
+            {
+                var account = _accountService.GetUserByUsername(username);
+                return account;
+            }
+
+            return NotFound();
+        }
 
         // PUT: api/Accounts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAccount(int id, Account account)
         {
@@ -73,7 +86,6 @@ namespace LoginForm.Controllers
         }
 
         // POST: api/Accounts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {

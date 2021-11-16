@@ -8,31 +8,40 @@ namespace LoginForm.Services
 {
     public interface IAccountService
     {
-        public bool UserDoesExist(string usernmae);
+        public Account GetUserByUsername(string username);
+        public bool DoesUsernameExist(string username);
     }
 
     public class AccountService : IAccountService
     {
         private readonly AccountDbContext _context;
 
-        public bool UserDoesExist(string usernmae)
+        public AccountService(AccountDbContext context)
         {
-            if(String.IsNullOrEmpty(usernmae))
+            _context = context;
+        }
+
+        public bool DoesUsernameExist(string username)
+        {
+            if (string.IsNullOrEmpty(username))
             {
-                return false;
-            }
-            
-            var query = from r in _context.Accounts
-                where r.Username.StartsWith(usernmae)
-                orderby r.Username
-                select r;
-            
-            if (query.First().Username == usernmae)
-            {
-                return true;
+                if(username.Equals(GetUserByUsername(username)))
+                {
+                    return true;
+                }
             }
 
             return false;
-        }       
+        }
+
+        public Account GetUserByUsername(string username)
+        {
+            var query = from r in _context.Accounts
+                        where r.Username.StartsWith(username) || string.IsNullOrEmpty(username)
+                        orderby r.Username
+                        select r;
+
+            return query.First();
+        }
     }
 }
