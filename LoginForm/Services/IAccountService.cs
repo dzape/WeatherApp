@@ -23,14 +23,13 @@ namespace LoginForm.Services
 
         public bool DoesUsernameExist(string username)
         {
-            if (string.IsNullOrEmpty(username))
+            if (!String.IsNullOrEmpty(username))
             {
-                if(username.Equals(GetUserByUsername(username)))
+                if (username.Equals(GetUserByUsername(username).Username))
                 {
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -41,7 +40,12 @@ namespace LoginForm.Services
                         orderby r.Username
                         select r;
 
-            return query.First();
+            if (!string.IsNullOrEmpty(query.First().Username))
+            {
+                return query.First();
+            }
+            else
+                return null;
         }
     }
 }

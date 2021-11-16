@@ -89,11 +89,16 @@ namespace LoginForm.Controllers
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {
-            account.Password = BC.HashPassword(account.Password);
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
+            if (!_accountService.DoesUsernameExist(account.Username))
+            {
+                account.Password = BC.HashPassword(account.Password);
+                _context.Accounts.Add(account);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAccount", new { id = account.Id }, account);
+                return CreatedAtAction("GetAccount", new { id = account.Id }, account);
+            }
+
+            return StatusCode(201);
         }
 
         // DELETE: api/Accounts/5
