@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-import { ListService } from '../services/list/list.service'
+import { ListService } from '../../services/list/list.service'
 
 @Component({
   selector: 'app-home',
