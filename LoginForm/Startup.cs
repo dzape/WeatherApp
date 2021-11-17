@@ -27,7 +27,7 @@ namespace LoginForm
 
             services.AddDbContext<AccountDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("AccountCS"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddControllersWithViews();

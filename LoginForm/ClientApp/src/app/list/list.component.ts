@@ -11,7 +11,7 @@ export class ListComponent implements OnInit {
 
   constructor(private listSrv: ListService, private http: HttpClient) { }
 
-  baseurl: string = 'https://localhost:44316/api/Accounts'
+  baseurl: string = 'https://localhost:5001/api/Accounts'
   li: any;
   lis = [];
 
