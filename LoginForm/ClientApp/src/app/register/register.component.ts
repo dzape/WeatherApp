@@ -11,9 +11,13 @@ export class RegisterComponent {
 
   baseUrl = 'https://localhost:44316/api/Accounts/'
 
+  
   registerUser(a: string, b: string) {
     this.http.post(this.baseUrl, { username: a, password: b }).subscribe(res => {
       console.log(res);
+      if (res == null) {
+        alert("User alredy exist");
+      }
     });
   }
 }

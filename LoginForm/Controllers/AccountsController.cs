@@ -25,7 +25,8 @@ namespace LoginForm.Controllers
         // GET: api/Accounts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
-        {
+        {   
+            //var
             return await _context.Accounts.ToListAsync();
         }
 

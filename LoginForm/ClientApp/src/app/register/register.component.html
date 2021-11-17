@@ -1,10 +1,40 @@
-<div style="text-align:center">
-  <form style="text-align: center">
+<div>
+  <form style="text-align: center" method="post">
     <label>Username : </label>
     <input #username name="username" id="username" required /> <br />
 
     <label>Password : </label>
     <input #passwrod name="password" id="password" type="password" required /> <br />
+
+    <button (click)="registerUser(username.value, passwrod.value)">Register</button>
   </form>
-  <button (click)="registerUser(username.value, passwrod.value)">Register</button>
+  
 </div>
+
+<br />
+<br />
+<div id="theForm">
+  <form action="/" method="post">
+    <label>User : </label>
+    <br />
+    <input />
+    <br />
+    <label>Email : </label>
+    <br />
+    <input type="email" />
+    <br />
+    <label>Subject : </label>
+    <br />
+    <input type="text" />
+    <br />
+    <label>Message : </label>
+    <br />
+    <textarea rows="4"></textarea>
+    <br />
+    <input type="submit" value="Send Message" />
+  </form>
+</div>
+
+<!--<-- ng- modle -->
+<!--//form control
+//form group ( )-->
