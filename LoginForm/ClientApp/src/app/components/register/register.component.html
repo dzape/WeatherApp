@@ -1,12 +1,12 @@
 <div>
   <form style="text-align: center" method="post">
     <label>Username : </label>
-    <input #username name="username" id="username" required /> <br />
+    <input [(ngModel)]="user.username" name="username" required /> <br />
 
     <label>Password : </label>
-    <input #passwrod name="password" id="password" type="password" required /> <br />
+    <input [(ngModel)]="user.password" name="password" type="password" required /> <br />
 
-    <button (click)="registerUser(username.value, passwrod.value)">Register</button>
+    <button (click)="addAccount()">Register</button>
   </form>
 </div>
 

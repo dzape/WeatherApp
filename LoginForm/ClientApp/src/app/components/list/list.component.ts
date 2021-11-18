@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { ListService } from '../../services/list/list.service'
+import { ApiService } from '../../services/api/api.service'
 
 @Component({
   selector: 'app-home',
@@ -9,14 +10,13 @@ import { ListService } from '../../services/list/list.service'
 })
 export class ListComponent implements OnInit {
 
-  constructor(private listSrv: ListService, private http: HttpClient) { }
+  constructor(private listSrv: ListService, private http: HttpClient, private api: ApiService) { }
 
-  baseurl: string = 'https://localhost:5001/api/Accounts'
   li: any;
   lis = [];
 
   ngOnInit() {
-    this.http.get(this.baseurl).subscribe(Response => {
+    this.http.get(this.api.getApiUrl()).subscribe(Response => {
       if (Response === null) {
         error();
       }

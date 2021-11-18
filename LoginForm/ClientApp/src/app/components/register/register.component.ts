@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
+import { Account } from '../../models/account.model';
+
 import { ApiService } from '../../services/api/api.service';
+import { RegisterService } from '../../services/register/register.service';
 
 @Component({
   selector: 'app-register',
@@ -9,14 +12,14 @@ import { ApiService } from '../../services/api/api.service';
 })
 export class RegisterComponent {
 
-  constructor(private http: HttpClient, private api: ApiService) { }
-  
-  registerUser(a: string, b: string) {
-    this.http.post(this.api.getApiUrl(), { username: a, password: b }).subscribe(res => {
-      console.log(res);
-      if (res == null) {
-        alert("User alredy exist");
-      }
-    });
+  account: Account[];
+  user = new Account();
+
+  constructor(private http: HttpClient, private api: ApiService, private registerService: RegisterService) { }
+
+  addAccount() {
+    this.registerService.registerNewAccount(this.user)
+      .subscribe(data => {
+        console.log(data)})
   }
 }
