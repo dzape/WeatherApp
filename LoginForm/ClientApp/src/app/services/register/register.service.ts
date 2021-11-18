@@ -18,5 +18,4 @@ export class RegisterService {
     console.log(body)
     return this.http.post(this.api.getApiUrl(), body, { 'headers': headers })
   }
-
 }
