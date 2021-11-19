@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace LoginForm.Controllers
 {
@@ -18,11 +19,11 @@ namespace LoginForm.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService authService;
+        private readonly AccountDbContext _context;
 
-        public AuthController(IAuthService authService)
+        public AuthController( AccountDbContext context)
         {
-            this.authService = authService;
+            this._context = context;
         }
 
         [HttpGet, Route("get")]
@@ -32,13 +33,11 @@ namespace LoginForm.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]Account account)
         {
-            
-
             if (account == null)
                 return BadRequest("Invalid client request");
             // TODO MATCH USER AND PASS FROM DB
             //if(account.Username == "jon" && account.Password == "jon123")
-            if (authService.Authenticate(account))
+            if (Authenticate(account))
             {
                 var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signingCridentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
@@ -55,6 +54,17 @@ namespace LoginForm.Controllers
             }
 
             return Unauthorized();
+        }
+
+        public bool Authenticate(Account account)
+        {
+            var acc = _context.Accounts.SingleOrDefault(x => x.Username == account.Username);
+
+            if (account == null || !BC.Verify(account.Password, acc.PasswordHash))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
