@@ -1,18 +1,18 @@
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Username</th>
-      <th scope="col">Password</th>
-    </tr>
-  </thead>
-  <tbody *ngFor="let i of li">
-  <td>{{ i.id }}</td>
-  <td>{{ i.username }}</td>
-  <td>{{ i.password}}</td>
-  </tbody>
-</table>
+<h2>List of users</h2>
 
+<input /> <br />
+
+<a>{{ li.value }}</a>
+
+<tbody>
+  <tr *ngFor='let acc of li'>
+    <td>
+      {{ acc.id}}
+      {{ acc.username}}
+      {{ acc.password}}
+    </td>
+  </tr>
+</tbody>
 
 <!----pagination---->
 <!----search---->

@@ -1,5 +1,4 @@
-export class Account {
-  id: number;
+export interface IAccount {
   username: string;
   password: string;
 }
