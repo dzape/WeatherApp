@@ -1,4 +1,5 @@
 ﻿using LoginForm.Data;
+using LoginForm.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,13 @@ namespace LoginForm.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IAuthService authService;
+
+        public AuthController(IAuthService authService)
+        {
+            this.authService = authService;
+        }
+
         [HttpGet, Route("get")]
         public IEnumerable<string> Get()
             => new string[] { "Hello", "Name" };
@@ -24,10 +32,13 @@ namespace LoginForm.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]Account account)
         {
+            
+
             if (account == null)
                 return BadRequest("Invalid client request");
-
-            if(account.Username == "jon" && account.Password == "$2a$11$/Fay8SxioOQx.PUKTu/X.eyU5kYm0kvIJZEb2caJ8TdSZAk0QKpMy")
+            // TODO MATCH USER AND PASS FROM DB
+            //if(account.Username == "jon" && account.Password == "jon123")
+            if (authService.Authenticate(account))
             {
                 var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signingCridentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);

@@ -25,7 +25,7 @@ namespace LoginForm.Controllers
         // GET: api/Accounts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
-        {   
+        {
             //var
             return await _context.Accounts.ToListAsync();
         }
@@ -91,7 +91,7 @@ namespace LoginForm.Controllers
         {
             if (!_accountService.DoesUserExist(account.Username))
             {
-                account.Password = BC.HashPassword(account.Password);
+                account.PasswordHash = BC.HashPassword(account.Password);
                 _context.Accounts.Add(account);
                 await _context.SaveChangesAsync();
 
