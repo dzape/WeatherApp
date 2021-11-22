@@ -1,16 +1,24 @@
-<div class="login">
-  <h1>Create Your Account</h1>
-  <form class="child" [formGroup]="userForm" (ngSubmit)="addAccount()">
-    <label for="username">Username: </label>
-    <input [(ngModel)]="acc.username" id="username" type="text" formControlName="username" placeholder="Minimum lenght 4"><br />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login FOrm</title>
 
-    <label for="passwod">Password: </label>
-    <input [(ngModel)]="acc.password" id="passwod" type="password" formControlName="passwod" placeholder="Minimum lenght 4"><br />
-    <br />
-    <div class="child">
-      <p>Complete the form to enable button.</p>
-      <button type="submit" [disabled]="!userForm.valid">Submit</button>
-    </div>
-  </form>
-</div>
+</head>
+<body>
 
+  <div class="container">
+    <h2>Login</h2>
+    <form action="">
+      <input type="text" name="username" id="username" placeholder="username">
+      <input type="password" name="pass" id="pass" placeholder="password">
+      <div class="btns">
+        <button type="submit">Login</button>
+        <a href="./registration.html"><button type="button" id="sign-up">Sign Up</button></a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
