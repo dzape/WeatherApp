@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { ListService } from '../../services/list/list.service'
 import { ApiService } from '../../services/api/api.service'
-import { error } from 'console';
 import { Account } from '../../models/account.model';
 import { User } from 'oidc-client';
 import { Subscription } from 'rxjs';
@@ -35,20 +34,10 @@ export class ListComponent implements OnInit {
   }
 
   returnUsers() {
-    return this.http.get(this.api.getApiUrl()).subscribe(response => {
+    return this.http.get(this.api.getApiUrl() + "accounts").subscribe(response => {
+      console.log(response);
       this.li = response;
+      console.log(this.li);
     })
   }
-    //this.sub = this.api.getUsers().subscribe({
-    //  next: products => {
-    //    console.log(products);
-    //    this.accounts = products;
-    //    this.filteredProducts = this.accounts
-    //  },
-    //  error: err => this.errorMessage = err
-    //});
-
-    //console.log(this.accounts);
-    //console.log(this.filteredProducts);   
-  
 }

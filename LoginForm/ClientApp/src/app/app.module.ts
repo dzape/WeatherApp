@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { JwtModule } from '@auth0/angular-jwt'
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -12,6 +12,11 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component'
 import { RegisterComponent } from './components/register/register.component'
 import { ListComponent } from './components/list/list.component'
+import { AuthGuard } from './services/guards/guards.service';
+
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 @NgModule({
   declarations: [
@@ -31,8 +36,15 @@ import { ListComponent } from './components/list/list.component'
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent},
-      { path: 'list', component: ListComponent},
-    ])
+      { path: 'list', component: ListComponent, canActivate: [AuthGuard] },
+    ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:44316"],
+        blacklistedRoutes: []
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

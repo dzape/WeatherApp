@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class ApiService {
   account: Account;
-  apiUrl: string = 'https://localhost:44316/api/accounts/'
+  apiUrl: string = 'https://localhost:44316/api/'
 
   constructor(private http: HttpClient) { }
 

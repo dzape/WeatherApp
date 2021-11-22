@@ -4,5 +4,10 @@
 <div>
     <a href="/register"><button style="width: 2cm;">Register</button></a> <br>
     <a href="/login"><button style="width: 2cm;">Login</button></a>
+    <a><button style="width: 2cm;" (click)="logOut()">LogOut</button></a>
 </div>
 
+<div *ngIf="isUserAuthenticated()">
+  <h3>You are logined in</h3>
+  <button (click)="logOut()">Logout</button>
+</div>

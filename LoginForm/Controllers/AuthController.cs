@@ -1,6 +1,7 @@
 ﻿using LoginForm.Data;
 using LoginForm.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -35,8 +36,7 @@ namespace LoginForm.Controllers
         {
             if (account == null)
                 return BadRequest("Invalid client request");
-            // TODO MATCH USER AND PASS FROM DB
-            //if(account.Username == "jon" && account.Password == "jon123")
+
             if (Authenticate(account))
             {
                 var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
