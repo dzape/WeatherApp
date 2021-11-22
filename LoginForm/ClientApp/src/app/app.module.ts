@@ -12,7 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component'
 import { RegisterComponent } from './components/register/register.component'
 import { ListComponent } from './components/list/list.component'
-import { AuthGuard } from './services/guards/guards.service';
+import { AuthGuard } from './services/guards/auth-guard.service';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
