@@ -40,7 +40,7 @@ export function tokenGetter() {
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent},
       { path: 'list', component: ListComponent, canActivate: [AuthGuard] },
-      { path: 'weather', component: WeatherComponent },
+      { path: 'weather', component: WeatherComponent, canActivate: [AuthGuard] },
     ]),
     JwtModule.forRoot({
       config: {
