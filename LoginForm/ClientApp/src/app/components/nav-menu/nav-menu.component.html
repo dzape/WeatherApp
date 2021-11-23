@@ -4,44 +4,42 @@
   >
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/']">LoginForm</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
+
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+           [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
+          <div *ngIf="!isUsrAuth()">
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/register']">Register</a>
+            </li>
+          </div>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/login']"
-              >Login</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/list']">List</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/register']"
-              >Register</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/list']"
-              >List</a
-            >
-          </li>
+          <div *ngIf="isUsrAuth()">
+            <ul class="navbar-nav flex-grow">
+              <li class="nav-item" [routerLinkActive]="['link-active']" (click)="logOut()">
+                <a class="nav-link text-dark">Logout</a>
+              </li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>

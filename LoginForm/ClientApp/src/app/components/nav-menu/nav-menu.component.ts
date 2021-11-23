@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class NavMenuComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private jwtHelper: JwtHelperService) { }
+
 
   isExpanded = false;
 
@@ -20,7 +22,11 @@ export class NavMenuComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-  toggleLogOut() {
+  isUsrAuth(): boolean {
     return this.authService.isUserAuthenticated();
+  }
+
+  logOut() {
+    return this.authService.logOut();
   }
 }

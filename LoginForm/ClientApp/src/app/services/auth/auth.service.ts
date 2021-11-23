@@ -17,4 +17,8 @@ export class AuthService {
       return false;
     }
   }
+
+  public logOut = () => {
+    localStorage.removeItem("jwt");
+  }
 }

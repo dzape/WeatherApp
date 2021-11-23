@@ -1,5 +1,5 @@
 <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-  <div class="container-fluid">
+  <div class="container-fluid" content="width=device-width, initial-scale=1">
     <h2 class="form-signin-heading">Login</h2>
     <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
     <br />
@@ -12,3 +12,5 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </div>
 </form>
+
+

@@ -18,8 +18,8 @@ export class RegisterComponent {
   acc = new Account();
 
   constructor(private http: HttpClient,
-              private api: ApiService,
-              private registerService: RegisterService
+    private api: ApiService,
+    private registerService: RegisterService
   ) { }
 
   regForm!: FormGroup;
@@ -35,10 +35,15 @@ export class RegisterComponent {
     ])
   });
 
+
   addAccount() {
     this.registerService.registerNewAccount(this.acc)
       .subscribe(data => {
-        console.log(data)})
-  }
 
+        if (data === null) {
+          alert("Username exist");
+        }
+      })
+  }
 }
+
