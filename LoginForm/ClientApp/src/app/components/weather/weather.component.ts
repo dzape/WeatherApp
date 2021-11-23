@@ -31,9 +31,9 @@ export class WeatherComponent implements OnInit {
         res => {
           this.weather =
             `Current temperature is  ${res['main'].temp}C, ` +
-            `humidity: ${res['main'].humidity}%`;
-            `humidity: ${res['main'].humidity}%`;
-            `humidity: ${res['main'].humidity}%`;
+            `humidity: ${res['main'].humidity}% ` +
+            `country: ${res['sys'].country} `;
+          console.log(res);
         },
         err => console.log(`Can't get weather. Error code: %s, URL: %s`,
           err.message, err.url)
@@ -48,6 +48,6 @@ export class WeatherComponent implements OnInit {
           return EMPTY
         }
       })
-      );
+    );
   }
 }
