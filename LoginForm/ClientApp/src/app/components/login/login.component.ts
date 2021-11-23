@@ -11,7 +11,6 @@ import { ApiService } from '../../services/api/api.service';
 export class LoginComponent {
 
   invalidLogin: boolean;
-
   constructor(private router: Router, private http: HttpClient, private apiService: ApiService) { }
 
   login(form: NgForm) {
@@ -31,5 +30,3 @@ export class LoginComponent {
     });
   }
 }
-
-//This is from vs

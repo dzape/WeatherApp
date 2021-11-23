@@ -22,26 +22,26 @@
               [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <div *ngIf="!isUsrAuth()">
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
-            </li>
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/register']">Register</a>
-            </li>
-          </div>
+          <div *ngIf="!isUsrAuth()" class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/list']">List</a>
+            <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
           </li>
-          <div *ngIf="isUsrAuth()">
-            <ul class="navbar-nav flex-grow">
-              <li class="nav-item" [routerLinkActive]="['link-active']" (click)="logOut()">
-                <a class="nav-link text-dark">Logout</a>
-              </li>
-            </ul>
-          </div>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/register']">Register</a>
+          </li>
+      </div>
+      <div *ngIf="isUsrAuth()" class="navbar-nav flex-grow">
+        <li class="nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link text-dark" [routerLink]="['/list']">List</a>
+        </li>
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item" [routerLinkActive]="['link-active']" (click)="logOut()">
+            <a class="nav-link text-dark">Logout</a>
+          </li>
         </ul>
       </div>
+      </ul>
+    </div>
     </div>
   </nav>
 </header>

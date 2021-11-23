@@ -1,12 +1,17 @@
-<body class="container">
-  <form class="vertical-center" [formGroup]="userForm" (ngSubmit)="addAccount()">
-    <label for="username">Username: </label>
-    <input [(ngModel)]="acc.username" id="username" type="text" formControlName="username"><br />
+<body style="max-width: 500px ; margin: auto">
+  <form class="form-singin" [formGroup]="userForm" (ngSubmit)="addAccount()">
+    <div class="container-fluid" content="width=device-width, initial-scale=1">
+      <h2 class="form-signin-heading">Register</h2>
 
-    <label for="passwod">Password: </label>
-    <input [(ngModel)]="acc.password" id="passwod" type="password" formControlName="passwod"><br />
-    <br />
-    <p>Complete the form to enable button.</p>
-    <button type="submit" [disabled]="!userForm.valid">Submit</button>
+      <div *ngIf="!userForm.valid" class="alert alert-warning">
+        <p>Complete the form to enable button.</p>
+      </div>
+
+      <input [(ngModel)]="acc.username" class="form-control" id="username" type="text" formControlName="username" placeholder="Username (minimum 4 characterrs!)"><br />
+
+      <input [(ngModel)]="acc.password" class="form-control" id="passwod" type="password" formControlName="passwod" placeholder="Password (minimum 5 characterrs!)"><br />
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!userForm.valid">Submit</button>
+    </div>
   </form>
 </body>

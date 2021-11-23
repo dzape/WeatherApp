@@ -9,19 +9,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 
 export class HomeComponent {
-  constructor(private jwtHelper: JwtHelperService, private router: Router) { }
+  constructor() { }
 
-  isUserAuthenticated() {
-    const token: string = localStorage.getItem("jwt");
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  public logOut = () => {
-    localStorage.removeItem("jwt");
-  }
 }
