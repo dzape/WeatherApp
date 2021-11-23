@@ -6,7 +6,7 @@ import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-weather',
   template: `
     <h2>Observable weather</h2>
     <input type="text" placeholder="Enter city" [formControl]="searchInput">

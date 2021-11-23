@@ -8,5 +8,12 @@
 <body style="text-align: center">
 
   <h3>Welcome.</h3>
+
+
+  <div *ngIf="!userAuthorized()" style="max-width:300px">
+    <app-login></app-login> <br />
+    <app-register></app-register>
+  </div>
+
 </body>
 </html>

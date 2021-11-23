@@ -34,11 +34,9 @@
         <li class="nav-item" [routerLinkActive]="['link-active']">
           <a class="nav-link text-dark" [routerLink]="['/weather']">Weather</a>
         </li>
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]="['link-active']" (click)="logOut()">
-            <a class="nav-link text-dark">Logout</a>
-          </li>
-        </ul>
+        <li class="nav-item" [routerLinkActive]="['link-active']" (click)="logOut()">
+          <a class="nav-link text-dark" [routerLink]="['/']">Logout</a>
+        </li>
       </div>
       </ul>
     </div>

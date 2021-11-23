@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 
 export class HomeComponent {
-  constructor() { }
+  constructor(private authService: AuthService) { }
+
+  userAuthorized() {
+    return this.authService.isUserAuthenticated();
+  }
 
 }
