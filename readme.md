@@ -2,8 +2,8 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<div align="center">
-  
+<div align="center">  
+  ![alt text](https://github.com/dzape/WeatherApp/blob/master/LoginForm/ClientApp/src/assets/images/weather_logo.png)
 </div>
 
 ### Built With
