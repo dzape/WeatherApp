@@ -7,17 +7,15 @@ import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-weather',
-  template: `
-    <h2>Observable weather</h2>
-    <input type="text" placeholder="Enter city" [formControl]="searchInput">
-    <h3>{{weather}}</h3>`
+  templateUrl: './weather.component.html',
+
 })
 export class WeatherComponent implements OnInit {
   private baseWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
   private urlSuffix = "&units=metric&APPID=abe1eb51289c21c167c66ce790c2fac3";
 
   searchInput = new FormControl();
-  weather: string;
+  weather: any = {};
 
   constructor(private http: HttpClient) { }
 
@@ -29,10 +27,11 @@ export class WeatherComponent implements OnInit {
         switchMap(city => this.getWeather(city)))
       .subscribe(
         res => {
-          this.weather =
-            `Current temperature is  ${res['main'].temp}C, ` +
-            `humidity: ${res['main'].humidity}% ` +
-            `country: ${res['sys'].country} `;
+          this.weather['city'] = res['main'].city;
+          this.weather['temp'] = res['main'].temp + ' ℃';
+          this.weather['humidity'] = res['main'].humidity + ' %';
+          this.weather['description'] = res['weather'][0].description;
+
           console.log(res);
         },
         err => console.log(`Can't get weather. Error code: %s, URL: %s`,

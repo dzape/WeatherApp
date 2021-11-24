@@ -11,7 +11,6 @@ import { RegisterService } from '../../services/register/register.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
 
@@ -34,7 +33,6 @@ export class RegisterComponent {
       Validators.minLength(6)
     ])
   });
-
 
   addAccount() {
     this.registerService.registerNewAccount(this.acc)
