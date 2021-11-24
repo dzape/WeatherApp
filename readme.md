@@ -1,27 +1,18 @@
 <div id="top"></div>
 
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">  
-  ![alt text]("https://github.com/dzape/WeatherApp/blob/master/src/WeatherApp/ClientApp/src/assets/images/weather_logo.png?raw=true")
+  <img src="https://user-images.githubusercontent.com/47067384/143243617-2076a38a-f79d-4c91-af71-129551dc9a8b.jpg" alt="drawing" width="100"/>
 </div>
 
 ### Built With
 
 * [Dotnet](https://dotnet.microsoft.com/)
 * [Angular](https://angular.io/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
@@ -29,6 +20,14 @@ This is an example of how to list things you need to use the software and how to
 * npm
   ```sh
   npm install npm@latest -g
+  ```
+* angular cli
+  ```sh
+  npm install -g @angular/cli
+  ```
+* dotnet
+  ```sh
+  choco install dotnet
   ```
 
 ### Installation
@@ -63,3 +62,11 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Schreanshots
+
+![Screenshot 2021-11-24 at 14-23-08 LoginForm](https://user-images.githubusercontent.com/47067384/143246541-c21b2cbe-fcaf-4625-8ee4-82279cd49427.png)
+
+![Screenshot 2021-11-24 at 14-23-21 LoginForm](https://user-images.githubusercontent.com/47067384/143246562-2cc3e5e1-793c-4b48-8f4e-73daab8ab4ad.png)
+
+![Screenshot 2021-11-24 at 14-23-50 LoginForm](https://user-images.githubusercontent.com/47067384/143246590-9ae89fd5-ce4b-408d-b798-7b55cc0382fd.png)
