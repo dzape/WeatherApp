@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">  
-  ![alt text](https://github.com/dzape/WeatherApp/blob/master/src/WeatherApp/ClientApp/src/assets/images/weather_logo.png)
+  ![alt text](https://github.com/dzape/WeatherApp/blob/master/src/WeatherApp/ClientApp/src/assets/images/weather_logo.png?raw=true)
 </div>
 
 ### Built With
