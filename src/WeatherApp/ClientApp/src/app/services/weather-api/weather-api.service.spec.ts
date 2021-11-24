@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PassHashService } from './pass-hash.service';
+import { WeatherApiService } from './weather-api.service';
 
-describe('PassHashService', () => {
+describe('WeatherApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PassHashService = TestBed.get(PassHashService);
+    const service: WeatherApiService = TestBed.get(WeatherApiService);
     expect(service).toBeTruthy();
   });
 });
