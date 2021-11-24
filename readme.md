@@ -4,19 +4,6 @@
 <br />
 <div align="center">
   
-  ![alt text](https://github.com/dzape/WeatherApp/blob/master/LoginForm/ClientApp/src/assets/images/weather_logo.png)
-
-  <h3 align="center">Best-README-Template</h3>
-
-  <p align="center">
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/dzape/WeatherApp/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/dzape/WeatherApp/issues">Request Feature</a>
-  </p>
 </div>
 
 ### Built With
