@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Account } from '../../models/account.model';
 
@@ -18,7 +19,8 @@ export class RegisterComponent {
 
   constructor(private http: HttpClient,
     private api: ApiService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private router: Router
   ) { }
 
   regForm!: FormGroup;
@@ -37,10 +39,10 @@ export class RegisterComponent {
   addAccount() {
     this.registerService.registerNewAccount(this.acc)
       .subscribe(data => {
-
         if (data === null) {
           alert("Username exist");
         }
+        this.router.navigate(["/weather"]);
       })
   }
 }
