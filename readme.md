@@ -1,11 +1,10 @@
 <div id="top"></div>
 
-<img src="https://user-images.githubusercontent.com/47067384/143243617-2076a38a-f79d-4c91-af71-129551dc9a8b.jpg" alt="drawing" width="200"/>
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">  
-  ![alt text]("https://github.com/dzape/WeatherApp/blob/master/src/WeatherApp/ClientApp/src/assets/images/weather_logo.png?raw=true")
+  <img src="https://user-images.githubusercontent.com/47067384/143243617-2076a38a-f79d-4c91-af71-129551dc9a8b.jpg" alt="drawing" width="100"/>
 </div>
 
 ### Built With
