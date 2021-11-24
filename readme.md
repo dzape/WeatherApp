@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-![weather_logo](https://user-images.githubusercontent.com/47067384/143243617-2076a38a-f79d-4c91-af71-129551dc9a8b.jpg)
+<img src="https://user-images.githubusercontent.com/47067384/143243617-2076a38a-f79d-4c91-af71-129551dc9a8b.jpg" alt="drawing" width="200"/>
 
 <!-- PROJECT LOGO -->
 <br />
