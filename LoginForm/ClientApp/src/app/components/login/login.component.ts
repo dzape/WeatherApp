@@ -23,8 +23,9 @@ export class LoginComponent {
       .subscribe(responce => {
         const token = (<any>responce).token;
         localStorage.setItem("jwt", token);
+        localStorage.setItem("username", credentials.username);
         this.invalidLogin = false;
-        this.router.navigate(["/"]);
+        this.router.navigate(["/weather"]);
       }, err => {
         this.invalidLogin = true;
       });

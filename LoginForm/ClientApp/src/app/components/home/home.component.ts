@@ -16,5 +16,4 @@ export class HomeComponent {
   userAuthorized() {
     return this.authService.isUserAuthenticated();
   }
-
 }

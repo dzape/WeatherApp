@@ -31,6 +31,7 @@ export class WeatherComponent implements OnInit {
           this.weather['temp'] = res['main'].temp + ' ℃';
           this.weather['humidity'] = res['main'].humidity + ' %';
           this.weather['description'] = res['weather'][0].description;
+          this.weather['wind'] = res['wind'].speed + ' km/h';
 
           console.log(res);
         },

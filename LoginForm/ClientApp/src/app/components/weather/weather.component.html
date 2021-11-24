@@ -2,13 +2,17 @@
 
 <div class="table-responsive">
   <input class="form-control" type="text" placeholder="Enter city" [formControl]="searchInput">
-  <table class="table table-striped table-light ">
+  <table class="table table-striped table-light" style="text-align:center">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">
+          <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
+               style=" width: 25px; height: 25px" />
+        </th>
         <th scope="col">Temperature</th>
         <th scope="col">Humidity</th>
         <th scope="col">Description</th>
+        <th scope="col">Wind Speed</th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +21,7 @@
         <td>{{ weather['temp'] }}</td>
         <td>{{ weather['humidity'] }}</td>
         <td>{{ weather['description'] }}</td>
+        <td>{{ weather['wind'] }}</td>
       </tr>
     </tbody>
 
