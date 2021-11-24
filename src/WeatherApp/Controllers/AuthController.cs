@@ -58,9 +58,10 @@ namespace LoginForm.Controllers
 
         public bool Authenticate(Account account)
         {
+
             var acc = _context.Accounts.SingleOrDefault(x => x.Username == account.Username);
 
-            if (account == null || !BC.Verify(account.Password, acc.PasswordHash))
+            if (account == null || !BC.Verify(account.Password, acc.Password))
             {
                 return false;
             }

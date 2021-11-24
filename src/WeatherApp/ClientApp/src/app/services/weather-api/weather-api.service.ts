@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 export class WeatherApiService {
 
   private baseWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  private urlSuffix = "&units=metric&APPID="; // Input your api Key
+  private urlSuffix = "&units=metric&APPID=abe1eb51289c21c167c66ce790c2fac3"; // Input your api Key
 
   constructor(private http: HttpClient) { }
 

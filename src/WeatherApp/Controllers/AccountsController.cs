@@ -91,7 +91,7 @@ namespace LoginForm.Controllers
         {
             if (!_accountService.DoesUserExist(account.Username))
             {
-                account.PasswordHash = BC.HashPassword(account.Password);
+                account.Password = BC.HashPassword(account.Password);
                 _context.Accounts.Add(account);
                 await _context.SaveChangesAsync();
 
