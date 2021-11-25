@@ -25,11 +25,11 @@ export class RegisterComponent {
   regForm!: FormGroup;
 
   userForm = new FormGroup({
-    username: new FormControl(this.acc.username, [
+    username: new FormControl(this.acc.username,[
       Validators.required,
       Validators.minLength(4)
     ]),
-    passwod: new FormControl(this.acc.password, [
+    password: new FormControl(this.acc.password,[
       Validators.required,
       Validators.minLength(6)
     ])
