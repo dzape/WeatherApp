@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component'
 import { RegisterComponent } from './components/register/register.component'
 import { ListComponent } from './components/list/list.component'
 import { WeatherComponent } from './components/weather/weather.component'
+import { FooterComponent } from './components/footer/footer.component'
 
 import { AuthGuard } from './services/guards/auth-guard.service';
 
@@ -23,12 +24,13 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
     ListComponent,
-    WeatherComponent
+    WeatherComponent,
+    NavMenuComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

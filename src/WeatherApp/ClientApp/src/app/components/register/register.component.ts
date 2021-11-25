@@ -18,7 +18,6 @@ export class RegisterComponent {
   acc = new Account();
 
   constructor(private http: HttpClient,
-    private api: ApiService,
     private registerService: RegisterService,
     private router: Router
   ) { }
