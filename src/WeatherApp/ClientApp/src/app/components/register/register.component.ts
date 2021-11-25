@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 
 import { Account } from '../../models/account.model';
 
-import { ApiService } from '../../services/api/api.service';
 import { RegisterService } from '../../services/register/register.service';
 
 @Component({
