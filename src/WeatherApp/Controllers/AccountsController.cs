@@ -26,7 +26,6 @@ namespace LoginForm.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
         {
-            //var
             return await _context.Accounts.ToListAsync();
         }
 
@@ -55,17 +54,17 @@ namespace LoginForm.Controllers
             return NotFound();
         }
 
-        //[HttpGet("{username}")]
-        //[Route("/q/{username}")]
-        //public int GetIdByUsername(string username)
-        //{
-        //    if (_accountService.DoesUserExist(username))
-        //    {
-        //        var account = _accountService.GetUserByUsername(username);
-        //        return account.Id;
-        //    }
-        //    return 0;
-        //}
+        [HttpGet]
+        [Route("/getuserById/")]
+        public int GetIdByUsername(string username)
+        {
+           if (_accountService.DoesUserExist(username))
+           {
+               var account = _accountService.GetUserByUsername(username);
+               return account.Id;
+           }
+           return 0;
+        }
 
         // PUT: api/Accounts/5
         [HttpPut("{id}")]
