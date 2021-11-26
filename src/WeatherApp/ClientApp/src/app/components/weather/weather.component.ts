@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable, EMPTY } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 import { WeatherApiService } from '../../services/weather-api/weather-api.service'
+import { Weather } from '../../models/Weather.model';
 
 @Component({
   selector: 'app-weather',
@@ -11,6 +12,8 @@ import { WeatherApiService } from '../../services/weather-api/weather-api.servic
 
 })
 export class WeatherComponent implements OnInit {
+
+  @Output() onAddCity: EventEmitter<Weather> = new EventEmitter();
 
   searchInput = new FormControl();
   weather: any = {};
@@ -36,4 +39,26 @@ export class WeatherComponent implements OnInit {
           err.message, err.url)
       );
   }
+
+  addNewCity() {
+
+    const newCity: any = {
+      cityName: this.weather['city'],
+      temp: this.weather['temp'],
+      humidity: this.weather['humidity'],
+      desciption: this.weather.description,
+      wind: this.weather['wind']
+    }
+
+    this.onAddCity.emit(newCity);
+
+    this.weather['city'] = '';
+    this.weather['temp'] = '';
+    this.weather['humidity'] = '';
+    this.weather['description'] = '';
+    this.weather['wind'] = '';
+  }
+
 }
+
+//pag

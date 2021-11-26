@@ -44,4 +44,5 @@ export class RegisterComponent {
       })
   }
 }
-
+// bos modal
+// if valid ? span ( error msg )

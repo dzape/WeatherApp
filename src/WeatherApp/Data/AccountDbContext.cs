@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WeatherApp.Data;
 
 namespace LoginForm.Data
 {
@@ -9,5 +10,6 @@ namespace LoginForm.Data
         { }
 
         public DbSet<Account> Accounts {get; set;}
+        public DbSet<Weather> Weathers {get; set;}
     }
 }
