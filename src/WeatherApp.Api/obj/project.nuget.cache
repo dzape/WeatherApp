@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "oqLW4dOdVQDVfTtlIxklV/24XVhzDd+TvF7NxMG2/wnnRAUydo7ZTqDLP/vHX30Bc/kS6PU+yU50gU29hcYbqw==",
+  "success": true,
+  "projectFilePath": "/Users/dzape/Documents/GitHub/WeatherApp/src/WeatherApp.Api/WeatherApp.Api.csproj",
+  "expectedPackageFiles": [
+    "/Users/dzape/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/Users/dzape/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/dzape/.nuget/packages/swashbuckle.aspnetcore/5.6.3/swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "/Users/dzape/.nuget/packages/swashbuckle.aspnetcore.swagger/5.6.3/swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "/Users/dzape/.nuget/packages/swashbuckle.aspnetcore.swaggergen/5.6.3/swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "/Users/dzape/.nuget/packages/swashbuckle.aspnetcore.swaggerui/5.6.3/swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
