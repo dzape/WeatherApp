@@ -55,6 +55,18 @@ namespace LoginForm.Controllers
             return NotFound();
         }
 
+        //[HttpGet("{username}")]
+        //[Route("/q/{username}")]
+        //public int GetIdByUsername(string username)
+        //{
+        //    if (_accountService.DoesUserExist(username))
+        //    {
+        //        var account = _accountService.GetUserByUsername(username);
+        //        return account.Id;
+        //    }
+        //    return 0;
+        //}
+
         // PUT: api/Accounts/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAccount(int id, Account account)

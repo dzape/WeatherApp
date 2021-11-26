@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { iWeather } from '../../models/iweather';
+import { Weather } from '../../models/weather.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,15 +15,15 @@ const httpOptions = {
 })
 export class WeatherService {
 
-  private weatherApiUrl = 'https://localhost:44316/api/weather/';
+  weather: any = {};
 
+  private weatherApiUrl = 'https://localhost:44316/api/weather/';
 
   constructor(private http: HttpClient) { }
 
-
   //return cityes for user if any
-  getFavCityes(accountId: number): Observable<iWeather[]> {
-    return this.http.get<iWeather[]>(this.weatherApiUrl + accountId);
+  getFavCityes(accountId: number): Observable<Weather[]>{
+    return this.http.get<Weather[]>(this.weatherApiUrl + accountId);
   }
 
   //add city to favourite
@@ -35,4 +36,4 @@ export class WeatherService {
     const url = `${this.weatherApiUrl}/${city.id}`;
     return this.http.delete<iWeather>(url);
   }
-}s
+}

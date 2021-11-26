@@ -1,26 +1,36 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Observable, EMPTY } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { catchError, debounceTime, switchMap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+
 import { WeatherApiService } from '../../services/weather-api/weather-api.service'
-import { Weather } from '../../models/Weather.model';
+import { WeatherService } from '../../services/weather/weather.service'
+import { UserService } from '../../services/list/user.service';
+import { Local } from 'protractor/built/driverProviders';
+import { Weather } from '../../models/weather.model';
+import { iWeather } from '../../models/iweather';
+import { NgLocaleLocalization } from '@angular/common';
+import { Account } from '../../models/account.model';
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-
 })
+
 export class WeatherComponent implements OnInit {
 
-  @Output() onAddCity: EventEmitter<Weather> = new EventEmitter();
+  userData: Account[];
 
   searchInput = new FormControl();
   weather: any = {};
+  jsonObj: any = {};
+  cityList: any = {};
 
-  constructor(private http: HttpClient, private weatherApiService: WeatherApiService) { }
+  constructor(private http: HttpClient, private userService: UserService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) { }
 
   ngOnInit() {
+    this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((response) => (this.jsonObj = response));
+    this.weatherService.getFavCityes(this.jsonObj['id']).subscribe((response) => (this.cityList = response));
 
     this.searchInput.valueChanges
       .pipe(debounceTime(200),
@@ -31,34 +41,17 @@ export class WeatherComponent implements OnInit {
           this.weather['temp'] = res['main'].temp + ' ℃';
           this.weather['humidity'] = res['main'].humidity + ' %';
           this.weather['description'] = res['weather'][0].description;
-          this.weather['wind'] = res['wind'].speed + ' km/h';
-
-          console.log(res);
+          this.weather['wind'] = res['wind'].speed + ' km/h'
         },
+
         err => console.log(`Can't get weather. Error code: %s, URL: %s`,
           err.message, err.url)
       );
   }
 
-  addNewCity() {
-
-    const newCity: any = {
-      cityName: this.weather['city'],
-      temp: this.weather['temp'],
-      humidity: this.weather['humidity'],
-      desciption: this.weather.description,
-      wind: this.weather['wind']
+  addFavouriteCity(city: any = {}) {
+    if (this.weather.content != "") {
+      // POST request to db
     }
-
-    this.onAddCity.emit(newCity);
-
-    this.weather['city'] = '';
-    this.weather['temp'] = '';
-    this.weather['humidity'] = '';
-    this.weather['description'] = '';
-    this.weather['wind'] = '';
   }
-
 }
-
-//pag

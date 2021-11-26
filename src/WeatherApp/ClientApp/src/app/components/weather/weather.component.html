@@ -2,7 +2,7 @@
 
 <div class="table-responsive">
   <input class="form-control" type="text" placeholder="Enter city" [formControl]="searchInput">
-  <button click()="addNewCity()" ></button>
+
   <table class="table table-striped table-light" style="text-align:center">
     <thead>
       <tr>
@@ -28,3 +28,7 @@
 
   </table>
 </div>
+
+<button (click)="getFavouriteCity()">Click</button>
+<h3>{{jsonObj.id}}</h3>
+<h3>{{cityList.cityName}}</h3>

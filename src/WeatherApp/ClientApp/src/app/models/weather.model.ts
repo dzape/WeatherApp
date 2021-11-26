@@ -1,5 +1,5 @@
-export class Weather {
-  id: number;
+export interface Weather {
+  id?: number;
   city: string;
   temperature: string;
   humidity: string;

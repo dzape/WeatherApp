@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { iWeather } from '../../models/iweather';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ import { iWeather } from '../../models/iweather';
 export class WeatherApiService {
 
   private baseWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  private urlSuffix = "&units=metric&APPID=abe1eb51289c21c167c66ce790c2fac3"; // Input your api Key
+  private urlSuffix = "&units=metric&APPID=a50e2aff21f6864e4b65258a3b3ea856"; // Input your api Key
 
   constructor(private http: HttpClient) { }
 
