@@ -1,9 +1,27 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, EMPTY } from 'rxjs';
+
+type NewType = Observable<any>;
 
 @Injectable({
   providedIn: 'root'
 })
 export class OpenweatherapiService {
 
-  constructor() { }
+  private baseWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  private urlSuffix = "&units=metric&APPID=a50e2aff21f6864e4b65258a3b3ea856";
+
+  constructor(private http: HttpClient) { }
+
+  getWeather(city: string): NewType {
+    return this.http.get(this.baseWeatherURL + city + this.urlSuffix)
+      .pipe(catchError(err => {
+        if (err.status === 404) {
+          console.log(`City ${city} not found`);
+          return EMPTY
+        }
+      })
+    );
+  }
 }
