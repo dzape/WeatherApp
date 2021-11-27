@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, EMPTY } from 'rxjs';
+import { catchError, EMPTY, Observable } from 'rxjs';
 
 type NewType = Observable<any>;
 
@@ -15,13 +15,6 @@ export class OpenweatherapiService {
   constructor(private http: HttpClient) { }
 
   getWeather(city: string): NewType {
-    return this.http.get(this.baseWeatherURL + city + this.urlSuffix)
-      .pipe(catchError(err => {
-        if (err.status === 404) {
-          console.log(`City ${city} not found`);
-          return EMPTY
-        }
-      })
-    );
+    return this.http.get(this.baseWeatherURL + city + this.urlSuffix);
   }
 }
