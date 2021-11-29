@@ -10,6 +10,7 @@
           <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
                style=" width: 25px; height: 25px" />
         </th>
+        <th scope="col">Name</th>
         <th scope="col">Temperature</th>
         <th scope="col">Humidity</th>
         <th scope="col">Description</th>
@@ -19,6 +20,7 @@
     <tbody>
       <tr>
         <th scope="row">1</th>
+        <td>{{ weather['name'] }}</td>
         <td>{{ weather['temp'] }}</td>
         <td>{{ weather['humidity'] }}</td>
         <td>{{ weather['description'] }}</td>
@@ -30,7 +32,10 @@
 </div>
 
 <div>
-  <tr *ngFor="let c of cityList">
-    <td>{{ c.cityName }}</td>
+  <tr *ngFor="let c of weatherData">
+    <td>{{ c.temp }}</td>
+    <td>{{ c.humidity }}</td>
+    <td>{{ c.description }}</td>
+    <td>{{ c.temp }}</td>
   </tr>
 </div>
