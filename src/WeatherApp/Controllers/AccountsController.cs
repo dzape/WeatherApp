@@ -55,7 +55,7 @@ namespace LoginForm.Controllers
         }
 
         [HttpGet]
-        [Route("/getuserById/")]
+        [Route("getid/")]
         public int GetIdByUsername(string username)
         {
            if (_accountService.DoesUserExist(username))

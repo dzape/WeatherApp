@@ -29,6 +29,8 @@
   </table>
 </div>
 
-<button (click)="getFavouriteCity()">Click</button>
-<h3>{{jsonObj.id}}</h3>
-<h3>{{cityList.cityName}}</h3>
+<div>
+  <tr *ngFor="let c of cityList">
+    <td>{{ c.cityName }}</td>
+  </tr>
+</div>

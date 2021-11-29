@@ -37,7 +37,7 @@ namespace LoginForm.Controllers
             if (account == null)
                 return BadRequest("Invalid client request");
 
-            if (account.Username == "123456" && account.Password == "123456") //Authenticate(account)
+            if (Authenticate(account)) //Authenticate(account)
             {
                 var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signingCridentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);

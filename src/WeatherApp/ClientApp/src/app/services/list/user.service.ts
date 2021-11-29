@@ -17,7 +17,7 @@ export class UserService {
   id;
 
   getUserIdByName(username: string) {
-    return this.http.get(this.api.getApiUrl() + `accounts/${username}`);
+    return this.http.get(this.api.getApiUrl() + `accounts/getid/?username=${username}`);
   }
    
   getUsersByName(usr?: string): void {

@@ -23,15 +23,15 @@ export class WeatherComponent implements OnInit {
 
   searchInput = new FormControl();
   weather: any = {};
-  jsonObj: any = {};
   cityList: any = {};
-
+  joTest: any;
   constructor(private http: HttpClient, private userService: UserService, private weatherApiService: WeatherApiService, private weatherService: WeatherService) { }
 
   ngOnInit() {
-    this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((response) => (this.jsonObj = response));
-    this.weatherService.getFavCityes(this.jsonObj['id']).subscribe((response) => (this.cityList = response));
 
+    this.getFavouriteCity();
+
+    
     this.searchInput.valueChanges
       .pipe(debounceTime(200),
         switchMap(city => this.weatherApiService.getWeather(city)))
@@ -49,6 +49,14 @@ export class WeatherComponent implements OnInit {
       );
   }
 
+  getFavouriteCity() {
+    this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((response) => {
+      this.weatherService.getFavCityes(response).subscribe((res) => {
+        console.log(res);
+      });
+    });
+  }
+    
   addFavouriteCity(city: any = {}) {
     if (this.weather.content != "") {
       // POST request to db

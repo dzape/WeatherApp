@@ -22,8 +22,8 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   //return cityes for user if any
-  getFavCityes(accountId: number): Observable<Weather[]>{
-    return this.http.get<Weather[]>(this.weatherApiUrl + accountId);
+  getFavCityes(accountId: any){
+    return this.http.get(this.weatherApiUrl + accountId);
   }
 
   //add city to favourite
