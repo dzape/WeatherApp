@@ -1,0 +1,25 @@
+<h2 style="text-align:center">Favourite Cities</h2>
+
+<div class="table-responsive">
+  <table class="table table-striped table-light" style="text-align:center">
+    <tr>
+      <th scope="col">
+        <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
+             style=" width: 25px; height: 25px" />
+      </th>
+      <th scope="col">Name</th>
+      <th scope="col">Temperature</th>
+      <th scope="col">Humidity</th>
+      <th scope="col">Description</th>
+      <th scope="col">Wind Speed</th>
+    </tr>
+    <tr *ngFor="let c of citiydata">
+      <td scope="row"><button (click)="onDelete(city)">-</button></td>
+      <td>{{ c.name}}</td>
+      <td>{{ c.main.temp }} ℃</td>
+      <td>{{ c.main.humidity }} %</td>
+      <td>{{ c.weather[0].description }}</td>
+      <td>{{ c.wind.speed }} km/h</td>
+    </tr>
+    </table>
+</div>

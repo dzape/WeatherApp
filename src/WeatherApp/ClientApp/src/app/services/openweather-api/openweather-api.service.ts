@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class WeatherApiService {
+export class OpenWeatherApiService {
 
   private baseWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
   private urlSuffix = "&units=metric&APPID=a50e2aff21f6864e4b65258a3b3ea856"; // Input your api Key

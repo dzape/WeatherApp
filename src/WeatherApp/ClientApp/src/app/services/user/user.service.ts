@@ -4,7 +4,7 @@ import { Data } from '@angular/router';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { iWeather } from '../../models/iweather';
-import { Weather } from '../../models/weather.model';
+import { City } from '../../models/city.model';
 
 import { ApiService } from '../api/api.service';
 

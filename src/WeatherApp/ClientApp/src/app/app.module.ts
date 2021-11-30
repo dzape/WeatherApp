@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component'
 import { RegisterComponent } from './components/register/register.component'
 import { ListComponent } from './components/list/list.component'
 import { WeatherComponent } from './components/weather/weather.component'
+import { CityComponent } from './components/city/city.component'
 import { FooterComponent } from './components/footer/footer.component'
 
 import { AuthGuard } from './services/guards/auth-guard.service';
@@ -29,6 +30,7 @@ export function tokenGetter() {
     RegisterComponent,
     ListComponent,
     WeatherComponent,
+    CityComponent,
     NavMenuComponent,
     FooterComponent
   ],
@@ -43,6 +45,7 @@ export function tokenGetter() {
       { path: 'register', component: RegisterComponent},
       { path: 'list', component: ListComponent, canActivate: [AuthGuard] },
       { path: 'weather', component: WeatherComponent, canActivate: [AuthGuard] },
+      { path: 'favourite', component: CityComponent, canActivate: [AuthGuard] },
     ]),
     JwtModule.forRoot({
       config: {

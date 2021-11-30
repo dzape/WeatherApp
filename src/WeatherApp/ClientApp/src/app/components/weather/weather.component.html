@@ -2,7 +2,6 @@
 
 <div class="table-responsive">
   <input class="form-control" type="text" placeholder="Enter city" [formControl]="searchInput">
-
   <table class="table table-striped table-light" style="text-align:center">
     <thead>
       <tr>
@@ -17,9 +16,9 @@
         <th scope="col">Wind Speed</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="newCity">
       <tr>
-        <th scope="row">1</th>
+        <td scope="row"><button (click)="addFavouriteCity()">Add</button></td>
         <td>{{ weather['name'] }}</td>
         <td>{{ weather['temp'] }}</td>
         <td>{{ weather['humidity'] }}</td>
@@ -27,15 +26,30 @@
         <td>{{ weather['wind'] }}</td>
       </tr>
     </tbody>
-
   </table>
 </div>
 
-<div>
-  <tr *ngFor="let c of weatherData">
-    <td>{{ c.temp }}</td>
-    <td>{{ c.humidity }}</td>
-    <td>{{ c.description }}</td>
-    <td>{{ c.temp }}</td>
-  </tr>
+<div class="table-responsive">
+  <h3>Favourite Cities</h3>
+  <table class="table table-striped table-light" style="text-align:center">
+    <tr>
+      <th scope="col">
+        <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
+             style=" width: 25px; height: 25px" />
+      </th>
+      <th scope="col">Name</th>
+      <th scope="col">Temperature</th>
+      <th scope="col">Humidity</th>
+      <th scope="col">Description</th>
+      <th scope="col">Wind Speed</th>
+    </tr>
+    <tr *ngFor="let c of weatherData">
+      <td scope="row"><button (click)="onDelete(city)">-</button></td>
+      <td>{{ c.name}}</td>
+      <td>{{ c.main.temp }} ℃</td>
+      <td>{{ c.main.humidity }} %</td>
+      <td>{{ c.weather[0].description }}</td>
+      <td>{{ c.wind.speed }} km/h</td>
+    </tr>
+    </table>
 </div>
