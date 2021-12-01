@@ -6,15 +6,17 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt'
 
-import { AppComponent } from './app.component';
-import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { LoginComponent } from './components/user/login/login.component'
+import { RegisterComponent } from './components/user/register/register.component'
+
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component'
-import { RegisterComponent } from './components/register/register.component'
-import { ListComponent } from './components/list/list.component'
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { FooterComponent } from './components/footer/footer.component'
+
 import { WeatherComponent } from './components/weather/weather.component'
 import { CityComponent } from './components/city/city.component'
-import { FooterComponent } from './components/footer/footer.component'
+
+import { AppComponent } from './app.component';
 
 import { AuthGuard } from './services/guards/auth-guard.service';
 
@@ -28,7 +30,6 @@ export function tokenGetter() {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ListComponent,
     WeatherComponent,
     CityComponent,
     NavMenuComponent,
@@ -43,7 +44,6 @@ export function tokenGetter() {
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent},
-      { path: 'list', component: ListComponent, canActivate: [AuthGuard] },
       { path: 'weather', component: WeatherComponent, canActivate: [AuthGuard] },
       { path: 'favourite', component: CityComponent, canActivate: [AuthGuard] },
     ]),

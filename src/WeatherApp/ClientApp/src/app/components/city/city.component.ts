@@ -12,10 +12,13 @@ import { iWeather } from '../../models/iweather';
 import { NgLocaleLocalization } from '@angular/common';
 import { Account } from '../../models/account.model';
 import { debounce } from 'rxjs-compat/operator/debounce';
+import { AppPage } from '../../../../e2e/src/app.po';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
+  styleUrls: ['./city.component.css']
 })
 
 export class CityComponent implements OnInit {
@@ -27,6 +30,7 @@ export class CityComponent implements OnInit {
 
   ngOnInit() {
     this.getFavouriteCity();
+    this.weatherData = [];
   }
 
   getFavouriteCity() {
@@ -37,9 +41,9 @@ export class CityComponent implements OnInit {
           for (var i = 0; i <= this.cities.length - 1; i++) {
             this.weatherApiService.getWeather(this.cities[i].cityName).subscribe((cityWeatherData) => {
               this.weatherData.push(cityWeatherData);
-              console.log("City Weather Data : ", this.weatherData);
             })
           }
+          console.log("City Weather Data : ", this.weatherData);
         }
       });
     });
@@ -50,10 +54,12 @@ export class CityComponent implements OnInit {
       if (city.name.toString() === this.cities[i].cityName.toString()) {
         console.log(city.name);
         city.id = Number(this.cities[i].cityId);
-        this.cityService.deleteFavCity(city).subscribe((cities) => this.cities = this.cities.filter( c => c.id !== this.cities.id ));
+        this.cityService.deleteFavCity(city).subscribe((cities) => {
+          this.cities = this.cities.filter(c => c.id !== this.cities.id);
+          this.ngOnInit();
+        })
         console.log("You have deleted : ", city.name);
       }
     }
   }
-
 }

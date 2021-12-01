@@ -1,10 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Data } from '@angular/router';
-import { EMPTY, Observable, of } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
-import { iWeather } from '../../models/iweather';
-import { City } from '../../models/city.model';
 
 import { ApiService } from '../api/api.service';
 
