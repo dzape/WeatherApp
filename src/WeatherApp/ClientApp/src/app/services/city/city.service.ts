@@ -30,40 +30,20 @@ export class CityService {
   }
 
   data: any;
-  //getCityData(): Observable<any> {
-  //  this.getObseravbeCity().subscribe;
-  //  return this.data;
-  //}
-
-  //getFavouriteCitiesData(): Observable<any> {
-  //  this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((id) => {
-  //    this.getFavCityes(id).subscribe((cities) => {
-  //      this.cities = cities;
-  //      if (this.cities.length > 0) {
-  //        for (var i = 0; i <= this.cities.length - 1; i++) {
-  //          this.owapi.getWeather(this.cities[i].cityName).subscribe((citydata) => {
-  //            this.citydata = citydata
-  //            console.log(this.citydata);
-  //          });
-  //        }
-  //      }
-  //    });
-  //  });
-  //}
-
   id: number;
   citylist;
 
   getObseravbeCity(): Observable<any> {
-    this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((id) => {
-      this.getFavCityes(this.id).subscribe((cities) => (this.cities = cities));
+    this.userService.getUserIdByName(localStorage.getItem("username").toString()).subscribe((id) => {
+      this.getFavCityes(Number(id)).subscribe((cities) => (this.cities = cities));
+      console.log(this.cities);
     });
-
     if (this.cities.length > 0) {
       for (var i = 0; i <= this.cities.length - 1; i++) {
         this.owapi.getWeather(this.cities[i].cityName).subscribe((citydata) => {
-          this.citydata = citydata
-          console.log(this.citydata);
+          this.citydata[i] = citydata
+          console.log(this.citydata[i]);
+
         });
       }
       return this.citydata;

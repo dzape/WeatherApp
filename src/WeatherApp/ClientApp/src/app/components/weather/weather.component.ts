@@ -28,8 +28,6 @@ export class WeatherComponent implements OnInit {
   constructor(private http: HttpClient, private userService: UserService, private weatherApiService: OpenWeatherApiService, private cityService: CityService) { }
 
   ngOnInit() {
-    this.getFavouriteCity();
-
     this.searchInput.valueChanges
       .pipe(debounceTime(200),
         switchMap(city => this.weatherApiService.getWeather(city)))
@@ -46,21 +44,6 @@ export class WeatherComponent implements OnInit {
     );
   }
 
-  getFavouriteCity() {
-    this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((response) => {
-      this.cityService.getFavCityes(response).subscribe((res) => {
-        this.cities = res;
-        if (this.cities.length > 0) {
-          for (var i = 0; i <= this.cities.length - 1; i++) {
-            this.weatherApiService.getWeather(this.cities[i].cityName).subscribe((cityWeatherData) => {
-              this.weatherData.push(cityWeatherData);
-              console.log("City Weather Data : ", this.weatherData);
-            })
-          }
-        }
-      });
-    });
-  }
   addFavouriteCity() {
     this.userService.getUserIdByName(localStorage.getItem("username")).subscribe(id => {
       const credentials = {
@@ -75,9 +58,5 @@ export class WeatherComponent implements OnInit {
       });
       console.log("YEE");
     })
-  }
-
-  onDelete() {
-
   }
 }

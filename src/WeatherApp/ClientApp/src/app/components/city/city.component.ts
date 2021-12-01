@@ -20,36 +20,31 @@ import { Account } from '../../models/account.model';
 export class CityComponent implements OnInit {
 
   public weatherData: iWeather[] = [];
-
-  searchInput = new FormControl();
-  citiydata;
-  weather: any = {};
   cities: any = {};
 
   constructor(private http: HttpClient, private userService: UserService, private weatherApiService: OpenWeatherApiService, private cityService: CityService) { }
 
   ngOnInit() {
-    this.cityService.getObseravbeCity().subscribe((cities) => this.cities = cities);
+    this.getFavouriteCity()
   }
 
-    
-  //addFavouriteCity() {
-  //  this.userService.getUserIdByName(localStorage.getItem("username")).subscribe(id => {
-  //    const credentials = {
-  //      'cityName': this.weather['name'],
-  //      'accountId': Number(id)
-  //    }
-  //    this.cityService.postFavCity(credentials).subscribe(data => {
-  //      if (data === null) {
-  //        alert("Search for a city");
-  //      }
-  //      console.log("ERROR");
-  //    });
-  //    console.log("YEE");
-  //  })
-  //}
+  getFavouriteCity() {
+    this.userService.getUserIdByName(localStorage.getItem("username")).subscribe((response) => {
+      this.cityService.getFavCityes(response).subscribe((res) => {
+        this.cities = res;
+        if (this.cities.length > 0) {
+          for (var i = 0; i <= this.cities.length - 1; i++) {
+            this.weatherApiService.getWeather(this.cities[i].cityName).subscribe((cityWeatherData) => {
+              this.weatherData.push(cityWeatherData);
+              console.log("City Weather Data : ", this.weatherData);
+            })
+          }
+        }
+      });
+    });
+  }
 
-  //deleteFavouriteCity() {
-
-  //}
+  onDelete(city: City) {
+    console.log(city);
+  }
 }

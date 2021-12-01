@@ -18,10 +18,11 @@ export class RegisterComponent {
 
   constructor(private http: HttpClient,
     private registerService: RegisterService,
-    private router: Router
+    private router: Router,
   ) { }
 
   regForm!: FormGroup;
+  closeResult: string;
 
   userForm = new FormGroup({
     username: new FormControl(this.acc.username,[
@@ -42,7 +43,7 @@ export class RegisterComponent {
         }
         this.router.navigate(["/weather"]);
       })
-  }
+  }   
 }
 // bos modal
 // if valid ? span ( error msg )

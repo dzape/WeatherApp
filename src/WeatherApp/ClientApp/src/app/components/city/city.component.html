@@ -13,13 +13,16 @@
       <th scope="col">Description</th>
       <th scope="col">Wind Speed</th>
     </tr>
-    <tr *ngFor="let c of citiydata">
-      <td scope="row"><button (click)="onDelete(city)">-</button></td>
-      <td>{{ c.name}}</td>
-      <td>{{ c.main.temp }} ℃</td>
-      <td>{{ c.main.humidity }} %</td>
-      <td>{{ c.weather[0].description }}</td>
-      <td>{{ c.wind.speed }} km/h</td>
+    <tr *ngFor="let city of weatherData">
+      <td (click)="onDelete(city)"><button>Delete</button></td> 
+      <td>{{ city.name }}</td>
+      <td>{{ city.main.temp }} ℃</td>
+      <td>{{ city.main.humidity }} %</td>
+      <td>{{ city.weather[0].description }}</td>
+      <td>{{ city.wind.speed }} km/h</td>
+
     </tr>
     </table>
 </div>
+
+
