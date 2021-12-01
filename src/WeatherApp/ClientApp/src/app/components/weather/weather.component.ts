@@ -42,6 +42,7 @@ export class WeatherComponent implements OnInit {
         err => console.log(`Can't get weather. Error code: %s, URL: %s`,
           err.message, err.url)
     );
+
   }
 
   addFavouriteCity() {

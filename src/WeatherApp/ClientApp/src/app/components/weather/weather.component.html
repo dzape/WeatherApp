@@ -1,35 +1,35 @@
-<h2 style="text-align:center">Weather</h2>
-
-<div class="table-responsive">
+<div class="table-striped">
   <input class="form-control" type="text" placeholder="Enter city" [formControl]="searchInput">
-  <table class="table table-striped table-light" style="text-align:center">
-    <thead>
-      <tr>
-        <th scope="col">
-          <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
-               style=" width: 25px; height: 25px" />
-        </th>
-        <th scope="col">Name</th>
-        <th scope="col">Temperature</th>
-        <th scope="col">Humidity</th>
-        <th scope="col">Description</th>
-        <th scope="col">Wind Speed</th>
-      </tr>
-    </thead>
-    <tbody class="newCity">
-      <tr>
-        <td scope="row"><button (click)="addFavouriteCity()">Add</button></td>
-        <td>{{ weather['name'] }}</td>
-        <td>{{ weather['temp'] }}</td>
-        <td>{{ weather['humidity'] }}</td>
-        <td>{{ weather['description'] }}</td>
-        <td>{{ weather['wind'] }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="!searchInput.empty && (searchInput.dirty || searchInput.touched)">
+    <table class="table table-striped table-light" style="text-align:center">
+      <thead>
+        <tr>
+          <th scope="col">
+            <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
+                 style=" width: 25px; height: 25px" />
+          </th>
+          <th scope="col">Name</th>
+          <th scope="col">Temperature</th>
+          <th scope="col">Humidity</th>
+          <th scope="col">Description</th>
+          <th scope="col">Wind Speed</th>
+        </tr>
+      </thead>
+      <tbody class="newCity">
+        <tr>
+          <td scope="row"><button class="btn btn-primary" (click)="addFavouriteCity()">Add</button></td>
+          <td>{{ weather['name'] }}</td>
+          <td>{{ weather['temp'] }}</td>
+          <td>{{ weather['humidity'] }}</td>
+          <td>{{ weather['description'] }}</td>
+          <td>{{ weather['wind'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-city class="table-striped"></app-city>
 </div>
 
-<app-city></app-city>
 
 
 

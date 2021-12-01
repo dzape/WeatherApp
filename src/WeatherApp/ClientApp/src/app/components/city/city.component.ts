@@ -11,6 +11,7 @@ import { City } from '../../models/city.model';
 import { iWeather } from '../../models/iweather';
 import { NgLocaleLocalization } from '@angular/common';
 import { Account } from '../../models/account.model';
+import { debounce } from 'rxjs-compat/operator/debounce';
 
 @Component({
   selector: 'app-city',
@@ -25,7 +26,7 @@ export class CityComponent implements OnInit {
   constructor(private http: HttpClient, private userService: UserService, private weatherApiService: OpenWeatherApiService, private cityService: CityService) { }
 
   ngOnInit() {
-    this.getFavouriteCity()
+    this.getFavouriteCity();
   }
 
   getFavouriteCity() {
@@ -45,6 +46,14 @@ export class CityComponent implements OnInit {
   }
 
   onDelete(city: City) {
-    console.log(city);
+    for (var i = 0; i < this.cities.length; i++) {
+      if (city.name.toString() === this.cities[i].cityName.toString()) {
+        console.log(city.name);
+        city.id = Number(this.cities[i].cityId);
+        this.cityService.deleteFavCity(city).subscribe((cities) => this.cities = this.cities.filter( c => c.id !== this.cities.id ));
+        console.log("You have deleted : ", city.name);
+      }
+    }
   }
+
 }

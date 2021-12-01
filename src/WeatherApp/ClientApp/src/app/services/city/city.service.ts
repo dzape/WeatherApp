@@ -42,7 +42,7 @@ export class CityService {
       for (var i = 0; i <= this.cities.length - 1; i++) {
         this.owapi.getWeather(this.cities[i].cityName).subscribe((citydata) => {
           this.citydata[i] = citydata
-          console.log(this.citydata[i]);
+          console.log(this.citydata);
 
         });
       }
@@ -60,7 +60,7 @@ export class CityService {
 
   // remove favourite city
   deleteFavCity(city: City) {
-    const url = `${this.weatherApiUrl}/${city.cityId}`;
+    const url = `${this.weatherApiUrl}${city.id}`;
     return this.http.delete<City>(url);
   }
 }

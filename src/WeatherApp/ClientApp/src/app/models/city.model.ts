@@ -1,6 +1,6 @@
 export interface City {
-  cityId?: number;
-  cityName: string;
-  accountId: number;
+  id?: number;
+  name: string;
+  userid: number;
 }
 
