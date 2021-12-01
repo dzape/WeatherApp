@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
+using Weather.Api.Data.Repository;
 
 namespace WeatherApp.Api.Controllers
 {
@@ -20,11 +21,12 @@ namespace WeatherApp.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserDbContext _context;
-
-        public AuthController( UserDbContext context)
+        //private readonly UserDbContext _context;
+        private readonly InMemoryUserData _inMemoryData;
+        public AuthController(  InMemoryUserData inMemoryData)
         {
-            this._context = context;
+            //this._context = context;
+            this._inMemoryData = inMemoryData;
         }
 
         [HttpGet, Route("get")]
@@ -37,7 +39,7 @@ namespace WeatherApp.Api.Controllers
             if (account == null)
                 return BadRequest("Invalid client request");
 
-            if (account.Username == "Pero" && account.Password == "Pero.123") //Authenticate(account)
+            if (Authenticate(account)) 
             {
                 var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signingCridentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
@@ -59,7 +61,7 @@ namespace WeatherApp.Api.Controllers
         public bool Authenticate(User account)
         {
 
-            var acc = _context.Users.SingleOrDefault(x => x.Username == account.Username);
+            var acc = _inMemoryData.GetUserByName(account.Username).SingleOrDefault(x => x.Username == account.Username);
 
             if (account == null || !BC.Verify(account.Password, acc.Password))
             {

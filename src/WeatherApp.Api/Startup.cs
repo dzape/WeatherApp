@@ -8,8 +8,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using WeatherApp.Api.Data;
+using WeatherApp.Api.Data.Models;
 using WeatherApp.Api.Services;
+using Weather.Api.Data.Repository;
+using WeatherApp.Api.Data;
 
 namespace WeatherApp.Api
 {
@@ -25,7 +27,6 @@ namespace WeatherApp.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -49,12 +50,12 @@ namespace WeatherApp.Api
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
-
             services.AddDbContext<UserDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped<IUserData, InMemoryUserData>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
