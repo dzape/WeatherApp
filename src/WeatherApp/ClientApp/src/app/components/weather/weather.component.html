@@ -1,6 +1,6 @@
 <div>
   <input class="form-control" type="text" placeholder="Enter city" [formControl]="searchInput">
-  <div *ngIf="!searchInput && (searchInput.dirty || searchInput.touched)" class="table-striped" style="overflow-x:auto;">
+  <div class="table-striped" style="overflow-x:auto;">
     <table class="table table-striped table-light" style="text-align:center">
       <thead>
         <tr>
@@ -17,7 +17,7 @@
       </thead>
       <tbody class="newCity">
         <tr>
-          <td scope="row"><button class="btn btn-primary" (click)="addFavouriteCity($event)">Add</button></td>
+          <td scope="row"><button class="btn btn-primary" (click)="addFavouriteCity()">Add</button></td>
           <td>{{ weather['name'] }}</td>
           <td>{{ weather['temp'] }}</td>
           <td>{{ weather['humidity'] }}</td>

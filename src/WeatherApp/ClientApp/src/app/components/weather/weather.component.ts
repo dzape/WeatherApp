@@ -26,7 +26,9 @@ export class WeatherComponent implements OnInit {
   ngOnInit() {
     this.searchInput.valueChanges
       .pipe(debounceTime(200),
-        switchMap(city => this.weatherApiService.getWeather(city)))
+        switchMap(city => {
+            return this.weatherApiService.getWeather(city);
+        }))
       .subscribe(
         res => {
           this.weather['name'] = res.name;
