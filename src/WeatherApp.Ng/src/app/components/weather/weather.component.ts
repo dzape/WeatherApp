@@ -1,12 +1,14 @@
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { debounceTime, switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
 import { OpenweatherapiService } from '../../services/api/openweatherapi/openweatherapi.service'
 import { CityService } from '../../services/city/city.service'
 import { UserService } from '../../services/user/user.service';
 import { iWeather } from '../../data/models/iweather';
+import { City } from 'src/app/data/models/city.model';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-weather',
@@ -27,9 +29,7 @@ export class WeatherComponent implements OnInit {
   ngOnInit() {
     this.searchInput.valueChanges
       .pipe(debounceTime(300),
-        switchMap(city => {
-            return this.weatherApiService.getWeather(city);
-        }))
+        switchMap(city =>  this.weatherApiService.getWeather(city)))
       .subscribe(
         res => {
           this.weather['name'] = res.name;
@@ -40,7 +40,7 @@ export class WeatherComponent implements OnInit {
         },
         err => console.log(`Can't get weather. Error code: %s, URL: %s`,
           err.message, err.url)
-    );
+      )
   }
 
   addFavouriteCity() {
