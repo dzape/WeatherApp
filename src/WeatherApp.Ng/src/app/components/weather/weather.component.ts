@@ -26,7 +26,7 @@ export class WeatherComponent implements OnInit {
 
   ngOnInit() {
     this.searchInput.valueChanges
-      .pipe(debounceTime(200),
+      .pipe(debounceTime(300),
         switchMap(city => {
             return this.weatherApiService.getWeather(city);
         }))
@@ -44,10 +44,10 @@ export class WeatherComponent implements OnInit {
   }
 
   addFavouriteCity() {
-    this.userService.getUserIdByName(this.username).subscribe(id => {
+    this.userService.getUserIdByName(this.username.toString()).subscribe(id => {
       const credentials = {
-        'cityName': this.weather['name'],
-        'accountId': Number(id)
+        'name': this.weather['name'],
+        'userid': Number(id)
       }
       this.cityService.postFavCity(credentials).subscribe(data => {
         if (data === null) {

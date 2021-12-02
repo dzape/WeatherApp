@@ -18,7 +18,6 @@ import { CityComponent } from './components/city/city.component'
 
 import { AppComponent } from './app.component';
 
-import { AuthGuard } from './services/guards/auth-guard.service';
 import { AppRoutingModule } from './app-routing.module';
 
 export function tokenGetter() {

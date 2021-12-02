@@ -31,7 +31,7 @@ namespace CityApp.Controllers
         public IEnumerable<City> GetCity(int id)
         {
             var query = from r in _context.Cities
-                        where r.Id.Equals(id)
+                        where r.UserId.Equals(id)
                         orderby r.Id
                         select r;
 

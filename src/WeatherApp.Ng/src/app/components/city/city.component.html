@@ -1,1 +1,26 @@
-<p>city works!</p>
+<h2 style="text-align:center">Favourite Cities</h2>
+
+<div style="overflow-x:auto;">
+  <table class="table table-striped" style="text-align:center; max-width:100%">
+    <tr>
+      <th scope="col">
+        <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
+             style=" width: 25px; height: 25px" />
+      </th>
+      <th scope="col">Name</th>
+      <th scope="col">Temperature</th>
+      <th scope="col">Humidity</th>
+      <th scope="col">Description</th>
+      <th scope="col">Wind Speed</th>
+    </tr>
+    <tr *ngFor="let city of weatherData">
+      <td><button (click)="onDelete(city)" class="btn btn-primary">Delete</button></td> 
+      <td>{{ city.name }}</td>
+      <td>{{ city['main'].temp }} ℃</td>
+      <td>{{ city.main.humidity }} %</td>
+      <td>{{ city.weather[0].description }}</td>
+      <td>{{ city.wind.speed }} km/h</td>
+
+    </tr>
+    </table>
+</div>

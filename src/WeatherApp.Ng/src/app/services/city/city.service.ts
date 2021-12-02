@@ -22,7 +22,7 @@ export class CityService {
   citydata: any;
   cities: any = {};
 
-  private weatherApiUrl = 'https://localhost:44316/api/Weather/';
+  private weatherApiUrl = 'https://localhost:44322/api/city/';
 
   constructor(private http: HttpClient, private userService: UserService, private owapi: OpenweatherapiService) { }
 
