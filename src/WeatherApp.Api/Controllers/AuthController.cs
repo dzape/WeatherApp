@@ -22,11 +22,10 @@ namespace WeatherApp.Api.Controllers
     public class AuthController : ControllerBase
     {
         //private readonly UserDbContext _context;
-        private readonly InMemoryUserData _inMemoryData;
-        public AuthController(  InMemoryUserData inMemoryData)
+        private readonly UserDbContext _context;
+        public AuthController(  UserDbContext context)
         {
-            //this._context = context;
-            this._inMemoryData = inMemoryData;
+            this._context = context;
         }
 
         [HttpGet, Route("get")]
@@ -61,7 +60,7 @@ namespace WeatherApp.Api.Controllers
         public bool Authenticate(User account)
         {
 
-            var acc = _inMemoryData.GetUserByName(account.Username).SingleOrDefault(x => x.Username == account.Username);
+            var acc = _context.Users.SingleOrDefault(x => x.Username == account.Username);
 
             if (account == null || !BC.Verify(account.Password, acc.Password))
             {

@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
+
 export class NavMenuComponent {
 
   constructor(private authService: AuthService) { }

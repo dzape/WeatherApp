@@ -1,14 +1,25 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { JwtModule } from '@auth0/angular-jwt';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
+import { JwtModule } from '@auth0/angular-jwt'
 
-import { AppComponent } from './app.component';
+import { LoginComponent } from './components/user/login/login.component'
+import { RegisterComponent } from './components/user/register/register.component'
+
 import { HomeComponent } from './components/home/home.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { WeatherComponent } from './components/weather/weather.component';
-import { CityComponent } from './components/city/city.component';
+import { FooterComponent } from './components/footer/footer.component'
+
+import { WeatherComponent } from './components/weather/weather.component'
+import { CityComponent } from './components/city/city.component'
+
+import { AppComponent } from './app.component';
+
+import { AuthGuard } from './services/guards/auth-guard.service';
+import { AppRoutingModule } from './app-routing.module';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -18,18 +29,23 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     HomeComponent,
-    NavMenuComponent,
+    LoginComponent,
+    RegisterComponent,
     WeatherComponent,
-    CityComponent
+    CityComponent,
+    NavMenuComponent,
+    FooterComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:42000"],
+        allowedDomains: ["localhost:44322"],
         disallowedRoutes: []
       }
     }),
