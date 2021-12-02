@@ -14,7 +14,7 @@ export class OpenweatherapiService {
 
   constructor(private http: HttpClient) { }
 
-  getWeather(city: string): NewType {
+  getWeather(city: string): Observable<any> {
     return this.http.get(this.baseWeatherURL + city + this.urlSuffix);
   }
 }

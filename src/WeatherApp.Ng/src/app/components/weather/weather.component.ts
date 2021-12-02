@@ -50,7 +50,7 @@ export class WeatherComponent implements OnInit {
         'userid': Number(id)
       }
       this.cityService.postFavCity(credentials).subscribe(data => {
-        if (data === null) {
+        if (credentials.name === null) {
           alert("Search for a city");
         }
       });

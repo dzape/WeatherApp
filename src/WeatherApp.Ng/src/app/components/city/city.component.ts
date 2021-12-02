@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { City } from 'src/app/data/models/city.model';
-import { iWeather } from 'src/app/data/models/iweather';
 import { OpenweatherapiService } from 'src/app/services/api/openweatherapi/openweatherapi.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -35,11 +34,6 @@ export class CityComponent implements OnInit {
             console.log(this.cities[i].name);
             this.weatherApiService.getWeather(this.cities[i].name).subscribe((cityWeatherData) => {
               this.weatherData.push(cityWeatherData);
-              // this.weatherData[i].name = cityWeatherData.name;
-              // this.weatherData[i].temperature = cityWeatherData['main'].temp + ' ℃';
-              // this.weatherData[i].humidity = cityWeatherData['main'].humidity + ' %';
-              // this.weatherData[i].description = cityWeatherData['weather'][0].description;
-              // this.weatherData[i].windspeed = cityWeatherData['wind'].speed + ' km/h'
               console.log(" THIS IS WEATHER DATA",this.weatherData)
             })
           }
