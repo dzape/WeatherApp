@@ -77,6 +77,7 @@ namespace Weather.Api.Controllers
                 return BadRequest();
             }
 
+            User.Password = BC.HashPassword(User.Password);
             _context.Entry(User).State = EntityState.Modified;
 
             try

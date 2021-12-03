@@ -1,5 +1,5 @@
 <div>
-  <input type="text" placeholder="Enter city" [formControl]="searchInput">
+  <input id="searchInput" class="form-control" type="text" placeholder="Enter city" [formControl]="searchInput" required minlength="3">
   <div class="table-striped" style="overflow-x:auto;">
     <table class="table table-striped table-light" style="text-align:center">
       <thead>

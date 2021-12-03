@@ -44,17 +44,21 @@ export class WeatherComponent implements OnInit {
   }
 
   addFavouriteCity() {
-    this.userService.getUserIdByName(this.username.toString()).subscribe(id => {
-      const credentials = {
-        'name': this.weather['name'],
-        'userid': Number(id)
-      }
-      this.cityService.postFavCity(credentials).subscribe(data => {
-        if (credentials.name === null) {
-          alert("Search for a city");
+    if(this.weather['name'] != null){
+      this.userService.getUserIdByName(this.username.toString()).subscribe(id => {
+        const credentials = {
+          'name': this.weather['name'],
+          'userid': Number(id)
         }
-      });
-      console.log(" City added to favourite cities :) ");
-    })
+        this.cityService.postFavCity(credentials).subscribe(data => {
+          if (credentials.name === null) {
+            alert("Search for a city");
+          }
+          window.location.reload();
+        });
+        console.log(" City added to favourite cities :) ");
+      })
+    }
+    //bootsrap modal :)
   }
 }

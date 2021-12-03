@@ -87,3 +87,5 @@ namespace WeatherApp.Api
         }
     }
 }
+
+  //  "DefaultConnection": "Data Source=192.168.10.20;Initial Catalog=WeatherDataDb; User Id=Weather;Password=Weather;"

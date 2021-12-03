@@ -1,26 +1,34 @@
 <h2 style="text-align:center">Favourite Cities</h2>
-
-<div style="overflow-x:auto;">
-  <table class="table table-striped" style="text-align:center; max-width:100%">
+ <div style="overflow-x:auto;" class="modal fade" id="myModal">
+  <table class="table table-striped" style="text-align:center; max-width:100%" matSort (matSortChange)="sortData($event)">
     <tr>
       <th scope="col">
-        <img src="../../../assets/images/weather_logo.png" alt="Alternate Text"
-             style=" width: 50px; height: 50px" />
+        <img src="../../../assets/images/weather_logo.png" alt="Alternate Text" style=" width: 50px; height: 50px" />
       </th>
-      <th scope="col">Name</th>
+      <th mat-sort-header="name" scope="col">Name</th>
       <th scope="col">Temperature</th>
       <th scope="col">Humidity</th>
       <th scope="col">Description</th>
       <th scope="col">Wind Speed</th>
     </tr>
-    <tr *ngFor="let city of weatherData">
-      <td><button (click)="onDelete(city)" class="btn btn-primary">Delete</button></td> 
+    <tr *ngFor="let city of sortedData">
+      <td><fa-icon [icon]="faTrash" ></fa-icon></td> 
       <td>{{ city.name }}</td>
-      <td>{{ city['main'].temp }} ℃</td>
-      <td>{{ city.main.humidity }} %</td>
-      <td>{{ city.weather[0].description }}</td>
-      <td>{{ city.wind.speed }} km/h</td>
-
+      <td>{{ city.temperature }} C</td>
+      <td>{{ city.humidity }} %</td>
+      <td>{{ city.description }}</td>
+      <td>{{ city.windspeed }} km/h</td>
     </tr>
     </table>
-</div>
+</div> 
+
+<table mat-table [dataSource]="weatherData">
+  
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> name </th>
+    <td mat-cell *matCellDef="let city"> {{ city.name }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>

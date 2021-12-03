@@ -4,6 +4,7 @@ import { CityComponent } from './components/city/city.component';
 
 //Components
 import { HomeComponent } from './components/home/home.component';
+import { EditComponent } from './components/user/edit/edit.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { WeatherComponent } from './components/weather/weather.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
+  { path: 'edit', component: EditComponent, canActivate: [AuthGuard] },
   { path: 'weather', component: WeatherComponent, canActivate: [AuthGuard] },
   { path: 'favourite', component: CityComponent, canActivate: [AuthGuard] },
 ];
