@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { iWeather } from 'src/app/data/models/iweather';
+import { iWeather } from '../../data/models/iweather';
 
 import { City } from '../../data/models/city.model';
 import { UserService } from '../../services/user/user.service';
@@ -60,8 +60,7 @@ export class CityService {
   }
 
   // remove favourite city
-  deleteFavCity(city: City) {
-    const url = `${this.weatherApiUrl}${city.id}`;
-    return this.http.delete<City>(url);
+  deleteFavCity(id: number) {
+    return this.http.delete<City>(this.weatherApiUrl + id);
   }
 }

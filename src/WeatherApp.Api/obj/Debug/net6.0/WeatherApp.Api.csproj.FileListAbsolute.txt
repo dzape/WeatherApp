@@ -281,4 +281,3 @@ C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\obj\Debug\n
 C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\obj\Debug\net6.0\ref\WeatherApp.Api.dll
 C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\obj\Debug\net6.0\WeatherApp.Api.pdb
 C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\obj\Debug\net6.0\WeatherApp.Api.genruntimeconfig.cache
-C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\obj\Debug\net6.0\WeatherApp.Api.csproj.CopyComplete
