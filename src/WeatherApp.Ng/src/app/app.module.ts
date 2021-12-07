@@ -27,6 +27,8 @@ import { AngularMaterialModule } from './angular-material.module';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+
 export function tokenGetter() {
   return localStorage.getItem("jwt");
 }
@@ -52,6 +54,8 @@ export function tokenGetter() {
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    NgbPaginationModule, 
+    NgbAlertModule,
     AngularMaterialModule,
     JwtModule.forRoot({
       config: {
