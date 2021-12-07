@@ -6,9 +6,7 @@ import { OpenweatherapiService } from '../../services/api/openweatherapi/openwea
 import { CityService } from '../../services/city/city.service'
 import { UserService } from '../../services/user/user.service';
 import { iWeather } from '../../data/models/iweather';
-import { City } from 'src/app/data/models/city.model';
 import { debounceTime, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-weather',
@@ -21,10 +19,8 @@ export class WeatherComponent implements OnInit {
 
   searchInput = new FormControl();
   weather: any = {};
-  cities: any = {};
-  username: any = localStorage.getItem("username");
 
-  constructor(private http: HttpClient, private userService: UserService, private weatherApiService: OpenweatherapiService, private cityService: CityService) { }
+  constructor( private userService: UserService, private weatherApiService: OpenweatherapiService, private cityService: CityService) { }
 
   ngOnInit() {
     this.searchInput.valueChanges
@@ -43,6 +39,7 @@ export class WeatherComponent implements OnInit {
       )
   }
 
+  username: any = localStorage.getItem("username");
   addFavouriteCity() {
     if(this.weather['name'] != null){
       this.userService.getUserIdByName(this.username.toString()).subscribe(id => {
