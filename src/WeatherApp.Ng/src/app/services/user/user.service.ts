@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 import { Account } from 'src/app/data/models/account.model';
 
 import { ApiService } from '../api/cityapi/api.service';
@@ -25,12 +24,21 @@ export class UserService {
     })
   }
 
+
+  username: any = localStorage.getItem("username");
   updateUser(acc: Account){
-    // this.http.put(this.api.getApiUrl() + username).subscribe(Response => {
-    //   if (Response === null) {
-    //     console.log(" UPDATE FAILED ");
-    //   }
-    // })
+    this.getUserIdByName(this.username).subscribe((id) => {
+      const body = {
+        'id': id,
+        'username': acc.username,
+        'password': acc.password
+      }
+      this.http.put(this.api.getApiUrl() + "users/" + id, body ).subscribe(Response => {
+        if (Response === null) {
+          console.log(" UPDATE FAILED ");
+        }
+      })
+    })
   }
 
   deleteUser(username: string){

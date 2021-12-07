@@ -1,5 +1,5 @@
-<div>
-  <table matSort (matSortChange)="sortData($event)" mat-table [dataSource]="sortedData" matSort class="mat-elevation-z8">
+<div class="example-container mat-elevation-z8">
+  <table matSort (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="Name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="name">Name</th>
@@ -37,8 +37,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                  showFirstLastButtons 
-                  aria-label="Select page of periodic elements">
-  </mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
 </div>

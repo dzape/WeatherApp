@@ -30,9 +30,14 @@ export class EditComponent {
   
   updateProfile() {
     this.userService.updateUser(this.acc);
+    this.logOut();
   }
 
   deleteUser(){
     this.userService.deleteUser(this.username);
+  }
+
+  logOut() {
+    localStorage.removeItem("token");
   }
 }
