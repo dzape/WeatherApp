@@ -32,7 +32,10 @@
         </div>
         <div *ngIf="isUsrAuth()" class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/weather']">Weather</a>
+            <a class="nav-link text-dark" [routerLink]="['/weather']">Search</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/favourite']">Favourite</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/edit']">Edit Profile</a>

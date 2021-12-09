@@ -5,3 +5,7 @@ table {
   .mat-sort-header-container {
     align-items: center;
   }
+
+div {
+  padding-bottom: 50px;
+}

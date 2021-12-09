@@ -1,14 +1,5 @@
-@media screen and (max-width: 540px) {
-    .view {
-      width: 400px;
-      text-align: center;
-    }
-    .div {
-        text-align: center;
-        height: 110%;
-    }
-  }
-
-  h3 {
-    text-align: left;
-  }
+body {
+  padding-bottom: 20px;
+  text-align: center;
+  border-style: groove;
+}

@@ -1,13 +1,17 @@
+
 <!DOCTYPE html>
 <html>
-
-<body style="text-align: center">
-
-  <h3>Welcome to my Weather App. This app will show you the weather in any city, also you can add your favourite citeis to your favourite list.</h3>
-
-  <div *ngIf="!userAuthorized()" style="max-width:325px">
-      <app-login></app-login> <br />
-  </div>
-
-</body>
+    <head>
+        <!-- head definitions go here -->
+    </head>
+    <body > 
+      <app-weather></app-weather>
+      <div *ngIf="!userAuthorized()">
+        <p><a href="/login">Login</a> or <a href="/register"> Register</a> </p><p>and save your favourite cities.</p>
+      </div>
+      <div *ngIf="userAuthorized()">
+        <app-city></app-city>
+      </div>
+    </body>
 </html>
+

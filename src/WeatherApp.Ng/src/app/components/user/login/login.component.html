@@ -1,14 +1,27 @@
-<body style="max-width: 500px ; margin: auto">
-  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-    <div class="form-control" content="width=device-width, initial-scale=1">
-      <h2 class="form-signin-heading">Login.</h2>
+<section>
+  <div class="container py-5 h-100">
 
-      <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
- 
-      <input type="text" id="username" name="username" ngModel class="form-control" placeholder="User Name" required autofocus minlength="4">
-      <input type="password" id="password" name="password" ngModel class="form-control" placeholder="Password" required minlength="6">
-      <button class="form-control btn btn-lg btn-primary btn-block" [disabled]="!loginForm.valid" type="submit">Sign in</button>
-      <p><a href="/register">Register</a></p>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-8 col-lg-6 col-xl-4">
+
+          
+          <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <div class="form-control" content="width=device-width, initial-scale=1">
+              <h2 class="form-signin-heading">Login.</h2>
+        
+              <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
+
+              <div class="">
+                <input type="text" id="username" name="username" ngModel class="form-control" placeholder="User Name" required autofocus minlength="4">
+                <input type="password" id="password" name="password" ngModel class="form-control" placeholder="Password" required minlength="6">
+                <button class="form-control btn btn-lg btn-primary btn-block" [disabled]="!loginForm.valid" type="submit">Sign in</button>
+              </div>
+              
+              <p><a href="/register">Register</a></p>
+            </div>
+          </form>
+        
+      </div>
     </div>
-  </form>
-</body>
+  </div>
+</section>

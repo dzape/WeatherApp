@@ -12,6 +12,7 @@ import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
 

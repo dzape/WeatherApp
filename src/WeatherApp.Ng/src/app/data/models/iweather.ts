@@ -3,5 +3,4 @@ export interface iWeather {
   temperature: string;
   humidity: string;
   description: string;
-  windspeed: string;
 }

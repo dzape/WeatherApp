@@ -27,7 +27,7 @@ export class CityComponent implements AfterViewInit {
               private cityService: CityService) 
               { }  
 
-  displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description', 'Wind Speed', 'Delete'];
+  displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
 
   cities: any = {};
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -51,7 +51,6 @@ export class CityComponent implements AfterViewInit {
                 temperature: cityWeatherData['main'].temp,
                 humidity: cityWeatherData['main'].humidity,
                 description: cityWeatherData['weather'][0].description,
-                windspeed: cityWeatherData['wind'].speed
               }
               this.sortedData.push(data);
               this.dataSource = new MatTableDataSource<iWeather>(this.sortedData);
@@ -92,8 +91,6 @@ export class CityComponent implements AfterViewInit {
           return compare(a.temperature, b.temperature, isAsc);
         case 'humidity':
           return compare(a.humidity, b.humidity, isAsc);
-        case 'windspeed':
-          return compare(a.windspeed, b.windspeed, isAsc);  
         default:
           return 0;
       }
