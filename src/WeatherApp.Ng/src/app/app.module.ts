@@ -14,7 +14,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { FooterComponent } from './components/footer/footer.component'
 
 /* Weather */
-import { WeatherComponent } from './components/weather/weather.component'
+import { SearchComponent } from './components/search/search.component'
 import { CityComponent } from './components/city/city.component'
 
 import { AppComponent } from './app.component';
@@ -40,7 +40,7 @@ export function tokenGetter() {
     LoginComponent,
     RegisterComponent,
     EditComponent,
-    WeatherComponent,
+    SearchComponent,
     CityComponent,
     NavMenuComponent,
     FooterComponent,

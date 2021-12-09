@@ -51,6 +51,7 @@ namespace WeatherApp.Api
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICityService, CityService>();
 
             services.AddDbContext<UserDbContext>(options =>
             {

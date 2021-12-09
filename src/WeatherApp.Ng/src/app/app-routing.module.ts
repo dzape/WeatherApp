@@ -7,15 +7,15 @@ import { HomeComponent } from './components/home/home.component';
 import { EditComponent } from './components/user/edit/edit.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
-import { WeatherComponent } from './components/weather/weather.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
   { path: 'edit', component: EditComponent, canActivate: [AuthGuard] },
-  { path: 'weather', component: WeatherComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
   { path: 'favourite', component: CityComponent, canActivate: [AuthGuard] },
 ];
 

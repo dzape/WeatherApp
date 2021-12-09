@@ -41,7 +41,6 @@ export class RegisterComponent {
       .subscribe(data => {
         if (data != null) {
           this.userAvailable = true;
-          this.router.navigate(["/login"]);
         }
       })
   }
@@ -53,5 +52,6 @@ export class RegisterComponent {
   }
   closePopup() {
     this.displayStyle = "none";
+    this.router.navigate(["/login"]);
   }
 }

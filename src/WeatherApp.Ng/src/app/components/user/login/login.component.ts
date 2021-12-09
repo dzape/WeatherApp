@@ -28,7 +28,7 @@ export class LoginComponent {
         localStorage.setItem("jwt", token);
         localStorage.setItem("username", credentials.username);
         this.invalidLogin = false;
-        this.router.navigate(["/weather"]);
+        this.router.navigate(["/"]);
       }, err => {
         this.invalidLogin = true;
       });

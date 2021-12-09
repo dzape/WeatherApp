@@ -13,11 +13,11 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-weather',
-  templateUrl: './weather.component.html',
+  selector: 'app-search',
+  templateUrl: './search.component.html',
 })
 
-export class WeatherComponent implements OnInit {
+export class SearchComponent implements OnInit {
 
   public weatherData: iWeather[] = [];
 

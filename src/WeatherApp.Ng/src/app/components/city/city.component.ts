@@ -75,6 +75,8 @@ export class CityComponent implements AfterViewInit {
     }
   }
 
+  //Parse dataSource
+
   sortData(sort: Sort) {
     const data = this.sortedData.slice();
     if (!sort.active || sort.direction === '') {

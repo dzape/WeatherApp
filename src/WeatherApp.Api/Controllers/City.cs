@@ -7,16 +7,19 @@ namespace CityApp.Controllers
     using Microsoft.EntityFrameworkCore;
     using WeatherApp.Api.Data;
     using WeatherApp.Api.Data.Models;
+    using WeatherApp.Api.Services;
 
     [Route("api/[controller]")]
     [ApiController]
     public class CityController : ControllerBase
     {
         private readonly UserDbContext _context;
+        private readonly ICityService _cityService;
 
-        public CityController(UserDbContext context)
+        public CityController(UserDbContext context, ICityService cityService)
         {
             _context = context;
+            _cityService = cityService;
         }
 
         // GET: api/City
@@ -74,10 +77,16 @@ namespace CityApp.Controllers
         [HttpPost]
         public async Task<ActionResult<City>> PostCity(City City)
         {
-            _context.Cities.Add(City);
-            await _context.SaveChangesAsync();
+            //if City has been added before >
+            if(!_cityService.DoesCityExist(City.Name, City.UserId))
+            {
+                _context.Cities.Add(City);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCity", new { id = City.Id }, City);
+                return CreatedAtAction("GetCity", new { id = City.Id }, City);
+            }
+
+            return StatusCode(202);
         }
 
         // DELETE: api/City/5
