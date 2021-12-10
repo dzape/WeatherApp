@@ -56,7 +56,6 @@ export class CityComponent implements AfterViewInit {
               this.dataSource = new MatTableDataSource<iWeather>(this.sortedData);
               this.dataSource.sort = this.sort;
               this.dataSource.paginator = this.paginator;
-
             })
           }
         }
@@ -75,8 +74,6 @@ export class CityComponent implements AfterViewInit {
       }
     }
   }
-
-  //Parse dataSource
 
   sortData(sort: Sort) {
     const data = this.sortedData.slice();
@@ -98,7 +95,6 @@ export class CityComponent implements AfterViewInit {
           return 0;
       }
     });
-
   }
 }
 

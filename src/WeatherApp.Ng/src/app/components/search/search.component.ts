@@ -10,6 +10,7 @@ import { OpenweatherapiService } from '../../services/api/openweatherapi/openwea
 
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search',
@@ -28,7 +29,10 @@ export class SearchComponent implements OnInit {
   constructor( private userService: UserService, 
                private weatherApiService: OpenweatherapiService, 
                private cityService: CityService, 
-               private authService: AuthService) { }
+               private authService: AuthService,
+               ngbAlertConfig: NgbAlertConfig
+               ) { ngbAlertConfig.animation = false; }
+             
 
   ngOnInit() {
     this.searchInput.valueChanges
@@ -53,26 +57,46 @@ export class SearchComponent implements OnInit {
       )
   }
 
+  cityExist: boolean = false;
   username: any = localStorage.getItem("username");
+
   addFavouriteCity() {
     if(this.weather['name'] != null){
       this.userService.getUserIdByName(this.username.toString()).subscribe(id => {
+        
         const credentials = {
           'name': this.weather['name'], // Name of the city
           'userid': Number(id)          // Id from the user
         }
+
         this.cityService.postFavCity(credentials).subscribe(data => {
           if (data === null) {
-            alert("City is allready added to your fav.")
+            this.cityExist = true;
+            this.openPopup();
           }
-          window.location.reload();
+          else{
+            window.location.reload();
+          }
         });
         console.log(" City added to favourite cities :) ");
+        
       })
     }
   }
 
   userAuthorized() {
     return this.authService.isUserAuthenticated();
+  }
+
+  displayStyle = "none";
+  
+  openPopup() {
+    this.displayStyle = "block";
+  }
+  
+  closePopup() {
+    this.displayStyle = "none";
+    this.cityExist = false;
+    window.location.reload();
   }
 }

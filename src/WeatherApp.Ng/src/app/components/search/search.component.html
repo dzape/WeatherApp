@@ -1,15 +1,18 @@
-<section >  <!--class="vh-100"  -->
+
   <div class="container py-5 h-100" style="text-align: center; ">
    
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-4">
 
         <div class="input-group rounded mb-3">
+       
           <input id="searchInput" class="form-control rounded" type="text" placeholder="Enter city" [formControl]="searchInput" required minlength="3" aria-label="Search"
           aria-describedby="search-addon" />
+       
           <div *ngIf="userAuthorized()">
-            <td  scope="row"><button class="btn btn-primary" (click)="addFavouriteCity()"><fa-icon [icon]="faStar" ></fa-icon></button></td>            
+            <td scope="row"><button class="btn btn-primary" (click)="addFavouriteCity()"><fa-icon [icon]="faStar" ></fa-icon></button></td>                       
           </div>
+       
         </div>
 
         <div class="card shadow-0 border">
@@ -29,4 +32,22 @@
       </div>
     </div>
   </div>
-</section>
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div *ngIf="cityExist" class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Weather Cotrol</h4>
+        </div>
+        <div class="alert alert-danger">
+          <p>City is allready available in your favourite list.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger"
+              (click)="closePopup()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

@@ -30,6 +30,7 @@
               <a class="nav-link text-dark" [routerLink]="['/register']">Register</a>
             </li>
         </div>
+        
         <div *ngIf="isUsrAuth()" class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/search']">Search</a>
