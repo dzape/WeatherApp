@@ -54,6 +54,7 @@ export class CityComponent implements AfterViewInit {
               }
               this.sortedData.push(data);
               this.dataSource = new MatTableDataSource<iWeather>(this.sortedData);
+              this.dataSource.sort = this.sort;
               this.dataSource.paginator = this.paginator;
 
             })
@@ -89,7 +90,7 @@ export class CityComponent implements AfterViewInit {
       switch (sort.active) {
         case 'name':
           return compare(a.name, b.name, isAsc);
-        case 'temp':
+        case 'temperature':
           return compare(a.temperature, b.temperature, isAsc);
         case 'humidity':
           return compare(a.humidity, b.humidity, isAsc);
@@ -97,7 +98,7 @@ export class CityComponent implements AfterViewInit {
           return 0;
       }
     });
-    this.dataSource = this.sortedData;
+
   }
 }
 

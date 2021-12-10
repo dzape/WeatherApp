@@ -61,14 +61,13 @@ export class SearchComponent implements OnInit {
         }
         this.cityService.postFavCity(credentials).subscribe(data => {
           if (data === null) {
-            alert("City is allready added to your fav list.");
+            alert("City is allready added to your fav.")
           }
           window.location.reload();
         });
         console.log(" City added to favourite cities :) ");
       })
     }
-    //bootsrap modal :)
   }
 
   userAuthorized() {

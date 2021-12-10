@@ -34,6 +34,7 @@ export class RegisterComponent {
       Validators.required,
       Validators.minLength(6)
     ])
+    // TODO : Confirm Password 
   });
 
   addAccount() {
