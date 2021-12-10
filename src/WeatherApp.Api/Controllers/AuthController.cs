@@ -21,7 +21,6 @@ namespace WeatherApp.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        //private readonly UserDbContext _context;
         private readonly UserDbContext _context;
         public AuthController(  UserDbContext context)
         {

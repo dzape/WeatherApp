@@ -5,12 +5,6 @@ import { City } from '../../data/models/city.model';
 
 import { OpenweatherapiService } from '../api/openweatherapi/openweatherapi.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
-
 @Injectable({
   providedIn: 'root'
 })
