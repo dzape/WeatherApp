@@ -1,5 +1,4 @@
 import { FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { iWeather } from '../../data/models/iweather';
@@ -26,7 +25,10 @@ export class SearchComponent implements OnInit {
 
   faStar = faStar;
 
-  constructor( private userService: UserService, private weatherApiService: OpenweatherapiService, private cityService: CityService, private authService: AuthService) { }
+  constructor( private userService: UserService, 
+               private weatherApiService: OpenweatherapiService, 
+               private cityService: CityService, 
+               private authService: AuthService) { }
 
   ngOnInit() {
     this.searchInput.valueChanges

@@ -8,4 +8,5 @@ table {
 
 div {
   padding-bottom: 50px;
+  overflow-x: auto;
 }

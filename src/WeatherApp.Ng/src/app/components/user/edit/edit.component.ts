@@ -10,16 +10,12 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './edit.component.html',
 })
 export class EditComponent {
+  
   acc = new Account();
-
   username: any = localStorage.getItem("username");
-  new_username!: string;
   userAvailable: boolean = false;
 
   constructor ( private userService: UserService, private router: Router, private auth: AuthService) {}
-
-  dsa!: FormGroup;
-  closeResult!: string;
 
   editForm = new FormGroup({
     username: new FormControl(this.acc.username,[
