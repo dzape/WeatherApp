@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Account } from 'src/app/data/models/account.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -11,8 +13,10 @@ export class EditComponent {
   acc = new Account();
 
   username: any = localStorage.getItem("username");
- 
-  constructor ( private userService: UserService) {}
+  new_username!: string;
+  userAvailable: boolean = false;
+
+  constructor ( private userService: UserService, private router: Router, private auth: AuthService) {}
 
   dsa!: FormGroup;
   closeResult!: string;
@@ -29,8 +33,9 @@ export class EditComponent {
   });
   
   updateProfile() {
-    this.userService.updateUser(this.acc);
-    this.logOut();
+      this.userService.updateUser(this.acc);
+      this.userAvailable = true;
+      this.logOut();
   }
 
   deleteUser(){
@@ -38,6 +43,17 @@ export class EditComponent {
   }
 
   logOut() {
-    localStorage.removeItem("token");
+    this.auth.logOut();
+  }
+
+  displayStyle = "none";
+  
+  openPopup() {
+    this.displayStyle = "block";
+  }
+  
+  closePopup() {
+    this.displayStyle = "none";
+    this.router.navigate(["/login"]);
   }
 }

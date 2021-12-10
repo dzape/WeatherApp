@@ -72,7 +72,7 @@ namespace Weather.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User User)
         {
-            if (id != User.Id)
+            if (_userservice.DoesUserExist(User.Username))
             {
                 return BadRequest();
             }

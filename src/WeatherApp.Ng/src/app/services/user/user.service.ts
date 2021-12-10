@@ -24,22 +24,21 @@ export class UserService {
     })
   }
 
-
   username: any = localStorage.getItem("username");
   updateUser(acc: Account){
-    this.getUserIdByName(this.username).subscribe((id) => {
+    this.getUserIdByName(this.username).subscribe((myId) => {
       const body = {
-        'id': id,
+        'id': myId,
         'username': acc.username,
         'password': acc.password
       }
-      this.http.put(this.api.getApiUrl() + "users/" + id, body ).subscribe(Response => {
+      this.http.put(this.api.getApiUrl() + "users/" + myId, body ).subscribe(Response => {
         if (Response === null) {
           console.log(" UPDATE FAILED ");
         }
       })
-    })
-  }
+    }
+  )}
 
   deleteUser(username: string){
     this.http.delete(this.api.getApiUrl() + this.getUserIdByName(username));

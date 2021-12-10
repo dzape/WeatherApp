@@ -7,7 +7,48 @@
 
       <input [(ngModel)]="acc.password" class="form-control" type="password" formControlName="password" placeholder="Password (minimum 5 characterrs!)"><br />   
 
-      <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!editForm.valid">Submit</button>
+      <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!editForm.valid">Submit</button> -->
+      <button
+      type="submit"
+      class="form-control btn btn-lg btn-primary btn-block"
+      (click)="openPopup()"
+      [disabled]="!editForm.valid">Save
+      </button>
+        <div
+        class="modal"
+        tabindex="-1"
+        role="dialog"
+        [ngStyle]="{'display':displayStyle}">
+          <div *ngIf="userAvailable" class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Account control</h4>
+              </div>
+            <div class="alert alert-success">
+              <p>Username changed successfully.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger"
+                  (click)="closePopup()">Close</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!userAvailable" class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Username Control</h4>
+            </div>
+            <div class="alert alert-danger">
+              <p>Username is not available.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger"
+                  (click)="closePopup()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </form>
 </body>

@@ -21,5 +21,6 @@ export class AuthService {
 
   public logOut = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("username")
   }
 }

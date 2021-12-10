@@ -79,8 +79,11 @@ export class RegisterComponent {
   openPopup() {
     this.displayStyle = "block";
   }
+  
   closePopup() {
     this.displayStyle = "none";
-    this.router.navigate(["/login"]);
+    if(this.userAvailable){
+      this.router.navigate(["/login"]);
+    }
   }
 }
