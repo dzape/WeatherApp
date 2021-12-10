@@ -13,9 +13,14 @@
                     Username must have more than 4 characterrs.
                 </div>
           
-                <input [(ngModel)]="acc.password" class="form-control" type="password" formControlName="password" placeholder="Password (minimum 5 characterrs!)"><br />   
+                <input [(ngModel)]="acc.password" class="form-control" type="password" formControlName="password" placeholder="Password (minimum 6 characterrs!)"><br />   
                 <div *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['password'].touched)" class="alert alert-warning">
                   Password must have more than 6 characterrs.
+                </div>
+          
+                <input class="form-control" type="password" formControlName="confirmPassword" placeholder="Password (minimum 6 characterrs!)"><br />   
+                <div *ngIf="userForm.controls['confirmPassword'].hasError('matching') && (userForm.controls['confirmPassword'].dirty || userForm.controls['confirmPassword'].touched) " class="alert alert-warning">
+                  Password doesnt match !
                 </div>
           
                 <button

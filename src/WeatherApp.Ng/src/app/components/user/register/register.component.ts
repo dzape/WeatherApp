@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Account } from '../../../data/models/account.model';
@@ -32,9 +32,15 @@ export class RegisterComponent {
     ]),
     password: new FormControl(this.acc.password,[
       Validators.required,
-      Validators.minLength(6)
+      Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+      Validators.minLength(6),
+      Validators.maxLength(25),
+      this.matchValidator('confirmPassword', true)
+    ]),
+    confirmPassword: new FormControl('',[
+      Validators.required,
+      this.matchValidator('password')
     ])
-    // TODO : Confirm Password 
   });
 
   addAccount() {
@@ -44,6 +50,28 @@ export class RegisterComponent {
           this.userAvailable = true;
         }
       })
+  }
+
+  matchValidator(
+    matchTo: string, 
+    reverse?: boolean
+  ): ValidatorFn {
+    return (control: AbstractControl): 
+    ValidationErrors | null => {
+      if (control.parent && reverse) {
+        const c = (control.parent?.controls as any)[matchTo] as AbstractControl;
+        if (c) {
+          c.updateValueAndValidity();
+        }
+        return null;
+      }
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value === 
+        (control.parent?.controls as any)[matchTo].value
+        ? null
+        : { matching: true };
+    };
   }
 
   displayStyle = "none";
