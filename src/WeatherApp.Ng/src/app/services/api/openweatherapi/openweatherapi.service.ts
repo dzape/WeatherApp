@@ -12,8 +12,18 @@ export class OpenweatherapiService {
 
   constructor(private http: HttpClient) { }
 
-  getWeather(city: string): Observable<any> {
+  getWeatherCity(city: string, contry?: string): Observable<any> {
     return this.http.get(this.baseWeatherURL + city + this.urlSuffix)
+    .pipe(
+      catchError(error => {
+        console.log('City not found');
+        return of(0);     
+      })
+    )
+  }
+
+  getWeatherCityAndCountry(city: string, contry: string): Observable<any> {
+    return this.http.get(this.baseWeatherURL + city + ',' + contry + this.urlSuffix)
     .pipe(
       catchError(error => {
         console.log('City not found');

@@ -5,10 +5,10 @@
       <div class="col-md-8 col-lg-6 col-xl-4">
 
         <div class="input-group rounded mb-3">
-       
-          <input id="searchInput" class="form-control rounded" type="text" placeholder="Enter city" [formControl]="searchInput" required minlength="3" aria-label="Search"
+
+          <input id="searchInputCity" class="form-control" type="text" placeholder="Enter City, Country initials" [formControl]="searchInputCity" required minlength="3" aria-label="Search"
           aria-describedby="search-addon" />
-       
+
           <div *ngIf="userAuthorized()">
             <td scope="row"><button class="btn btn-primary" (click)="addFavouriteCity()"><fa-icon [icon]="faStar" ></fa-icon></button></td>                       
           </div>

@@ -32,7 +32,6 @@ export class RegisterComponent {
     ]),
     password: new FormControl(this.acc.password,[
       Validators.required,
-      Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
       Validators.minLength(6),
       Validators.maxLength(25),
       this.matchValidator('confirmPassword', true)

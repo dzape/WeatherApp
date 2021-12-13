@@ -76,23 +76,25 @@ namespace Weather.Api.Controllers
             {
                 return BadRequest();
             }
-
-            User.Password = BC.HashPassword(User.Password);
-            _context.Entry(User).State = EntityState.Modified;
-
-            try
+            
+            if (Authenticate(User))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
+                _context.Entry(User).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!UserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 
@@ -133,6 +135,18 @@ namespace Weather.Api.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        public bool Authenticate(User account)
+        {
+
+            var acc = _context.Users.SingleOrDefault(x => x.Id == account.Id);
+
+            if (account == null || !BC.Verify(account.Password, acc.Password))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

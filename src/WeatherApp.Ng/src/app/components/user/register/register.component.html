@@ -13,32 +13,33 @@
                     Username must have more than 4 characterrs.
                 </div>
           
-                <input [(ngModel)]="acc.password" class="form-control" type="password" formControlName="password" placeholder="Password (minimum 6 characterrs!)"><br />   
+                <input [(ngModel)]="acc.password" onpaste="return false;" class="form-control" id="password" type="password" formControlName="password" placeholder="Password (minimum 6 characterrs!)"><br />   
                 <div *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['password'].touched)" class="alert alert-warning">
                   Password must have more than 6 characterrs.
                 </div>
           
-                <input class="form-control" type="password" formControlName="confirmPassword" placeholder="Password (minimum 6 characterrs!)"><br />   
+                <input class="form-control" onpaste="return false;"  type="password" formControlName="confirmPassword" placeholder="Password (minimum 6 characterrs!)"><br />   
                 <div *ngIf="userForm.controls['confirmPassword'].hasError('matching') && (userForm.controls['confirmPassword'].dirty || userForm.controls['confirmPassword'].touched) " class="alert alert-warning">
                   Password doesnt match !
                 </div>
-          
+
                 <button
                   type="submit"
                   class="form-control btn btn-lg btn-primary btn-block"
                   (click)="openPopup()"
                   [disabled]="!userForm.valid">Register
-                  </button>
-                    <div
-                    class="modal"
-                    tabindex="-1"
-                    role="dialog"
-                    [ngStyle]="{'display':displayStyle}">
-                      <div *ngIf="userAvailable" class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title">Account control</h4>
-                          </div>
+                </button>
+                    
+                <div
+                  class="modal"
+                  tabindex="-1"
+                  role="dialog"
+                  [ngStyle]="{'display':displayStyle}">
+                    <div *ngIf="userAvailable" class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Account control</h4>
+                        </div>
                         <div class="alert alert-success">
                           <p>You have registered successfully :)</p>
                         </div>
@@ -48,6 +49,7 @@
                         </div>
                       </div>
                     </div>
+
                     <div *ngIf="!userAvailable" class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -62,16 +64,20 @@
                         </div>
                       </div>
                     </div>
+
                   </div>
-          
               </div>
             </form>
-
           </div>
         </div>
   </div>
 </section>
   
-
+<script>
+    window.onload = () => {
+  const myInput = document.getElementById('password');
+  myInput.onpaste = e => e.preventDefault();
+  }
+</script>
 
 

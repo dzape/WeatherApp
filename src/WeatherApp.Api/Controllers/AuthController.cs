@@ -45,7 +45,7 @@ namespace WeatherApp.Api.Controllers
                 var tokenOptions = new JwtSecurityToken(
                     issuer: "http://localhost:44316/",
                     audience: "http://localhost:44316",
-                    claims: new List<Claim>(),
+                    claims: new List<Claim>(), /// TODO REED ....
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signingCridentials);
 

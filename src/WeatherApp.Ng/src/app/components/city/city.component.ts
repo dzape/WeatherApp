@@ -7,6 +7,8 @@ import { UserService } from '../../services/user/user.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-city',
@@ -24,8 +26,10 @@ export class CityComponent implements AfterViewInit {
 
   constructor(private userService: UserService, 
               private weatherApiService: OpenweatherapiService, 
-              private cityService: CityService) 
-              { }  
+              private cityService: CityService,
+              ngbAlertConfig: NgbAlertConfig
+              ) { ngbAlertConfig.animation = false; }
+
 
   displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
 
@@ -45,7 +49,7 @@ export class CityComponent implements AfterViewInit {
         this.cities = res;
         if (this.cities.length > 0) {
           for (var i = 0; i <= this.cities.length - 1; i++) {
-            this.weatherApiService.getWeather(this.cities[i].name).subscribe((cityWeatherData) => {
+            this.weatherApiService.getWeatherCity(this.cities[i].name).subscribe((cityWeatherData) => {
               let data: iWeather = {
                 name: cityWeatherData.name,
                 temperature: cityWeatherData['main'].temp,
@@ -63,9 +67,13 @@ export class CityComponent implements AfterViewInit {
     });
   }
 
-  onDelete(city: string) {
+  city: string = "";
+
+  onDelete(city?: string) {
+    city = this.city; 
     for (var i = 0; i < this.cities.length; i++) {
       if (city === this.cities[i].name) {
+        console.log(city, "      " ,this.cities[i].name);
         let id = Number(this.cities[i].id);
         this.cityService.deleteFavCity(id).subscribe((city) => {
           console.log("You have deleted : ", city);
@@ -73,6 +81,8 @@ export class CityComponent implements AfterViewInit {
         })
       }
     }
+
+    console.log(city);
   }
 
   sortData(sort: Sort) {
@@ -95,6 +105,17 @@ export class CityComponent implements AfterViewInit {
           return 0;
       }
     });
+  }
+
+  displayStyle = "none";
+  
+  openPopup(city: string) {
+    this.displayStyle = "block";
+    this.city = city;
+  }
+  
+  closePopup() {
+    this.displayStyle = "none";
   }
 }
 

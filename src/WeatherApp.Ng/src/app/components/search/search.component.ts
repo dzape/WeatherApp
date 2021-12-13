@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
 
   public weatherData: iWeather[] = [];
 
-  searchInput = new FormControl();
+  searchInputCity = new FormControl();
   weather: any = {};
 
   faStar = faStar;
@@ -35,9 +35,9 @@ export class SearchComponent implements OnInit {
              
 
   ngOnInit() {
-    this.searchInput.valueChanges
+      this.searchInputCity.valueChanges
       .pipe(debounceTime(300),
-        switchMap(city =>  this.weatherApiService.getWeather(city)))
+        switchMap(city =>  this.weatherApiService.getWeatherCity(city)))
       .subscribe(
         res => {
           this.weather['name'] = res.name;
@@ -59,6 +59,10 @@ export class SearchComponent implements OnInit {
 
   cityExist: boolean = false;
   username: any = localStorage.getItem("username");
+
+  getWeather() {
+
+  }
 
   addFavouriteCity() {
     if(this.weather['name'] != null){
