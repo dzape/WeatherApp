@@ -13,7 +13,7 @@ export class UserService {
   id: any;
 
   getUserIdByName(username: string) {
-    return this.http.get(this.api.getApiUrl() + `users/getid/?username=${username}`);
+    return this.http.get(this.api.getApiUrl() + `users/getid/?username=${username}` , );
   }
    
   getUsersByName(usr?: string): void {

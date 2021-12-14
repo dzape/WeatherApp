@@ -22,7 +22,8 @@ namespace WeatherApp.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserDbContext _context;
-        public AuthController(  UserDbContext context)
+
+        public AuthController(UserDbContext context)
         {
             this._context = context;
         }
@@ -32,28 +33,42 @@ namespace WeatherApp.Api.Controllers
             => new string[] { "Hello", "Name" };
 
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody]User account)
+        public IActionResult Login([FromBody] User account)
         {
             if (account == null)
                 return BadRequest("Invalid client request");
 
-            if (Authenticate(account)) 
+            if (Authenticate(account))
             {
-                var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                var signingCridentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
 
-                var tokenOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:44316/",
-                    audience: "http://localhost:44316",
-                    claims: new List<Claim>(), /// TODO REED ....
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signingCridentials);
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new { Token = tokenString });
+                var token = GenerateToken(account);
+                return Ok(new { Token = token });
             }
 
             return Unauthorized();
+        }
+
+        private string GenerateToken(User user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+
+            var key = Encoding.ASCII.GetBytes("superSecretKey@345");
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                }),
+                Expires = DateTime.UtcNow.AddHours(6),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+            var jwtToken = jwtTokenHandler.WriteToken(token);
+
+            return jwtToken;
         }
 
         public bool Authenticate(User account)

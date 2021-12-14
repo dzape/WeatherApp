@@ -3,6 +3,8 @@ namespace CityApp.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using WeatherApp.Api.Data;
@@ -11,6 +13,7 @@ namespace CityApp.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CityController : ControllerBase
     {
         private readonly UserDbContext _context;

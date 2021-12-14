@@ -10,9 +10,12 @@ namespace Weather.Api.Controllers
     using System.Collections.Generic;
     using BC = BCrypt.Net.BCrypt;
     using Microsoft.AspNetCore.Cors;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : ControllerBase
     {
         private readonly UserDbContext _context;
@@ -76,14 +79,15 @@ namespace Weather.Api.Controllers
             {
                 return BadRequest();
             }
-            
+
+            _context.Entry(User).State = EntityState.Modified;
+
             if (Authenticate(User))
             {
-                _context.Entry(User).State = EntityState.Modified;
-
                 try
                 {
                     await _context.SaveChangesAsync();
+                    return Ok();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -98,7 +102,7 @@ namespace Weather.Api.Controllers
                 }
             }
 
-            return NoContent();
+            return Unauthorized();
         }
 
         // POST: api/Users
