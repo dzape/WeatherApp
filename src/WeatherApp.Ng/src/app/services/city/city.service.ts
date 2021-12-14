@@ -17,8 +17,11 @@ export class CityService {
 
   constructor(private http: HttpClient,  private owapi: OpenweatherapiService) { }
 
+  token = localStorage.getItem('token');
+  header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
+
   getFavCityes(accountId: any){
-    return this.http.get(this.weatherApiUrl + accountId);
+    return this.http.get(this.weatherApiUrl + accountId , { headers : this.header });
   }
 
   data: any;

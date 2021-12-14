@@ -16,6 +16,6 @@ export class RegisterService {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(acc);
     console.log(body)
-    return this.http.post(this.api.getApiUrl() + 'users', body, { 'headers': headers })
+    return this.http.post(this.api.getApiUrl() + 'auth/register', body, { 'headers': headers })
   }
 }

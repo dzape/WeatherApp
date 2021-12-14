@@ -33,7 +33,7 @@ namespace WeatherApp.Api
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                        .AddJwtBearer(options =>
+            .AddJwtBearer(options =>
             {
                 string SecretKey = "superSecretKey@345";
 
@@ -57,9 +57,7 @@ namespace WeatherApp.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-
             services.AddControllers();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

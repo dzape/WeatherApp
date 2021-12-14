@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
 using Weather.Api.Data.Repository;
+using WeatherApp.Api.Services;
 
 namespace WeatherApp.Api.Controllers
 {
@@ -22,10 +23,11 @@ namespace WeatherApp.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserDbContext _context;
-
-        public AuthController(UserDbContext context)
+        private readonly IUserService _userService;
+        public AuthController(UserDbContext context, IUserService userService)
         {
             this._context = context;
+            this._userService = userService;
         }
 
         [HttpGet, Route("get")]
@@ -47,6 +49,23 @@ namespace WeatherApp.Api.Controllers
 
             return Unauthorized();
         }
+
+        // POST: api/Users
+        [HttpPost, Route("register")]
+        [AllowAnonymous]
+        public async Task<ActionResult<User>> PostUser(User User)
+        {
+            if (!_userService.DoesUserExist(User.Username))
+            {
+                User.Password = BC.HashPassword(User.Password);
+                _context.Users.Add(User);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetUser", new { id = User.Id }, User);
+            }
+            return StatusCode(201);
+        }
+
 
         private string GenerateToken(User user)
         {

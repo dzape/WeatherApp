@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Account } from 'src/app/data/models/account.model';
 
@@ -12,8 +12,11 @@ export class UserService {
   constructor(private http: HttpClient,private api: ApiService) { }
   id: any;
 
+  token = localStorage.getItem('token');
+  header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
+
   getUserIdByName(username: string) {
-    return this.http.get(this.api.getApiUrl() + `users/getid/?username=${username}` , );
+    return this.http.get(this.api.getApiUrl() + `users/getid/?username=${username}`);
   }
    
   getUsersByName(usr?: string): void {
@@ -32,7 +35,7 @@ export class UserService {
         'username': acc.username,
         'password': acc.password
       }
-      this.http.put(this.api.getApiUrl() + "users/" + myId, body ).subscribe(Response => {
+      this.http.put(this.api.getApiUrl() + "users/" + myId, body, { headers : this.header }).subscribe(Response => {
         if (Response === null) {
           console.log(" UPDATE FAILED ");
         }

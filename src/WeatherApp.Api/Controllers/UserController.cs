@@ -105,20 +105,21 @@ namespace Weather.Api.Controllers
             return Unauthorized();
         }
 
-        // POST: api/Users
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User User)
-        {
-            if (!_userservice.DoesUserExist(User.Username))
-            {
-                User.Password = BC.HashPassword(User.Password);
-                _context.Users.Add(User);
-                await _context.SaveChangesAsync();
+        //// POST: api/Users
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<User>> PostUser(User User)
+        //{
+        //    if (!_userservice.DoesUserExist(User.Username))
+        //    {
+        //        User.Password = BC.HashPassword(User.Password);
+        //        _context.Users.Add(User);
+        //        await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetUser", new { id = User.Id }, User);
-            }
-            return StatusCode(201);
-        }
+        //        return CreatedAtAction("GetUser", new { id = User.Id }, User);
+        //    }
+        //    return StatusCode(201);
+        //}
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
