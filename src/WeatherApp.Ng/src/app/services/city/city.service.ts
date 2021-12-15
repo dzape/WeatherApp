@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { City } from '../../data/models/city.model';
 
@@ -28,16 +30,12 @@ export class CityService {
   id!: number;
   citylist: any;
 
-  getObseravbeCity() {
-    if (this.cities.length > 0) {
-      for (var i = 0; i <= this.cities.length - 1; i++) {
-        this.owapi.getWeatherCity(this.cities[i].cityName).subscribe((citydata) => {
-          this.citydata[i] = citydata
-          console.log(this.citydata);
-        });
-      }
-      return this.citydata;
-    }
+  getCityByName(name: string){
+    return this.http.get(this.weatherApiUrl + name , { headers: this.header });
+  }
+
+  getFavouriteCities(username: string): Observable<any>{
+    return this.http.get(this.weatherApiUrl + username, { headers: this.header});
   }
 
   postFavCity(cityData: any) {

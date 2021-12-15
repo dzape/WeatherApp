@@ -30,6 +30,9 @@ export class RegisterComponent {
       Validators.required,
       Validators.minLength(4)
     ]),
+    email: new FormControl(this.acc.email,[
+      Validators.email
+    ]),
     password: new FormControl(this.acc.password,[
       Validators.required,
       Validators.minLength(6),
@@ -42,12 +45,15 @@ export class RegisterComponent {
     ])
   });
 
+  message: string = "";
   addAccount() {
     this.registerService.registerNewAccount(this.acc)
       .subscribe(data => {
+        console.log(data);
         if (data != null) {
           this.userAvailable = true;
         }
+        this.message = data;
       })
   }
 

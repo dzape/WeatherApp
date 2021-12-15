@@ -1,20 +1,17 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using WeatherApp.Api.Data.Models;
-using WeatherApp.Api.Services;
-using Weather.Api.Data.Repository;
-using WeatherApp.Api.Data;
-
 namespace WeatherApp.Api
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.EntityFrameworkCore;
+    using WeatherApp.Api.Repository;
+    using WeatherApp.Api.Data;
+    using System.Text;
+
     public class Startup
     {
 
@@ -49,8 +46,8 @@ namespace WeatherApp.Api
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
 
             services.AddDbContext<UserDbContext>(options =>
             {

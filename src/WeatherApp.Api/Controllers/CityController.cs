@@ -9,7 +9,8 @@ namespace CityApp.Controllers
     using Microsoft.EntityFrameworkCore;
     using WeatherApp.Api.Data;
     using WeatherApp.Api.Data.Models;
-    using WeatherApp.Api.Services;
+    using WeatherApp.Api.Data.ViewModels;
+    using WeatherApp.Api.Repository;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -17,12 +18,12 @@ namespace CityApp.Controllers
     public class CityController : ControllerBase
     {
         private readonly UserDbContext _context;
-        private readonly ICityService _cityService;
+        private readonly ICityRepository _cityRepository;
 
-        public CityController(UserDbContext context, ICityService cityService)
+        public CityController(UserDbContext context, ICityRepository cityRepository)
         {
             _context = context;
-            _cityService = cityService;
+            _cityRepository = cityRepository;
         }
 
         // GET: api/City
@@ -33,19 +34,19 @@ namespace CityApp.Controllers
         }
 
         // GET: api/City/5
-        [HttpGet("{id}")]
-        public IEnumerable<City> GetCity(int id)
+        [HttpGet("{username}")]
+        public IEnumerable<City> GetCity(string username)
         {
             var query = from r in _context.Cities
-                        where r.UserId.Equals(id)
+                        where r.UserUsername.Equals(username)
                         orderby r.Id
                         select r;
 
             return query;
         }
 
+
         // PUT: api/City/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCity(int id, City City)
         {
@@ -78,18 +79,23 @@ namespace CityApp.Controllers
         // POST: api/City
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City City)
+        public async Task<ActionResult<City>> PostCity(CityViewModel City)
         {
             //if City has been added before >
-            if(!_cityService.DoesCityExist(City.Name, City.UserId))
+            if(!_cityRepository.DoesCityExist(City.Name, City.UserUsername))
             {
-                _context.Cities.Add(City);
+                var city = new City();
+
+                city.Name = City.Name;
+                city.UserUsername = City.UserUsername;
+
+                _context.Cities.Add(city);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetCity", new { id = City.Id }, City);
+                return Ok(city.Name);
             }
 
-            return StatusCode(202);
+            return null;
         }
 
         // DELETE: api/City/5

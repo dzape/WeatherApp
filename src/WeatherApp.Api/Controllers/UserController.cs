@@ -1,17 +1,16 @@
 namespace Weather.Api.Controllers
 {
     using WeatherApp.Api.Data.Models;
-    using WeatherApp.Api.Services;
     using Microsoft.AspNetCore.Mvc;
-    using WeatherApp.Api.Data;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using BC = BCrypt.Net.BCrypt;
-    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using WeatherApp.Api.Data;
+    using WeatherApp.Api.Repository;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -19,12 +18,12 @@ namespace Weather.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserDbContext _context;
-        private readonly IUserService _userservice;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(UserDbContext context, IUserService userService)
+        public UsersController(UserDbContext context, IUserRepository userRepository)
         {
             this._context = context;
-            this._userservice = userService;
+            this._userRepository = userRepository;
         }
 
         // GET: api/Users
@@ -51,9 +50,9 @@ namespace Weather.Api.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<User>> GetByUsername(string username)
         {
-            if (_userservice.DoesUserExist(username))
+            if (_userRepository.DoesUserExist(username))
             {
-                var User = _userservice.GetUserByUsername(username);
+                var User = _userRepository.GetUserByUsername(username);
                 return User;
             }
             return NotFound();
@@ -63,9 +62,9 @@ namespace Weather.Api.Controllers
         [Route("getid/")]
         public int GetIdByUsername(string username)
         {
-            if (_userservice.DoesUserExist(username))
+            if (_userRepository.DoesUserExist(username))
             {
-                var User = _userservice.GetUserByUsername(username);
+                var User = _userRepository.GetUserByUsername(username);
                 return User.Id;
             }
             return 0;
@@ -75,7 +74,7 @@ namespace Weather.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User User)
         {
-            if (_userservice.DoesUserExist(User.Username))
+            if (_userRepository.DoesUserExist(User.Username))
             {
                 return BadRequest();
             }
@@ -104,22 +103,6 @@ namespace Weather.Api.Controllers
 
             return Unauthorized();
         }
-
-        //// POST: api/Users
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<ActionResult<User>> PostUser(User User)
-        //{
-        //    if (!_userservice.DoesUserExist(User.Username))
-        //    {
-        //        User.Password = BC.HashPassword(User.Password);
-        //        _context.Users.Add(User);
-        //        await _context.SaveChangesAsync();
-
-        //        return CreatedAtAction("GetUser", new { id = User.Id }, User);
-        //    }
-        //    return StatusCode(201);
-        //}
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]

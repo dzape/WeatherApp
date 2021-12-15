@@ -22,8 +22,8 @@ export class OpenweatherapiService {
     )
   }
 
-  getWeatherCityAndCountry(city: string, contry: string): Observable<any> {
-    return this.http.get(this.baseWeatherURL + city + ',' + contry + this.urlSuffix)
+  getWeatherCityAndCountry(city: string): Observable<any> {
+    return this.http.get(this.baseWeatherURL + city + this.urlSuffix)
     .pipe(
       catchError(error => {
         console.log('City not found');

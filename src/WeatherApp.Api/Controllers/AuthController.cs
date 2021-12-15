@@ -13,8 +13,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
-using Weather.Api.Data.Repository;
-using WeatherApp.Api.Services;
+using WeatherApp.Api.Repository;
+using WeatherApp.Api.Data.ViewModels;
 
 namespace WeatherApp.Api.Controllers
 {
@@ -23,11 +23,11 @@ namespace WeatherApp.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserDbContext _context;
-        private readonly IUserService _userService;
-        public AuthController(UserDbContext context, IUserService userService)
+        private readonly IUserRepository _userRepository;
+        public AuthController(UserDbContext context, IUserRepository userRepository)
         {
             this._context = context;
-            this._userService = userService;
+            this._userRepository = userRepository;
         }
 
         [HttpGet, Route("get")]
@@ -35,14 +35,13 @@ namespace WeatherApp.Api.Controllers
             => new string[] { "Hello", "Name" };
 
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody] User account)
+        public IActionResult Login([FromBody] UserViewModel account)
         {
             if (account == null)
                 return BadRequest("Invalid client request");
 
             if (Authenticate(account))
             {
-
                 var token = GenerateToken(account);
                 return Ok(new { Token = token });
             }
@@ -53,21 +52,31 @@ namespace WeatherApp.Api.Controllers
         // POST: api/Users
         [HttpPost, Route("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<User>> PostUser(User User)
+        public async Task<ActionResult<User>> PostUser(UserViewModel User)
         {
-            if (!_userService.DoesUserExist(User.Username))
+            if (ModelState.IsValid)
             {
-                User.Password = BC.HashPassword(User.Password);
-                _context.Users.Add(User);
-                await _context.SaveChangesAsync();
+                if (!_userRepository.DoesUserExist(User.Username))
+                {
+                    var user = new User();
 
-                return CreatedAtAction("GetUser", new { id = User.Id }, User);
+                    user.Username = User.Username;
+                    user.Email = User.Email;
+
+                    user.Password = BC.HashPassword(User.Password);
+
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
+
+                    return StatusCode(200, "User created :)");
+                }
+                return StatusCode(201, "Username Exist.");
             }
-            return StatusCode(201);
+            return StatusCode(201, "Model is not valid.");
         }
 
 
-        private string GenerateToken(User user)
+        private string GenerateToken(UserViewModel user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -90,9 +99,8 @@ namespace WeatherApp.Api.Controllers
             return jwtToken;
         }
 
-        public bool Authenticate(User account)
+        public bool Authenticate(UserViewModel account)
         {
-
             var acc = _context.Users.SingleOrDefault(x => x.Username == account.Username);
 
             if (account == null || !BC.Verify(account.Password, acc.Password))

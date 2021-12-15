@@ -8,6 +8,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -43,9 +44,11 @@ export class CityComponent implements AfterViewInit {
   
   username: any = localStorage.getItem("username");
 
+  token = localStorage.getItem('token');
+  header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
+
   getFavouriteCity() {
-    this.userService.getUserIdByName(this.username).subscribe((response) => {
-      this.cityService.getFavCityes(response).subscribe((res) => {
+      this.cityService.getCityByName(this.username).subscribe((res) => {
         this.cities = res;
         if (this.cities.length > 0) {
           for (var i = 0; i <= this.cities.length - 1; i++) {
@@ -63,7 +66,6 @@ export class CityComponent implements AfterViewInit {
             })
           }
         }
-      });
     });
   }
 

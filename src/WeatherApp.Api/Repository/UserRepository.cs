@@ -4,20 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WeatherApp.Api.Services
+namespace WeatherApp.Api.Repository
 {
-    public interface IUserService
-    {
-        public User GetUserByUsername(string username);
-        public bool DoesUserExist(string username);
-        public IEnumerable<User> QueryUsersByName(string username);
-    }
-
-    public class UserService : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly UserDbContext _context;
 
-        public UserService(UserDbContext context)
+        public UserRepository(UserDbContext context)
         {
             _context = context;
         }

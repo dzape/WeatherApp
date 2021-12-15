@@ -8,6 +8,11 @@
               <div class="form-control" content="width=device-width, initial-scale=1">
                 <h2 class="form-signin-heading">Register</h2>
           
+                <input [(ngModel)]="acc.email" class="form-control" id="email" type="text" formControlName="email" placeholder="Email"><br />
+                <div *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)" class="alert alert-warning">
+                    Email must have more than 4 characterrs.
+                </div>
+          
                 <input [(ngModel)]="acc.username" class="form-control" id="username" type="text" formControlName="username" placeholder="Username (minimum 4 characterrs!)"><br />
                 <div *ngIf="userForm.controls['username'].invalid && (userForm.controls['username'].dirty || userForm.controls['username'].touched)" class="alert alert-warning">
                     Username must have more than 4 characterrs.
@@ -41,7 +46,7 @@
                           <h4 class="modal-title">Account control</h4>
                         </div>
                         <div class="alert alert-success">
-                          <p>You have registered successfully :)</p>
+                          <p>{{ message }}</p>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger"

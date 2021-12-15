@@ -57,34 +57,29 @@ export class SearchComponent implements OnInit {
       )
   }
 
+  cities: any;
   cityExist: boolean = false;
   username: any = localStorage.getItem("username");
-
-  getWeather() {
-
-  }
-
   addFavouriteCity() {
     if(this.weather['name'] != null){
-      this.userService.getUserIdByName(this.username.toString()).subscribe(id => {
-        
+       
         const credentials = {
-          'name': this.weather['name'], // Name of the city
-          'userid': Number(id)          // Id from the user
+          "name": this.weather['name'],
+          "userusername": this.username 
         }
+        this.cityService.postFavCity(credentials).subscribe(Response =>
+          console.log(Response));
 
-        this.cityService.postFavCity(credentials).subscribe(data => {
-          if (data === null) {
-            this.cityExist = true;
-            this.openPopup();
-          }
-          else{
-            window.location.reload();
+        this.cityService.getFavouriteCities(this.username).subscribe(citiesResponse => {
+          for (let index = 0; index < citiesResponse.length; index++) {
+            const element = citiesResponse[index];
+            if(element.name.toString() === this.weather.name.toString()){
+              this.cityExist = true;
+              this.openPopup();
+              break;
+            }
           }
         });
-        console.log(" City added to favourite cities :) ");
-        
-      })
     }
   }
 
@@ -101,6 +96,5 @@ export class SearchComponent implements OnInit {
   closePopup() {
     this.displayStyle = "none";
     this.cityExist = false;
-    window.location.reload();
   }
 }
