@@ -11,6 +11,7 @@ import { OpenweatherapiService } from '../../services/api/openweatherapi/openwea
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
+import { City } from 'src/app/data/models/city.model';
 
 @Component({
   selector: 'app-search',
@@ -60,34 +61,23 @@ export class SearchComponent implements OnInit {
   cities: any;
   cityExist: boolean = false;
   username: any = localStorage.getItem("username");
+
   addFavouriteCity() {
     if(this.weather['name'] != null){
-       
-      const credentials = {
-        "name": this.weather['name'],
-        "userusername": this.username 
-      }
-      
       this.cityService.getFavouriteCities(this.username).subscribe(citiesResponse => {
+        console.log(citiesResponse)
         for (let index = 0; index < citiesResponse.length; index++) {
           const element = citiesResponse[index];
-          if(element.name.toString() === this.weather.name.toString()){
+          if(element === this.weather.name.toString()){
             this.cityExist = true;
             this.openPopup();
             break;
           }
         }
-        if(!this.cityExist){
-          this.postRequest(credentials);
-        }
+        let data: City = { name: this.weather['name'], userusername: this.username};
+        this.cityService.postFavCity(data).subscribe(response => console.log(response));
       });
     }
-    
-  }
-
-  postRequest(credentials: any) {
-    this.cityService.postFavCity(credentials).subscribe(Response =>
-      console.log("GERERE : ",Response));     
   }
 
   userAuthorized() {

@@ -15,35 +15,21 @@ export class CityService {
   private weatherApiUrl = 'https://localhost:44322/api/city/';
   constructor(private http: HttpClient,  private owapi: OpenweatherapiService) { }
 
-  token = localStorage.getItem('token');
+  //Local storage
+  token = localStorage.getItem('jwt');
   header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token );
-
-  getCityByName(name: string){
-    return this.http.get(this.weatherApiUrl + name , { headers: this.header });
-  }
-
+  username = localStorage.getItem('username');
+  headers = { "Authorization": 'Bearer ' + this.token }
+  
   getFavouriteCities(username: string): Observable<any>{
     return this.http.get(this.weatherApiUrl + username, { headers: this.header});
   }
 
-  postFavCity(cityData: any) {
-    const headers = { 'content-type': 'application/json' ,
-                      "Authorization": 'Bearer ' + this.token }
-    const body = JSON.stringify(cityData);
-    console.log(body, "Here ");
-    return this.http.post(this.weatherApiUrl, body, { 'headers': headers });
+  postFavCity(cityData: City) {
+    return this.http.post(this.weatherApiUrl, cityData, { headers: this.headers });
   }
-
-  // deleteFavCity(cityData: any) {
-  //   const headers = { 'content-type': 'application/json' }
-  //   const body = JSON.stringify(cityData);
-  //   return this.http.delete(this.weatherApiUrl, body, { headers : this.header });
-  // }
-
   
-  username = localStorage.getItem('username');
   deleteFavCity(city: City) {
-
     const body = JSON.stringify(city);
 
     let options = {

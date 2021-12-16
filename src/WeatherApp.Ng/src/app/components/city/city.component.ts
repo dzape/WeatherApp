@@ -19,23 +19,26 @@ import { City } from 'src/app/data/models/city.model';
 })
 
 export class CityComponent implements AfterViewInit {
-
+  /* Models */
   public weatherData: Array<iWeather> = [];
-  sortedData: iWeather[] = [];
   public cityData: City[] = [];
 
+  /* Mat Table */
   dataSource: any;
-  faTrash = faTrash;
+  sortedData: iWeather[] = [];
 
-  constructor(private userService: UserService, 
-              private weatherApiService: OpenweatherapiService, 
+  /* Var */
+  cities: any = {};
+  city: string = "";
+
+  faTrash = faTrash;
+  
+  constructor(private weatherApiService: OpenweatherapiService, 
               private cityService: CityService,
               ngbAlertConfig: NgbAlertConfig
               ) { ngbAlertConfig.animation = false; }
 
   displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
-
-  cities: any = {};
 
   username: any = localStorage.getItem("username");
   token = localStorage.getItem('token');
@@ -49,7 +52,7 @@ export class CityComponent implements AfterViewInit {
   }
   
   getFavouriteCity() {
-      this.cityService.getCityByName(this.username).subscribe((res) => {
+      this.cityService.getFavouriteCities(this.username).subscribe((res) => {
         this.cities = res;
         if (this.cities.length > 0) {
           for (var i = 0; i <= this.cities.length - 1; i++) {
@@ -70,19 +73,13 @@ export class CityComponent implements AfterViewInit {
     });
   }
 
-  city: string = "";
-
   onDelete(city?: string) {
     city = this.city; 
     console.log(city);
     for (var i = 0; i < this.cities.length; i++) {
       if (city === this.cities[i]) {
         
-        console.log(city, " " ,this.cities[i]);
-        
         let data: City = { name: city, userusername: this.username}
-        
-        console.log("Hiiii: ",data);
 
         this.cityService.deleteFavCity(data).subscribe((city) => {
           console.log("You have deleted : ", city);
