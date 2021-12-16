@@ -1,14 +1,11 @@
 namespace CityApp.Controllers
 {
-    using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using WeatherApp.Api.Data;
     using WeatherApp.Api.Data.Models;
     using WeatherApp.Api.Data.ViewModels;
@@ -28,7 +25,6 @@ namespace CityApp.Controllers
             _cityRepository = cityRepository;
         }
 
-        // GET: api/City/test
         [HttpGet("{username}")]
         public IEnumerable GetFavouriteCity(string username)
         {
@@ -40,9 +36,7 @@ namespace CityApp.Controllers
             return query;
         }
 
-        // POST: api/City
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+         [HttpPost]
         public async Task<ActionResult<City>> PostCity(CityViewModel City)
         {
             if(!_cityRepository.DoesCityExist(City.Name, City.UserUsername))
@@ -61,7 +55,6 @@ namespace CityApp.Controllers
             return null;
         }
 
-        // DELETE: api/City/5
         [HttpDelete]
         public async Task<ActionResult<City>> DeleteCity(CityViewModel City)
         {

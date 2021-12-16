@@ -20,11 +20,21 @@ import { City } from 'src/app/data/models/city.model';
 
 export class SearchComponent implements OnInit {
 
-  public weatherData: iWeather[] = [];
-
+  /* Search Form */
   searchInputCity = new FormControl();
   weather: any = {};
 
+  /* Add city to favourite */
+  cities: any;
+  cityExist: boolean = false;
+
+  /* Username of logined user */
+  username: any = localStorage.getItem("username");
+
+  /* Bootstrap Modal */
+  displayStyle = "none";
+
+  /* Icons */
   faStar = faStar;
 
   constructor( private userService: UserService, 
@@ -58,10 +68,6 @@ export class SearchComponent implements OnInit {
       )
   }
 
-  cities: any;
-  cityExist: boolean = false;
-  username: any = localStorage.getItem("username");
-
   addFavouriteCity() {
     if(this.weather['name'] != null){
       this.cityService.getFavouriteCities(this.username).subscribe(citiesResponse => {
@@ -83,9 +89,7 @@ export class SearchComponent implements OnInit {
   userAuthorized() {
     return this.authService.isUserAuthenticated();
   }
-
-  displayStyle = "none";
-  
+ 
   openPopup() {
     this.displayStyle = "block";
   }

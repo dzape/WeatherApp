@@ -1,23 +1,21 @@
-using WeatherApp.Api.Data.Models;
-using WeatherApp.Api.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using BC = BCrypt.Net.BCrypt;
-using WeatherApp.Api.Repository;
-using WeatherApp.Api.Data.ViewModels;
-
 namespace WeatherApp.Api.Controllers
 {
+    using WeatherApp.Api.Data.Models;
+    using WeatherApp.Api.Data;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using BC = BCrypt.Net.BCrypt;
+    using WeatherApp.Api.Repository;
+    using WeatherApp.Api.Data.ViewModels;
+
     [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -49,10 +47,9 @@ namespace WeatherApp.Api.Controllers
             return Unauthorized();
         }
 
-        // POST: api/Users
         [HttpPost, Route("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<User>> PostUser(UserViewModel User)
+        public async Task<ActionResult<User>> CreateUser(UserViewModel User)
         {
             if (ModelState.IsValid)
             {

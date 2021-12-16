@@ -11,6 +11,7 @@ namespace Weather.Api.Controllers
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using WeatherApp.Api.Data;
     using WeatherApp.Api.Repository;
+    using WeatherApp.Api.Data.ViewModels;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -26,53 +27,14 @@ namespace Weather.Api.Controllers
             this._userRepository = userRepository;
         }
 
-        // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
-        //GET: api/Users/58
-         [HttpGet("{id:int}")]
-        public async Task<ActionResult<User>> GetUser(int id)
-        {
-            var User = await _context.Users.FindAsync(id);
-
-            if (User == null)
-            {
-                return NotFound();
-            }
-
-            return User;
-        }
-
-        [HttpGet("{username}")]
-        public async Task<ActionResult<User>> GetByUsername(string username)
-        {
-            if (_userRepository.DoesUserExist(username))
-            {
-                var User = _userRepository.GetUserByUsername(username);
-                return User;
-            }
-            return NotFound();
-        }
-
-        [HttpGet]
-        [Route("getid/")]
-        public int GetIdByUsername(string username)
-        {
-            if (_userRepository.DoesUserExist(username))
-            {
-                var User = _userRepository.GetUserByUsername(username);
-                return User.Id;
-            }
-            return 0;
-        }
-
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User User)
+        [HttpPut]
+        public async Task<IActionResult> PutUser(UserViewModel User)
         {
             if (_userRepository.DoesUserExist(User.Username))
             {
@@ -83,29 +45,14 @@ namespace Weather.Api.Controllers
 
             if (Authenticate(User))
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _context.SaveChangesAsync();
+                return Ok();
             }
 
             return Unauthorized();
         }
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var User = await _context.Users.FindAsync(id);
@@ -120,15 +67,10 @@ namespace Weather.Api.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
-
-        public bool Authenticate(User account)
+        public bool Authenticate(UserViewModel account)
         {
 
-            var acc = _context.Users.SingleOrDefault(x => x.Id == account.Id);
+            var acc = _context.Users.SingleOrDefault(x => x.Username == account.Username);
 
             if (account == null || !BC.Verify(account.Password, acc.Password))
             {

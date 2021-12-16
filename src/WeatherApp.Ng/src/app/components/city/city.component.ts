@@ -31,6 +31,10 @@ export class CityComponent implements AfterViewInit {
   cities: any = {};
   city: string = "";
 
+  /* Boostrap Modal */
+  displayStyle = "none";
+
+  /* Icons */
   faTrash = faTrash;
   
   constructor(private weatherApiService: OpenweatherapiService, 
@@ -78,17 +82,13 @@ export class CityComponent implements AfterViewInit {
     console.log(city);
     for (var i = 0; i < this.cities.length; i++) {
       if (city === this.cities[i]) {
-        
         let data: City = { name: city, userusername: this.username}
-
         this.cityService.deleteFavCity(data).subscribe((city) => {
           console.log("You have deleted : ", city);
           window.location.reload();
         })
       }
     }
-
-    console.log(city);
   }
 
   sortData(sort: Sort) {
@@ -97,7 +97,6 @@ export class CityComponent implements AfterViewInit {
       this.sortedData = data;
       return;
     }
-
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -112,8 +111,6 @@ export class CityComponent implements AfterViewInit {
       }
     });
   }
-
-  displayStyle = "none";
   
   openPopup(city: string) {
     this.displayStyle = "block";

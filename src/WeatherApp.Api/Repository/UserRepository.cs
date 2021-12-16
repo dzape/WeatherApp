@@ -3,6 +3,8 @@ using WeatherApp.Api.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeatherApp.Api.Data.ViewModels;
+using System.Collections;
 
 namespace WeatherApp.Api.Repository
 {
@@ -19,7 +21,7 @@ namespace WeatherApp.Api.Repository
         {
             try
             {
-                var match = GetUserByUsername(username).Username.ToString();
+                var match = GetUserByUsername(username);
                 if (match != null)
                     return true;
             }
@@ -31,18 +33,17 @@ namespace WeatherApp.Api.Repository
             return false;
         }
 
-        public User GetUserByUsername(string username)
+        public IEnumerable GetUserByUsername(string username)
         {
-            var query = QueryUsersByName(username).First();
+            var query = QueryUsersByName(username);
             return query;
         }
 
-        public IEnumerable<User> QueryUsersByName(string username)
+        public IEnumerable QueryUsersByName(string username)
         {
-            var query = from r in _context.Users
-                        where r.Username.StartsWith(username) || string.IsNullOrEmpty(username)
-                        orderby r.Username
-                        select r;
+            var query = _context.Users
+                .Where(x => x.Username == username|| x.Username != null)
+                .Select(x => new { x.Email, x.Username, x.Password});                                                                    
 
             return query;
         }

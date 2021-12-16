@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Account } from 'src/app/data/models/account.model';
 
 import { ApiService } from '../api/cityapi/api.service';
@@ -14,36 +15,18 @@ export class UserService {
 
   token = localStorage.getItem('token');
   header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
-
-  getUserIdByName(username: string) {
-    return this.http.get(this.api.getApiUrl() + `users/getid/?username=${username}`);
-  }
-   
-  getUsersByName(usr?: string): void {
-    this.http.get(this.api.getApiUrl() + usr).subscribe(Response => {
-      if (Response === null) {
-        console.log("Error");
-      }
-    })
-  }
-
+  
   username: any = localStorage.getItem("username");
   updateUser(acc: Account){
-    this.getUserIdByName(this.username).subscribe((myId) => {
-      const body = {
-        'id': myId,
-        'username': acc.username,
-        'password': acc.password
-      }
-      this.http.put(this.api.getApiUrl() + "users/" + myId, body, { headers : this.header }).subscribe(Response => {
+      this.http.put(this.api.getApiUrl() + "users/" , { headers : this.header }).subscribe(Response => {
         if (Response === null) {
           console.log(" UPDATE FAILED ");
         }
       })
     }
-  )}
+  
 
   deleteUser(username: string){
-    this.http.delete(this.api.getApiUrl() + this.getUserIdByName(username));
+    this.http.delete(this.api.getApiUrl());
   }
 }
