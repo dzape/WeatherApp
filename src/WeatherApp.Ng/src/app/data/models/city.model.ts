@@ -1,6 +1,4 @@
 export interface City {
-  id?: number;
   name: string;
-  userid: number;
+  userusername: number;
 }
-

@@ -16,11 +16,11 @@ namespace WeatherApp.Api.Repository
 
         public bool DoesCityExist(string city_name, string username)
         {
-            var cities = GetCitiesWithUserId(username);
+            var cities = GetCitiesWithUsername(username);
 
             foreach (var i in cities)
             {
-                if(i.Name == city_name)
+                if(i.Name == city_name && i.UserUsername == username)
                 {
                     return true;
                 }
@@ -29,7 +29,7 @@ namespace WeatherApp.Api.Repository
             return false;
         }
 
-        public IEnumerable<City> GetCitiesWithUserId(string username)
+        public IEnumerable<City> GetCitiesWithUsername(string username)
         {
             var query = from r in _context.Cities
                         where r.UserUsername.Equals(username)

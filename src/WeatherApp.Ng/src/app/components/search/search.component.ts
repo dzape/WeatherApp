@@ -63,24 +63,31 @@ export class SearchComponent implements OnInit {
   addFavouriteCity() {
     if(this.weather['name'] != null){
        
-        const credentials = {
-          "name": this.weather['name'],
-          "userusername": this.username 
-        }
-        this.cityService.postFavCity(credentials).subscribe(Response =>
-          console.log(Response));
-
-        this.cityService.getFavouriteCities(this.username).subscribe(citiesResponse => {
-          for (let index = 0; index < citiesResponse.length; index++) {
-            const element = citiesResponse[index];
-            if(element.name.toString() === this.weather.name.toString()){
-              this.cityExist = true;
-              this.openPopup();
-              break;
-            }
+      const credentials = {
+        "name": this.weather['name'],
+        "userusername": this.username 
+      }
+      
+      this.cityService.getFavouriteCities(this.username).subscribe(citiesResponse => {
+        for (let index = 0; index < citiesResponse.length; index++) {
+          const element = citiesResponse[index];
+          if(element.name.toString() === this.weather.name.toString()){
+            this.cityExist = true;
+            this.openPopup();
+            break;
           }
-        });
+        }
+        if(!this.cityExist){
+          this.postRequest(credentials);
+        }
+      });
     }
+    
+  }
+
+  postRequest(credentials: any) {
+    this.cityService.postFavCity(credentials).subscribe(Response =>
+      console.log("GERERE : ",Response));     
   }
 
   userAuthorized() {

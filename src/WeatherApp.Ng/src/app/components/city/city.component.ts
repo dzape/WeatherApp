@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import { HttpHeaders } from '@angular/common/http';
 
+import { City } from 'src/app/data/models/city.model';
 
 @Component({
   selector: 'app-city',
@@ -21,8 +22,9 @@ export class CityComponent implements AfterViewInit {
 
   public weatherData: Array<iWeather> = [];
   sortedData: iWeather[] = [];
-  dataSource: any;
+  public cityData: City[] = [];
 
+  dataSource: any;
   faTrash = faTrash;
 
   constructor(private userService: UserService, 
@@ -31,10 +33,14 @@ export class CityComponent implements AfterViewInit {
               ngbAlertConfig: NgbAlertConfig
               ) { ngbAlertConfig.animation = false; }
 
-
   displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
 
   cities: any = {};
+
+  username: any = localStorage.getItem("username");
+  token = localStorage.getItem('token');
+  header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -42,17 +48,12 @@ export class CityComponent implements AfterViewInit {
     this.getFavouriteCity();
   }
   
-  username: any = localStorage.getItem("username");
-
-  token = localStorage.getItem('token');
-  header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
-
   getFavouriteCity() {
       this.cityService.getCityByName(this.username).subscribe((res) => {
         this.cities = res;
         if (this.cities.length > 0) {
           for (var i = 0; i <= this.cities.length - 1; i++) {
-            this.weatherApiService.getWeatherCity(this.cities[i].name).subscribe((cityWeatherData) => {
+            this.weatherApiService.getWeatherCity(this.cities[i]).subscribe((cityWeatherData) => {
               let data: iWeather = {
                 name: cityWeatherData.name,
                 temperature: cityWeatherData['main'].temp,
@@ -73,11 +74,17 @@ export class CityComponent implements AfterViewInit {
 
   onDelete(city?: string) {
     city = this.city; 
+    console.log(city);
     for (var i = 0; i < this.cities.length; i++) {
-      if (city === this.cities[i].name) {
-        console.log(city, "      " ,this.cities[i].name);
-        let id = Number(this.cities[i].id);
-        this.cityService.deleteFavCity(id).subscribe((city) => {
+      if (city === this.cities[i]) {
+        
+        console.log(city, " " ,this.cities[i]);
+        
+        let data: City = { name: city, userusername: this.username}
+        
+        console.log("Hiiii: ",data);
+
+        this.cityService.deleteFavCity(data).subscribe((city) => {
           console.log("You have deleted : ", city);
           window.location.reload();
         })

@@ -1,5 +1,7 @@
 namespace CityApp.Controllers
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -26,54 +28,16 @@ namespace CityApp.Controllers
             _cityRepository = cityRepository;
         }
 
-        // GET: api/City
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCitys()
-        {
-            return await _context.Cities.ToListAsync();
-        }
-
-        // GET: api/City/5
+        // GET: api/City/test
         [HttpGet("{username}")]
-        public IEnumerable<City> GetCity(string username)
+        public IEnumerable GetFavouriteCity(string username)
         {
             var query = from r in _context.Cities
                         where r.UserUsername.Equals(username)
                         orderby r.Id
-                        select r;
+                        select r.Name;
 
             return query;
-        }
-
-
-        // PUT: api/City/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(int id, City City)
-        {
-            if (id != City.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(City).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/City
@@ -81,14 +45,13 @@ namespace CityApp.Controllers
         [HttpPost]
         public async Task<ActionResult<City>> PostCity(CityViewModel City)
         {
-            //if City has been added before >
             if(!_cityRepository.DoesCityExist(City.Name, City.UserUsername))
             {
                 var city = new City();
 
                 city.Name = City.Name;
                 city.UserUsername = City.UserUsername;
-
+                
                 _context.Cities.Add(city);
                 await _context.SaveChangesAsync();
 
@@ -99,24 +62,24 @@ namespace CityApp.Controllers
         }
 
         // DELETE: api/City/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCity(int id)
+        [HttpDelete]
+        public async Task<ActionResult<City>> DeleteCity(CityViewModel City)
         {
-            var City = await _context.Cities.FindAsync(id);
-            if (City == null)
+            var city = from r in _context.Cities
+                       where r.UserUsername.Equals(City.UserUsername) && r.Name.Equals(City.Name)
+                       select r.Id;
+
+            var delete = await _context.Cities.FindAsync(city.FirstOrDefault());
+
+            if (city == null)
             {
                 return NotFound();
             }
 
-            _context.Cities.Remove(City);
+            _context.Cities.Remove(delete);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool CityExists(int id)
-        {
-            return _context.Cities.Any(e => e.Id == id);
         }
     }
 }
