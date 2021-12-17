@@ -1,13 +1,12 @@
-﻿using WeatherApp.Api.Data.Models;
-using System.Collections.Generic;
-using System.Collections;
-
-namespace WeatherApp.Api.Repository
+﻿namespace WeatherApp.Api.Repository
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using WeatherApp.Api.Data.Models;
+    using WeatherApp.Api.Data.ViewModels;
     public interface IUserRepository
     {
-        public IEnumerable GetUserByUsername(string username);
-        public bool DoesUserExist(string username);
-        public IEnumerable QueryUsersByName(string username);
+        public bool UsernameMatch(UserViewModel user);
+        public IEnumerable<User> QueryUsersByName(UserViewModel user);
     }
 }

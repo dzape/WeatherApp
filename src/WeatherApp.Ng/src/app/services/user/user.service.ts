@@ -25,7 +25,6 @@ export class UserService {
       })
     }
   
-
   deleteUser(username: string){
     this.http.delete(this.api.getApiUrl());
   }

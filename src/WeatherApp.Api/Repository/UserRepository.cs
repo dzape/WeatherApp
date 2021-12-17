@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using WeatherApp.Api.Data.ViewModels;
 using System.Collections;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WeatherApp.Api.Repository
 {
@@ -19,31 +21,31 @@ namespace WeatherApp.Api.Repository
 
         public bool DoesUserExist(string username)
         {
-            try
-            {
-                var match = GetUserByUsername(username);
-                if (match != null)
-                    return true;
-            }
-            catch (InvalidOperationException)
-            {
-                return false;
-                throw new InvalidOperationException("User exist");
-            }
             return false;
         }
 
-        public IEnumerable GetUserByUsername(string username)
+        public bool UsernameMatch(UserViewModel user)
         {
-            var query = QueryUsersByName(username);
-            return query;
+            try
+            {
+                var match = QueryUsersByName(user);
+                if (match.Count() != 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (InvalidCastException)
+            {
+                return false;
+            }
         }
 
-        public IEnumerable QueryUsersByName(string username)
+        public IEnumerable<User> QueryUsersByName(UserViewModel user)
         {
-            var query = _context.Users
-                .Where(x => x.Username == username|| x.Username != null)
-                .Select(x => new { x.Email, x.Username, x.Password});                                                                    
+            var query = from q in _context.Users
+                        where q.Username == user.Username
+                        select q;
 
             return query;
         }

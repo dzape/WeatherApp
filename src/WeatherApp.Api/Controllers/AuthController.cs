@@ -53,7 +53,7 @@ namespace WeatherApp.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!_userRepository.DoesUserExist(User.Username))
+                if (!_userRepository.UsernameMatch(User))
                 {
                     var user = new User();
 

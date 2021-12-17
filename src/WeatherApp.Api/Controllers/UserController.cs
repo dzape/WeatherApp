@@ -33,10 +33,15 @@ namespace Weather.Api.Controllers
             return await _context.Users.ToListAsync();
         }
 
+        /// <summary>
+        /// Update User
+        /// </summary>
+        /// <param name="PutUser"></param>
+        /// <returns>Ok</returns>
         [HttpPut]
         public async Task<IActionResult> PutUser(UserViewModel User)
         {
-            if (_userRepository.DoesUserExist(User.Username))
+            if (_userRepository.UsernameMatch(User))
             {
                 return BadRequest();
             }
@@ -69,7 +74,6 @@ namespace Weather.Api.Controllers
 
         public bool Authenticate(UserViewModel account)
         {
-
             var acc = _context.Users.SingleOrDefault(x => x.Username == account.Username);
 
             if (account == null || !BC.Verify(account.Password, acc.Password))
