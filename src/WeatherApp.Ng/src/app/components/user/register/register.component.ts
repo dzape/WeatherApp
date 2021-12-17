@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Account } from '../../../data/models/account.model';
+import { Account } from '../../../data/models/user/account.model';
 import { RegisterService } from '../../../services/register/register.service';
 
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -48,13 +48,16 @@ export class RegisterComponent {
   message: string = "";
   addAccount() {
     this.registerService.registerNewAccount(this.acc)
-      .subscribe(data => {
-        console.log(data);
-        if (data != null) {
-          this.userAvailable = true;
-        }
-        this.message = data;
-      })
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error.status)
+          if(error.status == 200){
+            this.userAvailable = true;
+          }
+        })
   }
 
   matchValidator(

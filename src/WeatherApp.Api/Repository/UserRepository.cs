@@ -49,5 +49,25 @@ namespace WeatherApp.Api.Repository
 
             return query;
         }
+
+        public bool UsernameMatchOnUpdate(UpdateUserViewModel User)
+        {
+            var user = new UserViewModel();
+            user.Username = User.NewUsername;
+
+            try
+            {
+                var match = QueryUsersByName(user);
+                if (match.Count() != 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (InvalidCastException)
+            {
+                return false;
+            }
+        }
     }
 }

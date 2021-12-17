@@ -18,11 +18,13 @@ namespace CityApp.Controllers
     {
         private readonly UserDbContext _context;
         private readonly ICityRepository _cityRepository;
+        private readonly IUserRepository _userRepository;
 
-        public CityController(UserDbContext context, ICityRepository cityRepository)
+        public CityController(UserDbContext context, ICityRepository cityRepository, IUserRepository userRepository)
         {
             _context = context;
             _cityRepository = cityRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("{username}")]
@@ -45,7 +47,13 @@ namespace CityApp.Controllers
 
                 city.Name = City.Name;
                 city.UserUsername = City.UserUsername;
+
+                var user = new UserViewModel();
+                user.Username = City.UserUsername;
                 
+                var getId = (User)_userRepository.QueryUsersByName(user);
+                city.UserId = getId.Id;
+
                 _context.Cities.Add(city);
                 await _context.SaveChangesAsync();
 

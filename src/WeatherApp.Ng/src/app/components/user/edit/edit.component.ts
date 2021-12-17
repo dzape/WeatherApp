@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Account } from 'src/app/data/models/account.model';
+import { Account } from '../../../data/models/user/account.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { UpdateAccModel } from '../../../data/models/user/updateacc.model';
 
 @Component({
   selector: 'app-edit',
@@ -11,14 +12,14 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class EditComponent {
   
-  acc = new Account();
+  acc = new UpdateAccModel();
   username: any = localStorage.getItem("username");
   userAvailable: boolean = false;
 
   constructor ( private userService: UserService, private router: Router, private auth: AuthService) {}
 
   editForm = new FormGroup({
-    username: new FormControl(this.acc.username,[
+    username: new FormControl(this.acc.newUsername,[
       Validators.required,
       Validators.minLength(4)
     ]),
@@ -29,9 +30,17 @@ export class EditComponent {
   });
   
   updateProfile() {
-      this.userService.updateUser(this.acc);
-      this.userAvailable = true;
-      this.logOut();
+      this.userService.updateUser(this.acc).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          if(error.status == 200){
+            this.userAvailable = true;
+            this.logOut();
+          }
+        }
+      );
   }
 
   deleteUser(){
@@ -50,6 +59,5 @@ export class EditComponent {
   
   closePopup() {
     this.displayStyle = "none";
-    this.router.navigate(["/login"]);
   }
 }

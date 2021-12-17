@@ -7,6 +7,9 @@
     public interface IUserRepository
     {
         public bool UsernameMatch(UserViewModel user);
+        public bool UsernameMatchOnUpdate(UpdateUserViewModel user);
+
         public IEnumerable<User> QueryUsersByName(UserViewModel user);
+
     }
 }

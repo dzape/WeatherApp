@@ -39,21 +39,31 @@ namespace Weather.Api.Controllers
         /// <param name="PutUser"></param>
         /// <returns>Ok</returns>
         [HttpPut]
-        public async Task<IActionResult> PutUser(UserViewModel User)
+        public async Task<IActionResult> PutUser(UpdateUserViewModel User)
         {
-            if (_userRepository.UsernameMatch(User))
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(User).State = EntityState.Modified;
-
             if (Authenticate(User))
             {
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
+                if (_userRepository.UsernameMatchOnUpdate(User))
+                {
+                    return BadRequest();
+                }
 
+                //Get User Id bY name
+                var acc = _context.Users.SingleOrDefault(x => x.Username == User.OldUsername);
+                acc.Username = User.NewUsername;
+                _context.Entry(acc).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+
+            }
             return Unauthorized();
         }
 
@@ -72,9 +82,9 @@ namespace Weather.Api.Controllers
             return NoContent();
         }
 
-        public bool Authenticate(UserViewModel account)
+        public bool Authenticate(UpdateUserViewModel account)
         {
-            var acc = _context.Users.SingleOrDefault(x => x.Username == account.Username);
+            var acc = _context.Users.SingleOrDefault(x => x.Username == account.OldUsername);
 
             if (account == null || !BC.Verify(account.Password, acc.Password))
             {

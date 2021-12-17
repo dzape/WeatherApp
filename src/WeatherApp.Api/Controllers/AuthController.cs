@@ -48,7 +48,6 @@ namespace WeatherApp.Api.Controllers
         }
 
         [HttpPost, Route("register")]
-        [AllowAnonymous]
         public async Task<ActionResult<User>> CreateUser(UserViewModel User)
         {
             if (ModelState.IsValid)
@@ -71,8 +70,7 @@ namespace WeatherApp.Api.Controllers
             }
             return StatusCode(201, "Model is not valid.");
         }
-
-
+        
         private string GenerateToken(UserViewModel user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
