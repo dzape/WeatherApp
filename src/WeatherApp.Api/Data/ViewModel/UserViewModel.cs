@@ -1,6 +1,5 @@
 namespace WeatherApp.Api.Data.ViewModels
 {
-    using System.Collections.Generic;
     public class UserViewModel
     {        
         public string Username { get; set; }

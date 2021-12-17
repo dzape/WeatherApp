@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using WeatherApp.Api.Data;
-using WeatherApp.Api.Data.Models;
-
-namespace WeatherApp.Api.Repository
+﻿namespace WeatherApp.Api.Repository
 {
+    using System.Linq;
+    using System.Collections.Generic;
+    using WeatherApp.Api.Data;
+    using WeatherApp.Api.Data.Models;
+
     public class CityRepository : ICityRepository
     {
         private readonly UserDbContext _context;

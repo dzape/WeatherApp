@@ -1,15 +1,12 @@
-using WeatherApp.Api.Data.Models;
-using WeatherApp.Api.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using WeatherApp.Api.Data.ViewModels;
-using System.Collections;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
 namespace WeatherApp.Api.Repository
 {
+    using WeatherApp.Api.Data.Models;
+    using WeatherApp.Api.Data;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using WeatherApp.Api.Data.ViewModels;
+
     public class UserRepository : IUserRepository
     {
         private readonly UserDbContext _context;
@@ -19,9 +16,11 @@ namespace WeatherApp.Api.Repository
             _context = context;
         }
 
-        public bool DoesUserExist(string username)
+        public User GetUser(string username)
         {
-            return false;
+            var user = new UserViewModel();
+            user.Username = username;
+            return QueryUsersByName(user).First();
         }
 
         public bool UsernameMatch(UserViewModel user)
@@ -69,5 +68,7 @@ namespace WeatherApp.Api.Repository
                 return false;
             }
         }
+
+ 
     }
 }

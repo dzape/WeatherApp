@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using WeatherApp.Api.Data.Models;
-
-namespace WeatherApp.Api.Repository
+﻿namespace WeatherApp.Api.Repository
 {
+    using System.Collections.Generic;
+    using WeatherApp.Api.Data.Models;
     public interface ICityRepository
     {
         public IEnumerable<City> GetCitiesWithUsername(string username);

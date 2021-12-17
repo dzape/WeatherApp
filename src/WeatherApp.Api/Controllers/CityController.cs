@@ -30,8 +30,10 @@ namespace CityApp.Controllers
         [HttpGet("{username}")]
         public IEnumerable GetFavouriteCity(string username)
         {
+            var user = _userRepository.GetUser(username);
+            
             var query = from r in _context.Cities
-                        where r.UserUsername.Equals(username)
+                        where r.UserId.Equals(user.Id)
                         orderby r.Id
                         select r.Name;
 
@@ -45,14 +47,10 @@ namespace CityApp.Controllers
             {
                 var city = new City();
 
+                var user = _userRepository.GetUser(City.UserUsername);
                 city.Name = City.Name;
-                city.UserUsername = City.UserUsername;
-
-                var user = new UserViewModel();
-                user.Username = City.UserUsername;
-                
-                var getId = (User)_userRepository.QueryUsersByName(user);
-                city.UserId = getId.Id;
+                city.UserUsername = user.Username; 
+                city.UserId = user.Id;
 
                 _context.Cities.Add(city);
                 await _context.SaveChangesAsync();
