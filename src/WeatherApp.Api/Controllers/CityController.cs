@@ -68,7 +68,7 @@ namespace CityApp.Controllers
                        where r.UserUsername.Equals(City.UserUsername) && r.Name.Equals(City.Name)
                        select r.Id;
 
-            var delete = await _context.Cities.FindAsync(city.FirstOrDefault());
+            var delete = await _context.Cities.FindAsync(city.First());
 
             if (city == null)
             {
