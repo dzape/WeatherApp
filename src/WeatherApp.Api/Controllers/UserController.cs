@@ -33,11 +33,6 @@ namespace Weather.Api.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        /// <summary>
-        /// Update User
-        /// </summary>
-        /// <param name="PutUser"></param>
-        /// <returns>Ok</returns>
         [HttpPut]
         public async Task<IActionResult> PutUser(UpdateUserViewModel User)
         {
@@ -48,7 +43,6 @@ namespace Weather.Api.Controllers
                     return BadRequest();
                 }
 
-                //Get User Id bY name
                 var acc = _context.Users.SingleOrDefault(x => x.Username == User.OldUsername);
                 acc.Username = User.NewUsername;
                 _context.Entry(acc).State = EntityState.Modified;
@@ -67,16 +61,12 @@ namespace Weather.Api.Controllers
             return Unauthorized();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpDelete("{username}")]
+        public async Task<IActionResult> DeleteUser(string username)
         {
-            var User = await _context.Users.FindAsync(id);
-            if (User == null)
-            {
-                return NotFound();
-            }
+            var userObj = _userRepository.GetUser(username);
 
-            _context.Users.Remove(User);
+            _context.Users.Remove(userObj);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -84,9 +74,9 @@ namespace Weather.Api.Controllers
 
         public bool Authenticate(UpdateUserViewModel account)
         {
-            var acc = _context.Users.SingleOrDefault(x => x.Username == account.OldUsername);
+            var acc = _userRepository.GetUser(account.OldUsername);
 
-            if (account == null || !BC.Verify(account.Password, acc.Password))
+            if (account == null || !BC.Verify(account.Password, acc.Password)) ;
             {
                 return false;
             }

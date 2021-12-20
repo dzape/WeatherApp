@@ -64,18 +64,18 @@ namespace CityApp.Controllers
         [HttpDelete]
         public async Task<ActionResult<City>> DeleteCity(CityViewModel City)
         {
-            var city = from r in _context.Cities
-                       where r.UserUsername.Equals(City.UserUsername) && r.Name.Equals(City.Name)
-                       select r.Id;
+            var user = _userRepository.GetUser(City.UserUsername);
 
-            var delete = await _context.Cities.FindAsync(city.First());
+            var city = from r in _context.Cities
+                       where r.UserUsername.Equals(City.UserUsername) || r.Name.Equals(City.Name)
+                       select r;
 
             if (city == null)
             {
                 return NotFound();
             }
 
-            _context.Cities.Remove(delete);
+            _context.Cities.Remove(city.First());
             await _context.SaveChangesAsync();
 
             return NoContent();

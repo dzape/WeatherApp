@@ -31,27 +31,26 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
-
+  
   <div
-  class="modal"
-  tabindex="-1"
-  role="dialog1"
-  [ngStyle]="{'display':displayStyle}"
-  style="max-width: 500px; max-height: fit-content;">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure ?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger"
-              (click)="onDelete()">Delete</button>
-          <button type="button" class="btn btn-danger"
-              (click)="closePopup()">Close</button>
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{'display':displayStyle}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Account control</h4>
+          </div>
+          <div class="modal-body alert-warning">
+            <p>Are you sure ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger"
+                (click)="onDelete()">Delete</button>
+            <button type="button" class="btn btn-success"
+                (click)="closePopup()">Close</button>
+          </div>
         </div>
       </div>
-    </div>
   </div>

@@ -26,7 +26,6 @@ export class SearchComponent implements OnInit {
 
   /* Add city to favourite */
   cities: any;
-  cityExist: boolean = false;
 
   /* Username of logined user */
   username: any = localStorage.getItem("username");
@@ -70,19 +69,19 @@ export class SearchComponent implements OnInit {
 
   addFavouriteCity() {
     if(this.weather['name'] != null){
-      this.cityService.getFavouriteCities(this.username).subscribe(citiesResponse => {
-        console.log(citiesResponse)
-        for (let index = 0; index < citiesResponse.length; index++) {
-          const element = citiesResponse[index];
-          if(element === this.weather.name.toString()){
-            this.cityExist = true;
+      let data: City = { name: this.weather['name'], userusername: this.username};
+      this.cityService.postFavCity(data).subscribe(
+        (response) => {
+          if(response == null){
             this.openPopup();
-            break;
+          }
+        },
+        (error) => {
+          if(error.status == 200){
+            window.location.reload();
           }
         }
-        let data: City = { name: this.weather['name'], userusername: this.username};
-        this.cityService.postFavCity(data).subscribe(response => console.log(response));
-      });
+      );
     }
   }
 
@@ -96,6 +95,5 @@ export class SearchComponent implements OnInit {
   
   closePopup() {
     this.displayStyle = "none";
-    this.cityExist = false;
   }
 }
