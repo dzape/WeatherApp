@@ -15,14 +15,14 @@ export class CityService {
   private weatherApiUrl = 'https://localhost:44322/api/city/';
   constructor(private http: HttpClient,  private owapi: OpenweatherapiService) { }
 
-  //Local storage
-  token = localStorage.getItem('jwt');
+  /* SessionStorage  */
+  token = sessionStorage.getItem('jwt');
   header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token );
-  username = localStorage.getItem('username');
+  username = sessionStorage.getItem('username');
   headers = { "Authorization": 'Bearer ' + this.token }
   
-  getFavouriteCities(username: string): Observable<any>{
-    return this.http.get(this.weatherApiUrl + username, { headers: this.header});
+  getFavouriteCities(): Observable<any>{
+    return this.http.get(this.weatherApiUrl,{ headers: this.header });
   }
 
   postFavCity(cityData: City) {

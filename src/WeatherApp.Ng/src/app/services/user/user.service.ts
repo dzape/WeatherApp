@@ -13,15 +13,22 @@ export class UserService {
 
   constructor(private http: HttpClient,private api: ApiService) { }
 
-  token = localStorage.getItem('token');
+  token = sessionStorage.getItem('token');
   header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
   
-  username: any = localStorage.getItem("username");
+  username: any = sessionStorage.getItem("username");
   updateUser(acc: UpdateAccModel): Observable<any>{
     acc.oldUsername = this.username;
     return this.http.put(this.api.getApiUrl() + "users/" , acc ,  { headers : this.header })
   }
   
+  registerNewAccount(acc: Account): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    const body = JSON.stringify(acc);
+    console.log(body)
+    return this.http.post(this.api.getApiUrl() + 'auth/register', body, { 'headers': headers ,observe: 'response'} )
+  }
+
   deleteUser(username: string){
     this.http.delete(this.api.getApiUrl());
   }

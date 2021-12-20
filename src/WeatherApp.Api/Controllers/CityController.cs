@@ -27,10 +27,12 @@ namespace CityApp.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("{username}")]
-        public IEnumerable GetFavouriteCity(string username)
+        [HttpGet]
+        public IEnumerable GetFavouriteCity()
         {
-            var user = _userRepository.GetUser(username);
+            var curentUser = HttpContext.User;
+
+            var user = _userRepository.GetUser(curentUser.Identity.Name);
             
             var query = from r in _context.Cities
                         where r.UserId.Equals(user.Id)

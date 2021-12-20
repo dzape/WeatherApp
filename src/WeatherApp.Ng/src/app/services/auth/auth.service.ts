@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private jwtHelper: JwtHelperService) { }
 
   isUserAuthenticated() {
-    const token: any = localStorage.getItem("jwt");
+    const token: any = sessionStorage.getItem("jwt");
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
     }
@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   public logOut = () => {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("username")
+    sessionStorage.removeItem("jwt");
+    sessionStorage.removeItem("username")
   }
 }

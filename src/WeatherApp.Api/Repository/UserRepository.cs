@@ -43,7 +43,7 @@ namespace WeatherApp.Api.Repository
         public IEnumerable<User> QueryUsersByName(UserViewModel user)
         {
             var query = from q in _context.Users
-                        where q.Username == user.Username
+                        where q.Username.Equals(user.Username)
                         select q;
 
             return query;

@@ -3,12 +3,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { iWeather } from '../../data/models/iweather';
 import { OpenweatherapiService } from '../../services/api/openweatherapi/openweatherapi.service';
 import { CityService } from '../../services/city/city.service';
-import { UserService } from '../../services/user/user.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
-import { HttpHeaders } from '@angular/common/http';
 
 import { City } from 'src/app/data/models/city.model';
 
@@ -26,6 +24,10 @@ export class CityComponent implements AfterViewInit {
   /* Mat Table */
   dataSource: any;
   sortedData: iWeather[] = [];
+  displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   /* Var */
   cities: any = {};
@@ -37,26 +39,20 @@ export class CityComponent implements AfterViewInit {
   /* Icons */
   faTrash = faTrash;
   
+  /* SessionStorage */
+  username: any = sessionStorage.getItem("username");
+
   constructor(private weatherApiService: OpenweatherapiService, 
               private cityService: CityService,
               ngbAlertConfig: NgbAlertConfig
               ) { ngbAlertConfig.animation = false; }
-
-  displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
-
-  username: any = localStorage.getItem("username");
-  token = localStorage.getItem('token');
-  header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
     this.getFavouriteCity();
   }
   
   getFavouriteCity() {
-      this.cityService.getFavouriteCities(this.username).subscribe((res) => {
+      this.cityService.getFavouriteCities().subscribe((res) => {
         this.cities = res;
         if (this.cities.length > 0) {
           for (var i = 0; i <= this.cities.length - 1; i++) {
@@ -125,4 +121,3 @@ export class CityComponent implements AfterViewInit {
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
-

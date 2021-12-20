@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
   cities: any;
 
   /* Username of logined user */
-  username: any = localStorage.getItem("username");
+  username: any = sessionStorage.getItem("username");
 
   /* Bootstrap Modal */
   displayStyle = "none";

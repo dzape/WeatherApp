@@ -26,8 +26,8 @@ export class LoginComponent {
       .subscribe(responce => {
         const token = (<any>responce).token;
         const username = credentials.username;
-        localStorage.setItem("jwt", token);
-        localStorage.setItem("username", username);
+        sessionStorage.setItem("jwt", token),
+        sessionStorage.setItem("username", username);
         this.invalidLogin = false;
         this.router.navigate(["/"]);
       }, err => {

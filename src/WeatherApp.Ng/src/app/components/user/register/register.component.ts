@@ -5,7 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 import { Router } from '@angular/router';
 
 import { Account } from '../../../data/models/user/account.model';
-import { RegisterService } from '../../../services/register/register.service';
+import { UserService } from '../../../services/user/user.service'
 
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,7 +20,7 @@ export class RegisterComponent {
   userAvailable: boolean = false;
 
   constructor(private http: HttpClient,
-    private registerService: RegisterService,
+    private userService: UserService,
     private router: Router,
     ngbAlertConfig: NgbAlertConfig
   ) { ngbAlertConfig.animation = false; }
@@ -47,7 +47,7 @@ export class RegisterComponent {
 
   message: string = "";
   addAccount() {
-    this.registerService.registerNewAccount(this.acc)
+    this.userService.registerNewAccount(this.acc)
       .subscribe(
         (data) => {
           console.log(data);

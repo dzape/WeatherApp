@@ -76,7 +76,7 @@ namespace Weather.Api.Controllers
         {
             var acc = _userRepository.GetUser(account.OldUsername);
 
-            if (account == null || !BC.Verify(account.Password, acc.Password)) ;
+            if (account == null || !BC.Verify(account.Password, acc.Password))
             {
                 return false;
             }
