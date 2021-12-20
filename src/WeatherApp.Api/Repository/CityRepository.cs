@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using WeatherApp.Api.Data;
     using WeatherApp.Api.Data.Models;
+    using WeatherApp.Api.Data.ViewModels;
 
     public class CityRepository : ICityRepository
     {
@@ -12,6 +13,15 @@
         public CityRepository(UserDbContext context)
         {
             _context = context;
+        }
+
+        public City GetCity(CityViewModel city)
+        {
+            var query = from i in _context.Cities
+                           where i.Name.Equals(city.Name) && i.UserUsername.Equals(city.UserUsername)
+                           select i;
+
+            return query.First();
         }
 
         public bool DoesCityExist(string city_name, string username)

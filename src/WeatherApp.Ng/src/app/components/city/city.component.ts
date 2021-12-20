@@ -76,15 +76,21 @@ export class CityComponent implements AfterViewInit {
   onDelete(city?: string) {
     city = this.city; 
     console.log(city);
-    for (var i = 0; i < this.cities.length; i++) {
-      if (city === this.cities[i]) {
-        let data: City = { name: city, userusername: this.username}
-        this.cityService.deleteFavCity(data).subscribe((city) => {
-          console.log("You have deleted : ", city);
-          window.location.reload();
-        })
+    let data: City = { name: city, userusername: this.username}
+    this.cityService.deleteFavCity(data).subscribe(
+    (city) => 
+    {
+      console.log(city);
+      if(city != null){
+        console.log("You have deleted : ", data.name);
       }
-    }
+    },
+    (err) => {
+      console.log("ERROR : ",err);
+      if(err.status === 200){
+        window.location.reload();
+      }
+    })
   }
 
   sortData(sort: Sort) {
