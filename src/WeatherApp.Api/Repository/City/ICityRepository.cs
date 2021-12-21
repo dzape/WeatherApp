@@ -1,7 +1,6 @@
 ﻿namespace WeatherApp.Api.Repository
 {
     using System.Collections;
-    using System.Collections.Generic;
     using WeatherApp.Api.Data.Models;
     using WeatherApp.Api.Data.ViewModels;
 

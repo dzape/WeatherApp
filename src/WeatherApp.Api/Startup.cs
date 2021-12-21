@@ -14,7 +14,6 @@ namespace WeatherApp.Api
 
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,7 +23,6 @@ namespace WeatherApp.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,7 +55,6 @@ namespace WeatherApp.Api
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -82,5 +79,3 @@ namespace WeatherApp.Api
         }
     }
 }
-
-  //  "DefaultConnection": "Data Source=192.168.10.20;Initial Catalog=WeatherDataDb; User Id=Weather;Password=Weather;"

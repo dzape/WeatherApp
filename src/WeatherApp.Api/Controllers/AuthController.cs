@@ -2,7 +2,6 @@ namespace WeatherApp.Api.Controllers
 {
     using WeatherApp.Api.Data.Models;
     using WeatherApp.Api.Data;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.Tokens;
     using System;
