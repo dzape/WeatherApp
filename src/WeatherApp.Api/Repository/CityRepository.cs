@@ -5,6 +5,7 @@
     using WeatherApp.Api.Data;
     using WeatherApp.Api.Data.Models;
     using WeatherApp.Api.Data.ViewModels;
+    using System.Collections;
 
     public class CityRepository : ICityRepository
     {
@@ -15,6 +16,17 @@
             _context = context;
         }
 
+        /* Returns list of all cities taht one user have saved*/
+        public IEnumerable GetCities(User user)
+        {
+            var query = from i in _context.Cities
+                        where i.UserId.Equals(user.Id)
+                        select i.Name;
+
+            return query;
+        }
+
+        /* Retyrns Specific city. (Delete) */
         public City GetCity(CityViewModel city)
         {
             var query = from i in _context.Cities
@@ -24,22 +36,29 @@
             return query.First();
         }
 
-        public bool DoesCityExist(string city_name, string username)
+        /* Check if city exist and returns bool value. */
+        public bool CityMatch(CityViewModel city)
         {
-            var cities = GetCitiesWithUsername(username);
-
-            foreach (var i in cities)
+            if(city != null)
             {
-                if(i.Name == city_name && i.UserUsername == username)
+                try
                 {
-                    return true;
+                    var match = GetCity(city);
+                    if(match != null)
+                    {
+                        return true;
+                    }
+                }
+                catch (System.Exception)
+                {
+
+                    return false;
                 }
             }
-
-            return false;
+            return true;
         }
 
-        public IEnumerable<City> GetCitiesWithUsername(string username)
+        public IEnumerable GetCitiesWithUsername(string username)
         {
             var query = from r in _context.Cities
                         where r.UserUsername.Equals(username)

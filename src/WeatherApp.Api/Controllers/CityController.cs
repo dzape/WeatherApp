@@ -33,11 +33,8 @@ namespace CityApp.Controllers
             var curentUser = HttpContext.User;
 
             var user = _userRepository.GetUser(curentUser.Identity.Name);
-            
-            var query = from r in _context.Cities
-                        where r.UserId.Equals(user.Id)
-                        orderby r.Id
-                        select r.Name;
+
+            var query = _cityRepository.GetCities(user);
 
             return query;
         }
@@ -45,7 +42,7 @@ namespace CityApp.Controllers
          [HttpPost]
         public async Task<ActionResult<City>> PostCity(CityViewModel City)
         {
-            if(!_cityRepository.DoesCityExist(City.Name, City.UserUsername))
+            if(!_cityRepository.CityMatch(City))
             {
                 var city = new City();
 

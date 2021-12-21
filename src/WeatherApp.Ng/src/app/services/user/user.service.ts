@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient,private api: ApiService) { }
 
-  token = sessionStorage.getItem('token');
+  token = sessionStorage.getItem("jwt");
   header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
   
   username: any = sessionStorage.getItem("username");

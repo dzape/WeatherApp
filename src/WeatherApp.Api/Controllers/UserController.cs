@@ -50,6 +50,7 @@ namespace Weather.Api.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
+                    return Ok(200);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
