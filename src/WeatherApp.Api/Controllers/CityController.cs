@@ -1,7 +1,6 @@
 namespace CityApp.Controllers
 {
     using System.Collections;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
@@ -44,11 +43,11 @@ namespace CityApp.Controllers
         {
             if(!_cityRepository.CityMatch(City))
             {
+                var user = _userRepository.GetUser(HttpContext.User.Identity.Name);
+
                 var city = new City();
 
-                var user = _userRepository.GetUser(City.UserUsername);
                 city.Name = City.Name;
-                city.UserUsername = user.Username; 
                 city.UserId = user.Id;
 
                 _context.Cities.Add(city);
@@ -63,10 +62,9 @@ namespace CityApp.Controllers
         [HttpDelete]
         public async Task<ActionResult<City>> DeleteCity(CityViewModel City)
         {
-            var curentUser = HttpContext.User;
-            var user = _userRepository.GetUser(City.UserUsername);
+            var user = _userRepository.GetUser(HttpContext.User.Identity.Name);
 
-            if (curentUser.Identity.Name.Equals(user.Username))
+            try
             {
                 var city = _cityRepository.GetCity(City);
 
@@ -80,8 +78,10 @@ namespace CityApp.Controllers
 
                 return Ok("City Deleted.");
             }
-
-            return BadRequest();
+            catch (System.Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

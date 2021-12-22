@@ -19,6 +19,8 @@ namespace WeatherApp.Api.Data.Models
         [StringLength(100)]
         public string Password { get; set; }
 
+        public bool EmailActivated { get; set; }
+
         public List<City> CityList { get; set; }
     }
 }

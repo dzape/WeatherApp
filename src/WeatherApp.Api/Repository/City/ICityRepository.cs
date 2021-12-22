@@ -6,7 +6,7 @@
 
     public interface ICityRepository
     {
-        public IEnumerable GetCitiesWithUsername(string username);
+        public IEnumerable GetCitiesById(int id);
         public City GetCity(CityViewModel city);
         public bool CityMatch(CityViewModel city);
         public IEnumerable GetCities(User user);

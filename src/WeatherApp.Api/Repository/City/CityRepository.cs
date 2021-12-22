@@ -9,10 +9,12 @@
     public class CityRepository : ICityRepository
     {
         private readonly UserDbContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public CityRepository(UserDbContext context)
+        public CityRepository(UserDbContext context, IUserRepository userRepository)
         {
             _context = context;
+            this._userRepository = userRepository;
         }
 
         /* Returns list of all cities taht one user have saved*/
@@ -28,8 +30,10 @@
         /* Retyrns Specific city. (Delete) */
         public City GetCity(CityViewModel city)
         {
+            var user = _userRepository.GetUser(city.UserUsername);
+
             var query = from i in _context.Cities
-                           where i.Name.Equals(city.Name) && i.UserUsername.Equals(city.UserUsername)
+                           where i.Name.Equals(city.Name) && i.UserId.Equals(user.Id)
                            select i;
 
             return query.First();
@@ -57,10 +61,10 @@
             return true;
         }
 
-        public IEnumerable GetCitiesWithUsername(string username)
+        public IEnumerable GetCitiesById(int id)
         {
             var query = from r in _context.Cities
-                        where r.UserUsername.Equals(username)
+                        where r.Id.Equals(id)
                         orderby r.Id
                         select r;
 

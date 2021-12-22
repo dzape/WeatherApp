@@ -1,16 +1,18 @@
 namespace WeatherApp.Api
 {
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.EntityFrameworkCore;
-    using WeatherApp.Api.Repository;
     using WeatherApp.Api.Data;
-    using System.Text;
+    using WeatherApp.Api.Helpers;
+    using WeatherApp.Api.Repository;
+    using WeatherApp.Api.Services;
 
     public class Startup
     {
@@ -23,6 +25,9 @@ namespace WeatherApp.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<IMailService, MailService>();
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

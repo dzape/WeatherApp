@@ -300,3 +300,8 @@ C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\n
 C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\zh-Hant\System.Private.ServiceModel.resources.dll
 C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\SendGrid.dll
 C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\StarkbankEcdsa.dll
+C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\FluentEmail.Core.dll
+C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\MailKit.dll
+C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\MimeKit.dll
+C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+C:\Users\predrag.nikolikj\source\repos\WeatherApp\src\WeatherApp.Api\bin\Debug\net6.0\FluentEmail.Smtp.dll

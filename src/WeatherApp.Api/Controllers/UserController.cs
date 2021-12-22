@@ -56,8 +56,6 @@ namespace Weather.Api.Controllers
                 {
                     throw;
                 }
-
-
             }
             return Unauthorized();
         }

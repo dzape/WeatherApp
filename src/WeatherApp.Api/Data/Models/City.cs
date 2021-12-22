@@ -12,10 +12,6 @@ namespace WeatherApp.Api.Data.Models
         public string Name { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string UserUsername { get; set; }
-
-        [Required]
         public int UserId { get; set; }
     }
 }

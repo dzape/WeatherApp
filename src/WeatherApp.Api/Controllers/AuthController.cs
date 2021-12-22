@@ -14,6 +14,9 @@ namespace WeatherApp.Api.Controllers
     using BC = BCrypt.Net.BCrypt;
     using WeatherApp.Api.Repository;
     using WeatherApp.Api.Data.ViewModels;
+    using System.Net.Mail;
+    using WeatherApp.Api.Services;
+    using WeatherApp.Api.Helpers;
 
     [Route("api/auth")]
     [ApiController]
@@ -21,10 +24,12 @@ namespace WeatherApp.Api.Controllers
     {
         private readonly UserDbContext _context;
         private readonly IUserRepository _userRepository;
-        public AuthController(UserDbContext context, IUserRepository userRepository)
+        private readonly IMailService _mailService;
+        public AuthController(UserDbContext context, IUserRepository userRepository, IMailService mailService)
         {
             this._context = context;
             this._userRepository = userRepository;
+            this._mailService = mailService;
         }
 
         [HttpGet, Route("get")]
@@ -34,6 +39,8 @@ namespace WeatherApp.Api.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody] UserViewModel account)
         {
+            //if ( account.emailActivated ) -> ...
+
             if (account == null)
                 return BadRequest("Invalid client request");
 
@@ -42,7 +49,6 @@ namespace WeatherApp.Api.Controllers
                 var token = GenerateToken(account);
                 return Ok(new { Token = token });
             }
-
             return Unauthorized();
         }
 
@@ -63,13 +69,35 @@ namespace WeatherApp.Api.Controllers
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
-                    return StatusCode(200, "User created :)");
+                    var message = new MailRequest();
+                    var link = "https://localhost:44322/api/activate/";
+                    var userHash = BC.HashString(User.Username);
+
+                    message.ToEmail = user.Email;
+                    message.Subject = "Welcome to my Weather App, Activate Account.";
+                    message.Body = "<h3> Hello </h3> <p> Hello, " + user.Username + " . You can activate your account on this <a href=" + link + userHash + ">link text</a>";
+
+                    await _mailService.SendEmailAsync(message);
+
+                    return Ok("Check your mail.");
                 }
                 return StatusCode(201, "Username Exist.");
             }
             return StatusCode(201, "Model is not valid.");
         }
-        
+
+        [HttpPut, Route("activate")]
+        public async Task<ActionResult<User>> AcitvateUser(string userhash)
+        {
+            if(userhash != null)
+            {
+                // DECRYPT USERHASH AND
+                // GETU USER 
+                // UPDATE ACCOUNT VERFICATION TO TRUE 
+                // REUTNR OK () ")
+            }
+        }
+
         private string GenerateToken(UserViewModel user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
@@ -103,5 +131,7 @@ namespace WeatherApp.Api.Controllers
             }
             return true;
         }
+
+        
     }
 }
