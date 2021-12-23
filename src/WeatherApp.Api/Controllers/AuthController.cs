@@ -18,6 +18,7 @@ namespace WeatherApp.Api.Controllers
     using WeatherApp.Api.Services;
     using WeatherApp.Api.Helpers;
     using Microsoft.EntityFrameworkCore;
+    using System.Net;
 
     [Route("api/auth")]
     [ApiController]
@@ -106,7 +107,8 @@ namespace WeatherApp.Api.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    Response.Redirect("http://localhost:4200/login");
+
+                    return RedirectPermanent("https://localhost:4200/login");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
