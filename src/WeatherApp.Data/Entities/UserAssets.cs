@@ -14,7 +14,6 @@ namespace WeatherApp.Data.Entities
 
         [Required]
         public Role Role { get; set; }
-        
         [Required]
         public Guid Guid { get; set; }
         public bool Verified { get; set; }

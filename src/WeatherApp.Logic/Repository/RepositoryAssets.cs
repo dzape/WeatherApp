@@ -19,8 +19,9 @@ namespace WeatherApp.Logic.Repository
         public async Task<UserAssets> CreateAssets(User _object)
         {
             var asset = new UserAssets();
-
-            asset.Guid = new Guid();
+            asset.Guid = Guid.NewGuid();
+            asset.Role = Role.Admin;
+            asset.User = _object;
             var obj = await _context.Assets.AddAsync(asset);
             _context.SaveChanges();
             return asset;
