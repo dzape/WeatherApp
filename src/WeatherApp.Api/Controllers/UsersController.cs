@@ -31,18 +31,15 @@ namespace WeatherApp.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
+                if (_userCrudService.UserExist(user))
                 {
-                    _userCrudService.AddUser(user);
+                    await _userCrudService.AddUser(user);
                     await _assetsRepo.CreateAssets(user);
                     return Ok("User was created");
                 }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return Ok("Change your username.");
             }
-            return false;
+            return Ok("Check your input and try again !");
         }
 
         [HttpPut]

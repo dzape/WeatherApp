@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WeatherApp.Data.Entities;
 using WeatherApp.Logic.IRepository;
@@ -16,7 +14,7 @@ namespace WeatherApp.Logic.Services
         private readonly IAssetsRepository<UserAssets> _assetsRepo;
         private readonly IAuthRepository<User> _authRepo;
 
-        public UserCrudService( IUserRepository<User> userRepo, 
+        public UserCrudService(IUserRepository<User> userRepo,
                                 IAssetsRepository<UserAssets> assetsRepo,
                                 IAuthRepository<User> authRepo)
         {
@@ -26,39 +24,27 @@ namespace WeatherApp.Logic.Services
         }
 
         // Create User
-        public object AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
-            var i = UserExist(user);
-            switch (i)
-            {
-                case 0:
-                    user.Password = BC.HashPassword(user.Password);
-                    return _userRepo.Create(user);
-                case 1:
-                    return ("Email is registered.");
-                case 2:
-                    return ("Username is registered.");
-                default:
-                    break;
-            }
-            return false;
+            user.Password = BC.HashPassword(user.Password);
+            return await _userRepo.Create(user);
         }
 
-        public object UserExist(User user)
+        public bool UserExist(User user)
         {
             try
             {
-                var userByEmail = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).First();
-                if (userByEmail != null)
-                    return 1;
+                var match = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).ToList();
+                if (match.Count == 0)
+                {
+                    return true;
+                }
+                return false;
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
-                var userByUsername = _userRepo.GetAll().Where(x => x.Username.Equals(user.Username)).First();
-                if (userByUsername != null)
-                    return 2;
+                return false;
             }
-            return 0;
         }
 
         // Update User
