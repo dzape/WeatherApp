@@ -33,7 +33,7 @@ namespace WeatherApp.Api.Controllers
             {
                 try
                 {
-                    await _userCrudService.AddUser(user);
+                    _userCrudService.AddUser(user);
                     await _assetsRepo.CreateAssets(user);
                     return Ok("User was created");
                 }

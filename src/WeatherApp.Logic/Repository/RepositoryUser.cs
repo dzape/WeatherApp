@@ -47,6 +47,11 @@ namespace WeatherApp.Logic.Repository
             return (User)_context.Users.Where(x => x.Id.Equals(query.Id));
         }
 
+        public User GetUser(User _object)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(User _object)
         {
             _context.Users.Update(_object);

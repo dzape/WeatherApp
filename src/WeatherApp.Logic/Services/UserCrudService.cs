@@ -26,11 +26,39 @@ namespace WeatherApp.Logic.Services
         }
 
         // Create User
-        public async Task<User> AddUser(User user)
+        public object AddUser(User user)
         {
-            // If username or email match return false ?
-            user.Password = BC.HashPassword(user.Password);
-            return await _userRepo.Create(user);
+            var i = UserExist(user);
+            switch (i)
+            {
+                case 0:
+                    user.Password = BC.HashPassword(user.Password);
+                    return _userRepo.Create(user);
+                case 1:
+                    return ("Email is registered.");
+                case 2:
+                    return ("Username is registered.");
+                default:
+                    break;
+            }
+            return false;
+        }
+
+        public object UserExist(User user)
+        {
+            try
+            {
+                var userByEmail = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).First();
+                if (userByEmail != null)
+                    return 1;
+            }
+            catch (Exception)
+            {
+                var userByUsername = _userRepo.GetAll().Where(x => x.Username.Equals(user.Username)).First();
+                if (userByUsername != null)
+                    return 2;
+            }
+            return 0;
         }
 
         // Update User
