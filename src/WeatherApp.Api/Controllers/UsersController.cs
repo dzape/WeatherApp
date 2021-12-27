@@ -50,18 +50,27 @@ namespace WeatherApp.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO : if Authorized 
-                try
+                if (_userCrudService.UpdateUser(user).Equals(true))
                 {
-                    _userCrudService.UpdateUser(user);
                     return Ok("User was updated");
                 }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return Unauthorized();
             }
-            return false;
+            return Ok("Check your input and try again !");
+        }
+
+        [HttpDelete]
+        public object DeleteUser([FromBody] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_userCrudService.DeleteUser(user).Equals(true))
+                {
+                    return Ok("User was deleted.");
+                }
+                return Unauthorized();
+            }
+            return Ok("Check your input and try again !");
         }
     }
 }

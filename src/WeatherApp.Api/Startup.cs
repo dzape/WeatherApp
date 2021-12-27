@@ -38,9 +38,10 @@ namespace WeatherApp.Api
             services.AddTransient<UserCrudService, UserCrudService>();
 
             services.AddTransient<IAssetsRepository<UserAssets>, RepositoryAssets>();
+            services.AddTransient<AssetsService, AssetsService>();
 
-            services.AddTransient<UserCrudService, UserCrudService>();
-
+            services.AddTransient<IAuthRepository<User>, RepositoryAuth>();
+            
             services.AddControllers();
         }
 

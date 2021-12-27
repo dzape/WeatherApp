@@ -22,5 +22,22 @@ namespace WeatherApp.Logic.Services
         {
             return await _assetRepo.CreateAssets(user);
         }
+
+        public bool DeleteAssets(UserAssets userAssets)
+        {
+            try
+            {
+                var DataList = _assetRepo.GetAll().Where(x => x.User.Id.Equals(userAssets.User.Id));
+                foreach (var item in DataList)
+                {
+                    _assetRepo.DeleteAssets(userAssets);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
     }
 }

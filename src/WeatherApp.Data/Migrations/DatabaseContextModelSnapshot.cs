@@ -94,10 +94,15 @@ namespace WeatherApp.Data.Migrations
             modelBuilder.Entity("WeatherApp.Data.Entities.UserAssets", b =>
                 {
                     b.HasOne("WeatherApp.Data.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("UserAssets")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WeatherApp.Data.Entities.User", b =>
+                {
+                    b.Navigation("UserAssets");
                 });
 #pragma warning restore 612, 618
         }

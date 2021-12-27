@@ -10,7 +10,7 @@ using WeatherApp.Data.DataContext;
 namespace WeatherApp.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211224115110_InitialCreate")]
+    [Migration("20211227101108_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,10 +96,15 @@ namespace WeatherApp.Data.Migrations
             modelBuilder.Entity("WeatherApp.Data.Entities.UserAssets", b =>
                 {
                     b.HasOne("WeatherApp.Data.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("UserAssets")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WeatherApp.Data.Entities.User", b =>
+                {
+                    b.Navigation("UserAssets");
                 });
 #pragma warning restore 612, 618
         }

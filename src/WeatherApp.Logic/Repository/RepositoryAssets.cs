@@ -16,15 +16,26 @@ namespace WeatherApp.Logic.Repository
             _context = context;
         }
 
+        public IEnumerable<UserAssets> GetAll()
+        {
+            return _context.Assets.ToList();
+        }
+
         public async Task<UserAssets> CreateAssets(User _object)
         {
             var asset = new UserAssets();
             asset.Guid = Guid.NewGuid();
-            asset.Role = Role.Admin;
+            asset.Role = Role.User;
             asset.User = _object;
             var obj = await _context.Assets.AddAsync(asset);
             _context.SaveChanges();
             return asset;
+        }
+
+        public void DeleteAssets(UserAssets _object)
+        {
+            _context.Remove(_object);
+            _context.SaveChanges();
         }
     }
 }

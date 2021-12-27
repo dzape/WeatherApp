@@ -1,6 +1,7 @@
 ﻿namespace WeatherApp.Data.Entities
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class User
@@ -26,5 +27,7 @@
         [Required]
         [Display(Name = "CreatedOn")]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
+
+        public List<UserAssets> UserAssets { get; set; }
     }
 }

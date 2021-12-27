@@ -10,5 +10,8 @@ namespace WeatherApp.Logic.Repository
     public interface IAssetsRepository<T>
     {
         public Task<T> CreateAssets(User _object);
+        public void DeleteAssets(UserAssets _object);
+        public IEnumerable<UserAssets> GetAll();
+
     }
 }
