@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,9 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using WeatherApp.Data.DataContext;
 using WeatherApp.Data.Entities;
@@ -31,6 +34,27 @@ namespace WeatherApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                string SecretKey = "superSecretKey@345";
+
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = false
+                };
+            });
+
             services.AddDbContext<DatabaseContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -40,7 +64,7 @@ namespace WeatherApp.Api
             services.AddTransient<IAssetsRepository<UserAssets>, RepositoryAssets>();
             services.AddTransient<AssetsService, AssetsService>();
 
-            services.AddTransient<IAuthRepository<User>, RepositoryAuth>();
+            services.AddTransient<AuthService, AuthService>();
             
             services.AddControllers();
         }

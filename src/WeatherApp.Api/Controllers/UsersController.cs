@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using WeatherApp.Data.Entities;
 using WeatherApp.Logic.IRepository;
@@ -13,6 +16,7 @@ namespace WeatherApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : ControllerBase
     {
         private readonly UserCrudService _userCrudService;
@@ -47,11 +51,11 @@ namespace WeatherApp.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userCrudService.UpdateUser(user).Equals(true))
+                if (!_userCrudService.UpdateUser(user).Equals(true))
                 {
                     return Ok("User was updated");
                 }
-                return Unauthorized();
+                return Ok("Username exist !");
             }
             return Ok("Check your input and try again !");
         }

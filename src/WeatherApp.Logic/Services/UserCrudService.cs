@@ -10,17 +10,18 @@ namespace WeatherApp.Logic.Services
 {
     public class UserCrudService
     {
+        private readonly AuthService _authService;
+
         private readonly IUserRepository<User> _userRepo;
         private readonly IAssetsRepository<UserAssets> _assetsRepo;
-        private readonly IAuthRepository<User> _authRepo;
 
         public UserCrudService(IUserRepository<User> userRepo,
                                 IAssetsRepository<UserAssets> assetsRepo,
-                                IAuthRepository<User> authRepo)
+                                AuthService authService)
         {
             _userRepo = userRepo;
             _assetsRepo = assetsRepo;
-            _authRepo = authRepo;
+            _authService = authService;
         }
 
         // Create User
@@ -50,23 +51,26 @@ namespace WeatherApp.Logic.Services
         // Update User
         public bool UpdateUser(User user)
         {
-            if (_authRepo.IsAuthorized(user))
+            if (_authService.Authenticate(user))
             {
-                try
+                if (!UserExist(user))
                 {
-                    // Other way ... Timcorey
-                    var DataList = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).ToList();
-                    foreach (var item in DataList)
+                    try
                     {
-                        item.Username = user.Username;
-                        _userRepo.Update(item);
+                        var DataList = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).ToList();
+                        foreach (var item in DataList)
+                        {
+                            item.Username = user.Username;
+                            _userRepo.Update(item);
+                        }
+                        return true;
                     }
-                    return true;
+                    catch (Exception)
+                    {
+                        return false;
+                    }
                 }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return false;
             }
             return false;
         }
@@ -74,7 +78,7 @@ namespace WeatherApp.Logic.Services
         // Delete User
         public bool DeleteUser(User user)
         {
-            if (_authRepo.IsAuthorized(user))
+            if (_authService.Authenticate(user))
             {
                 try
                 {
