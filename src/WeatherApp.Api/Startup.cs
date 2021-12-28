@@ -1,27 +1,23 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeatherApp.Data.DataContext;
-using WeatherApp.Data.Entities;
-using WeatherApp.Logic.IRepository;
-using WeatherApp.Logic.Repository;
-using WeatherApp.Logic.Services;
-
 namespace WeatherApp.Api
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.Text;
+    using System.Text.Json.Serialization;
+    using WeatherApp.Data.DataContext;
+    using WeatherApp.Data.Entities;
+    using WeatherApp.Logic.IRepository;
+    using WeatherApp.Logic.Repository;
+    using WeatherApp.Logic.Services;
+    using WeatherApp.Logic.Utilities;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -34,6 +30,11 @@ namespace WeatherApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,6 +56,13 @@ namespace WeatherApp.Api
                 };
             });
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.Cookie.HttpOnly = false;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddDbContext<DatabaseContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -65,7 +73,11 @@ namespace WeatherApp.Api
             services.AddTransient<AssetsService, AssetsService>();
 
             services.AddTransient<AuthService, AuthService>();
-            
+
+            services.AddTransient<IMailSender, MailSender>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddControllers();
         }
 
@@ -80,6 +92,8 @@ namespace WeatherApp.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

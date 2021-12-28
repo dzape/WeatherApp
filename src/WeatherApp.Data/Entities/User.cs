@@ -28,6 +28,5 @@
         [Display(Name = "CreatedOn")]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        public List<UserAssets> UserAssets { get; set; }
     }
 }

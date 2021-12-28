@@ -27,11 +27,15 @@ namespace WeatherApp.Logic.Services
         // Create User
         public async Task<User> AddUser(User user)
         {
+            if (!EmailMatch(user))
+            {
+                return null;
+            }
             user.Password = BC.HashPassword(user.Password);
             return await _userRepo.Create(user);
         }
 
-        public bool UserExist(User user)
+        public bool EmailMatch(User user)
         {
             try
             {
@@ -53,7 +57,7 @@ namespace WeatherApp.Logic.Services
         {
             if (_authService.Authenticate(user))
             {
-                if (!UserExist(user))
+                if (!EmailMatch(user))
                 {
                     try
                     {

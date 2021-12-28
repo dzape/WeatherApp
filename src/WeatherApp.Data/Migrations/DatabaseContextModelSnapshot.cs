@@ -30,7 +30,12 @@ namespace WeatherApp.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Guid");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Cities");
                 });
@@ -91,18 +96,22 @@ namespace WeatherApp.Data.Migrations
                     b.ToTable("Assets");
                 });
 
-            modelBuilder.Entity("WeatherApp.Data.Entities.UserAssets", b =>
+            modelBuilder.Entity("WeatherApp.Data.Entities.City", b =>
                 {
                     b.HasOne("WeatherApp.Data.Entities.User", "User")
-                        .WithMany("UserAssets")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WeatherApp.Data.Entities.User", b =>
+            modelBuilder.Entity("WeatherApp.Data.Entities.UserAssets", b =>
                 {
-                    b.Navigation("UserAssets");
+                    b.HasOne("WeatherApp.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

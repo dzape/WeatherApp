@@ -1,33 +1,30 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using WeatherApp.Data.Entities;
+using WeatherApp.Data.Helpers;
 using WeatherApp.Logic.IRepository;
-using WeatherApp.Logic.Repository;
 using WeatherApp.Logic.Services;
+using WeatherApp.Logic.Utilities;
 
 namespace WeatherApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+//    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : ControllerBase
     {
         private readonly UserCrudService _userCrudService;
-        private readonly IUserRepository<User> _userRepo;
-        private readonly IAssetsRepository<UserAssets> _assetsRepo;
+        private readonly AssetsService _assetService;
+        private readonly IMailSender _mailService;
 
-        public UsersController(UserCrudService userService, IUserRepository<User> userRepo, IAssetsRepository<UserAssets> assetsRepo)
+        public UsersController(UserCrudService userService, IUserRepository<User> userRepo, AssetsService assetService, IMailSender mailService)
         {
             _userCrudService = userService;
-            _userRepo = userRepo;
-            _assetsRepo = assetsRepo;
+            _assetService = assetService;
+            _mailService = mailService;
         }
 
         [HttpPost]
@@ -35,13 +32,19 @@ namespace WeatherApp.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userCrudService.UserExist(user))
+                if (_userCrudService.EmailMatch(user))
                 {
                     await _userCrudService.AddUser(user);
-                    await _assetsRepo.CreateAssets(user);
+                    await _assetService.CreateAssets(user);
+
+                    //Selski
+                    var m = new MailRequest();
+                    m.ToEmail = user.Email;
+
+                    _mailService.SendEmailAsync(m);
                     return Ok("User was created");
                 }
-                return Ok("Change your username.");
+                return Ok("Email exist.");
             }
             return Ok("Check your input and try again !");
         }

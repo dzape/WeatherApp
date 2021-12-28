@@ -1,18 +1,14 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using WeatherApp.Data.DataContext;
-using WeatherApp.Data.Entities;
-using WeatherApp.Logic.Repository;
-using BC = BCrypt.Net.BCrypt;
-
-namespace WeatherApp.Logic.Services
+﻿namespace WeatherApp.Logic.Services
 {
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using WeatherApp.Data.DataContext;
+    using WeatherApp.Data.Entities;
+    using BC = BCrypt.Net.BCrypt;
     public class AuthService
     {
         private readonly DatabaseContext _context;

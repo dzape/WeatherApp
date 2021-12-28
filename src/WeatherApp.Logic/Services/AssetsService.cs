@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeatherApp.Data.Entities;
+using WeatherApp.Logic.IRepository;
 using WeatherApp.Logic.Repository;
 
 namespace WeatherApp.Logic.Services
@@ -11,14 +12,23 @@ namespace WeatherApp.Logic.Services
     public class AssetsService
     {
         private readonly IAssetsRepository<UserAssets> _assetRepo;
+        private readonly IUserRepository<User> _userRepository;
 
-        public AssetsService(IAssetsRepository<UserAssets> assetRepo)
+        public AssetsService(IAssetsRepository<UserAssets> assetRepo, IUserRepository<User> userRepository)
         {
             _assetRepo = assetRepo;
+            _userRepository = userRepository;
         }
 
-        // Create User
-        public async Task<UserAssets> AddAssets(User user)
+        // Get Assets for user
+        public UserAssets GetAssets(User user)
+        {
+            var curentUser = _userRepository.GetAll().Where(x => x.Username.Equals(user.Username)).First();
+            return _assetRepo.GetAll().Where(x => x.User.Id.Equals(curentUser.Id)).First();
+        }
+
+        // onCreate User
+        public async Task<UserAssets> CreateAssets(User user)
         {
             return await _assetRepo.CreateAssets(user);
         }
