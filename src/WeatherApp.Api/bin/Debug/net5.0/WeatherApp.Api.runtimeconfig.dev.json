@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "/Users/dzape/.dotnet/store/|arch|/|tfm|",
-      "/Users/dzape/.nuget/packages"
-    ]
-  }
-}
