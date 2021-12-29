@@ -27,6 +27,28 @@ namespace WeatherApp.Logic.Services
             return _assetRepo.GetAll().Where(x => x.User.Id.Equals(curentUser.Id)).First();
         }
 
+        // onActivate User
+        public void ActivateMail(Guid guid)
+        {
+            var curentAsset = _assetRepo.GetAll().Where(x => x.Guid.Equals(guid)).FirstOrDefault();
+            if(curentAsset.Verified == false)
+            {
+                _assetRepo.ActivateMail(curentAsset);
+            }
+        }
+
+        // isMail Ver
+        public bool IsMailVerified(User user)
+        {
+            var curentUser = _userRepository.GetAll().Where(x => x.Username.Equals(user.Username)).First();
+            var curentAsset = _assetRepo.GetAll().Where(x => x.User.Id.Equals(curentUser.Id)).FirstOrDefault();
+
+            if(curentAsset.Verified)
+                return true;
+
+            return false;
+        }
+
         // onCreate User
         public async Task<UserAssets> CreateAssets(User user)
         {

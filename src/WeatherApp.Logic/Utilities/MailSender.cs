@@ -25,16 +25,15 @@ namespace WeatherApp.Logic.Utilities
         {
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
 
-            smtpClient.Credentials = new System.Net.NetworkCredential("@gmail.com", "pass");
-            //smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
+            smtpClient.Credentials = new System.Net.NetworkCredential("yourmail@gmail.com", "yourpass");
+            smtpClient.UseDefaultCredentials = false; 
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.EnableSsl = true;
+
             MailMessage mail = new MailMessage();
-
-            //Setting From , To and CC
-            mail.From = new MailAddress("@gmail.com", "MyWeb Site");
+            mail.From = new MailAddress("yourmail@gmail.com", "Weather App");
             mail.To.Add(new MailAddress(mailRequest.ToEmail));
-
+            
             smtpClient.Send(mail);
         }
     }

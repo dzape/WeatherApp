@@ -37,5 +37,12 @@ namespace WeatherApp.Logic.Repository
             _context.Remove(_object);
             _context.SaveChanges();
         }
+
+        public void ActivateMail(UserAssets _object)
+        {
+            _object.Verified = true;
+            _context.Assets.Update(_object);
+            _context.SaveChanges();
+        }
     }
 }
