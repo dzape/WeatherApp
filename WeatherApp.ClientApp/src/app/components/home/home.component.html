@@ -1,0 +1,14 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body > 
+      <app-search></app-search>
+      <div *ngIf="!userAuthorized()">
+        <p><a href="/login">Login</a> or <a href="/register"> Register</a> </p><p>and save your favourite cities.</p>
+      </div>
+    </body>
+</html>
+

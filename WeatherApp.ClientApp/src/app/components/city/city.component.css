@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+  }
+
+  .mat-sort-header-container {
+    align-items: center;
+  }
+
+div {
+  padding-bottom: 50px;
+  overflow-x: auto;
+  margin-bottom: 50px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}

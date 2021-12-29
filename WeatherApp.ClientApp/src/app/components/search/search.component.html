@@ -1,0 +1,53 @@
+
+  <div class="container py-5 h-100" style="text-align: center; ">
+   
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+
+        <div class="input-group rounded mb-3">
+
+          <input id="searchInputCity" class="form-control" type="text" placeholder="Enter City, Country initials" [formControl]="searchInputCity" required minlength="3" aria-label="Search"
+          aria-describedby="search-addon" />
+
+          <div *ngIf="userAuthorized()">
+            <td scope="row"><button class="btn btn-primary" (click)="addFavouriteCity()"><fa-icon [icon]="faStar" ></fa-icon></button></td>                       
+          </div>
+       
+        </div>
+
+        <div class="card shadow-0 border">
+          <div class="card-body p-4">
+            
+            <h4 class="mb-1 sfw-normal"> {{ weather['name'] }} {{ weather['country'] }}</h4>
+            <p class="mb-2">Current temperature: <strong>{{ weather['temp'] }} °C</strong></p>
+            <p>Feels like: <strong>{{ weather['feels_like'] }}°C</strong></p>
+            <p>Max: <strong> {{ weather['temp_max'] }} °C</strong>, Min: <strong> {{ weather['temp_max']}} °C</strong></p>
+
+            <div class="d-flex flex-row align-items-center">
+              <p class="mb-0 me-4" >{{ weather['weather_main'] }}</p>
+              <i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Weather Cotrol</h4>
+        </div>
+        <div class="alert alert-danger">
+          <p>City is allready available in your favourite list.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger"
+              (click)="closePopup()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

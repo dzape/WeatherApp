@@ -1,0 +1,58 @@
+<app-search></app-search>
+
+<div class="noselect example-container mat-elevation-z8">
+  <table matSort (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="name">Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Temperature">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="temperature"> Temperature </th>
+      <td mat-cell *matCellDef="let element"> {{element.temperature}} C</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Humidity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="humidity"> Humidity </th>
+      <td mat-cell *matCellDef="let element"> {{element.humidity}} %</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element"><fa-icon (click)="openPopup(element.name)" [icon]="faTrash" onmouseover="" style="cursor: pointer;" ></fa-icon></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+  
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{'display':displayStyle}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Account control</h4>
+          </div>
+          <div class="modal-body alert-warning">
+            <p>Are you sure ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger"
+                (click)="onDelete()">Delete</button>
+            <button type="button" class="btn btn-success"
+                (click)="closePopup()">Close</button>
+          </div>
+        </div>
+      </div>
+  </div>

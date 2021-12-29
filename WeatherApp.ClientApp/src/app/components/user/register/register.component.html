@@ -1,0 +1,88 @@
+<section>
+  <div class="container py-5 h-100">
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-8 col-lg-6 col-xl-4">
+
+            <form class="form-singin" [formGroup]="userForm" (ngSubmit)="addAccount()">
+              <div class="form-control" content="width=device-width, initial-scale=1">
+                <h2 class="form-signin-heading">Register</h2>
+          
+                <input [(ngModel)]="acc.email" class="form-control" id="email" type="text" formControlName="email" placeholder="Email"><br />
+                <div *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)" class="alert alert-warning">
+                    Email must have more than 4 characterrs.
+                </div>
+          
+                <input [(ngModel)]="acc.username" class="form-control" id="username" type="text" formControlName="username" placeholder="Username (minimum 4 characterrs!)"><br />
+                <div *ngIf="userForm.controls['username'].invalid && (userForm.controls['username'].dirty || userForm.controls['username'].touched)" class="alert alert-warning">
+                    Username must have more than 4 characterrs.
+                </div>
+          
+                <input [(ngModel)]="acc.password" onpaste="return false;" class="form-control" id="password" type="password" formControlName="password" placeholder="Password (minimum 6 characterrs!)"><br />   
+                <div *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['password'].touched)" class="alert alert-warning">
+                  Password must have more than 6 characterrs.
+                </div>
+          
+                <input class="form-control" onpaste="return false;"  type="password" formControlName="confirmPassword" placeholder="Password (minimum 6 characterrs!)"><br />   
+                <div *ngIf="userForm.controls['confirmPassword'].hasError('matching') && (userForm.controls['confirmPassword'].dirty || userForm.controls['confirmPassword'].touched) " class="alert alert-warning">
+                  Password doesnt match !
+                </div>
+
+                <button
+                  type="submit"
+                  class="form-control btn btn-lg btn-primary btn-block"
+                  (click)="openPopup()"
+                  [disabled]="!userForm.valid">Register
+                </button>
+                    
+                <div
+                  class="modal"
+                  tabindex="-1"
+                  role="dialog"
+                  [ngStyle]="{'display':displayStyle}">
+                    <div *ngIf="userAvailable" class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Account control</h4>
+                        </div>
+                        <div class="alert alert-success">
+                          <p>Success.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger"
+                              (click)="closePopup()">Close</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="!userAvailable" class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Username Control</h4>
+                        </div>
+                        <div class="alert alert-danger">
+                          <p>Username is not available.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger"
+                              (click)="closePopup()">Close</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+  </div>
+</section>
+  
+<script>
+    window.onload = () => {
+  const myInput = document.getElementById('password');
+  myInput.onpaste = e => e.preventDefault();
+  }
+</script>
+
+
