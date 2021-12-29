@@ -8,6 +8,7 @@ namespace WeatherApp.Logic.IRepository
 {
     public interface IUserRepository<T>
     {
+        public T GetByEmail(string _objec);
         public T GetUser(T _object);
         public Task<T> Create(T _object);
 

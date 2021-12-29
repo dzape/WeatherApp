@@ -40,10 +40,10 @@ namespace WeatherApp.Logic.Services
         // isMail Ver
         public bool IsMailVerified(User user)
         {
-            var curentUser = _userRepository.GetAll().Where(x => x.Username.Equals(user.Username)).First();
-            var curentAsset = _assetRepo.GetAll().Where(x => x.User.Id.Equals(curentUser.Id)).FirstOrDefault();
+            var curentUser = _userRepository.GetByEmail(user.Email);
+            var curentAsset = GetAssets(curentUser);
 
-            if(curentAsset.Verified)
+            if (curentAsset.Verified)
                 return true;
 
             return false;

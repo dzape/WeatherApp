@@ -37,11 +37,7 @@ namespace WeatherApp.Api.Controllers
                     await _userCrudService.AddUser(user);
                     await _assetService.CreateAssets(user);
 
-                    //Selski
-                    var m = new MailRequest();
-                    m.ToEmail = user.Email;
-
-                    _mailService.SendEmailAsync(m);
+                    _mailService.SendEmailAsync(user.Email);
                     return Ok("User was created");
                 }
                 return Ok("Email exist.");

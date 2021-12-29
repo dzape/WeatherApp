@@ -44,7 +44,7 @@ namespace WeatherApp.Api.Controllers
             return Ok("Check your inputs.");
         }
 
-        [HttpPut("{guid}"), Route("activation")]
+        [HttpGet("{guid}"), Route("activation")]
         public IActionResult ActivateAccount(Guid guid)
         {
             if(guid != null)

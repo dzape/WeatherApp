@@ -24,6 +24,11 @@ namespace WeatherApp.Logic.Services
             _authService = authService;
         }
 
+        public User GetUserByEmail(string email)
+        {
+            return _userRepo.GetByEmail(email);
+        }
+
         // Create User
         public async Task<User> AddUser(User user)
         {

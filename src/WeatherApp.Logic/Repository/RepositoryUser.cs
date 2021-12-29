@@ -33,12 +33,17 @@ namespace WeatherApp.Logic.Repository
         {
             try
             {
-                return _context.Users.Where(x => x.Email != null).ToList();
+                return _context.Users.ToList();
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public User GetByEmail(string email)
+        {
+            return (User)_context.Users.Where(x => x.Email.Equals(email)).First();
         }
 
         public User GetByGuid(Guid guid)
