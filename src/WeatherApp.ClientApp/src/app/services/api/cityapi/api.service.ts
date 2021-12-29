@@ -7,7 +7,7 @@ import { Account } from '../../../data/models/user/account.model';
 })
 export class ApiService {
   account!: Account;
-  apiUrl: string = 'https://localhost:44322/api/'
+  apiUrl: string = 'https://localhost:44358/api/'
 
   constructor(private http: HttpClient) { }
 
