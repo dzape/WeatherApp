@@ -1,6 +1,4 @@
 export class UpdateAccModel {
-    oldUsername: string = "";
-    newUsername: string = "";
-    email: string = "";
+    username: string = "";
     password: string = "";
 }

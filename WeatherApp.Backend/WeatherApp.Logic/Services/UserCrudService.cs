@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using WeatherApp.Data.Entities;
+using WeatherApp.Data.Helpers;
 using WeatherApp.Logic.IRepository;
 using WeatherApp.Logic.Repository;
 using BC = BCrypt.Net.BCrypt;
@@ -27,6 +28,11 @@ namespace WeatherApp.Logic.Services
         public User GetUserByEmail(string email)
         {
             return _userRepo.GetByEmail(email);
+        }
+        
+        public User GetUserByUsername(string email)
+        {
+            return _userRepo.GetByUsername(email);
         }
 
         // Create User
@@ -60,34 +66,30 @@ namespace WeatherApp.Logic.Services
         // Update User
         public bool UpdateUser(User user)
         {
-            if (_authService.Authenticate(user))
+            try
             {
-                if (!EmailMatch(user))
+                var DataList = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).ToList();
+                foreach (var item in DataList)
                 {
-                    try
-                    {
-                        var DataList = _userRepo.GetAll().Where(x => x.Email.Equals(user.Email)).ToList();
-                        foreach (var item in DataList)
-                        {
-                            item.Username = user.Username;
-                            _userRepo.Update(item);
-                        }
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
+                    item.Username = user.Username;
+                    _userRepo.Update(item);
                 }
+                return true;
+            }
+            catch (Exception)
+            {
                 return false;
             }
-            return false;
         }
 
         // Delete User
         public bool DeleteUser(User user)
         {
-            if (_authService.Authenticate(user))
+            var curentUser = new UserLogin();
+            curentUser.Username = user.Username;
+            curentUser.Password = user.Password;
+
+            if (_authService.Authenticate(curentUser))
             {
                 try
                 {

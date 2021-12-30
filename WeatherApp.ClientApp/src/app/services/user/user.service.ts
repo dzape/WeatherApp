@@ -17,9 +17,9 @@ export class UserService {
   header = new HttpHeaders().set("Authorization", 'Bearer ' + this.token);
   
   username: any = sessionStorage.getItem("username");
+
   updateUser(acc: UpdateAccModel): Observable<any>{
-    acc.oldUsername = this.username;
-    return this.http.put(this.api.getApiUrl() + "users/" , acc ,  { headers : this.header })
+    return this.http.put(this.api.getApiUrl() + "users/", acc,  { 'headers' : this.header })
   }
   
   registerNewAccount(acc: Account): Observable<any> {

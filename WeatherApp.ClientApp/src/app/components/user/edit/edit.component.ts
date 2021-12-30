@@ -20,7 +20,7 @@ export class EditComponent {
                 private auth: AuthService) {}
 
   editForm = new FormGroup({
-    username: new FormControl(this.acc.newUsername,[
+    username: new FormControl(this.acc.username,[
       Validators.required,
       Validators.minLength(4)
     ]),

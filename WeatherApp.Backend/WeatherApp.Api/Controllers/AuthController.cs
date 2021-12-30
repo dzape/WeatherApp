@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SessionMvc.App.Utilities;
 using System;
+using System.Threading.Tasks;
 using WeatherApp.Data.Entities;
+using WeatherApp.Data.Helpers;
 using WeatherApp.Logic.Services;
+using WeatherApp.Logic.Utilities;
 
 namespace WeatherApp.Api.Controllers
 {
@@ -15,6 +18,8 @@ namespace WeatherApp.Api.Controllers
         private readonly UserCrudService _userCrudService;
         private readonly AssetsService _assetsService;
         private readonly AuthService _authService;
+        private readonly AssetsService _assetService;
+        private readonly MailSender _mailService;
 
         public AuthController( UserCrudService userService,
                                AssetsService assetsService,
@@ -26,22 +31,41 @@ namespace WeatherApp.Api.Controllers
         }
 
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody] User user)
+        public IActionResult Login([FromBody] UserLogin user)
         {
             if (ModelState.IsValid)
             {
-                if (_assetsService.IsMailVerified(user))
+                var curentUser = _userCrudService.GetUserByUsername(user.Username);
+                if (_assetsService.IsMailVerified(curentUser))
                 {
                     if (_authService.Authenticate(user))
                     {
-                        var asset = _assetsService.GetAssets(user);
+                        var asset = _assetsService.GetAssets(curentUser);
                         HttpContext.Session.Set<UserAssets>("info", asset);
-                        var token = _authService.GenerateToken(user);
+                        var token = _authService.GenerateToken(curentUser);
                         return Ok(new { Token = token });
                     }
                 }
+                return Ok("Mail not ver/");
             }
             return Ok("Check your inputs.");
+        }
+        [HttpPost, Route("register")]
+        public async Task<Object> AddUser([FromBody] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_userCrudService.EmailMatch(user))
+                {
+                    await _userCrudService.AddUser(user);
+                    await _assetService.CreateAssets(user);
+
+                    _mailService.SendEmailAsync(user.Email);
+                    return Ok("User was created");
+                }
+                return Ok("Email exist.");
+            }
+            return Ok("Check your input and try again !");
         }
 
         [HttpGet("{guid}"), Route("activation")]

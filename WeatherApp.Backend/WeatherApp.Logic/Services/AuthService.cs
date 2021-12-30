@@ -8,6 +8,7 @@
     using System.Text;
     using WeatherApp.Data.DataContext;
     using WeatherApp.Data.Entities;
+    using WeatherApp.Data.Helpers;
     using BC = BCrypt.Net.BCrypt;
     public class AuthService
     {
@@ -18,9 +19,9 @@
             _context = context;
         }
 
-        public bool Authenticate(User user)
+        public bool Authenticate(UserLogin user)
         {
-            var acc = _context.Users.SingleOrDefault(x => x.Email == user.Email);
+            var acc = _context.Users.SingleOrDefault(x => x.Username == user.Username);
 
             if (user == null || !BC.Verify(user.Password, acc.Password))
             {

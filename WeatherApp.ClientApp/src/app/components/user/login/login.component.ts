@@ -20,17 +20,24 @@ export class LoginComponent {
       'username': form.value.username,
       'password': form.value.password,
     }
-    const headers = { 'content-type': 'application/json' }
 
-    this.http.post(this.apiService.getApiUrl() + 'auth/login', credentials,  { 'headers': headers })
-      .subscribe(responce => {
-        const token = (<any>responce).token;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+     
+      withCredentials: false, 
+      observe: 'response' as 'response'
+    };  
+
+    this.http.post(this.apiService.getApiUrl() + 'auth/login', credentials,  httpOptions)
+      .subscribe(response => {
+        console.log(response)
+        const token = (<any>response).body.token;
         const username = credentials.username;
         sessionStorage.setItem("jwt", token),
         sessionStorage.setItem("username", username);
         this.invalidLogin = false;
         this.router.navigate(["/"]);
-      }, err => {
+      } ,err => {
         this.invalidLogin = true;
       });
   }
