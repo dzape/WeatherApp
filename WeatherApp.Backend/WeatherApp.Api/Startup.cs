@@ -76,6 +76,9 @@ namespace WeatherApp.Api
 
             services.AddTransient<IAssetsRepository<UserAssets>, RepositoryAssets>();
             services.AddTransient<AssetsService, AssetsService>();
+            
+            services.AddTransient<ICityRepository<City>, RepositoryCity>();
+            services.AddTransient<CityService, CityService>();
 
             services.AddTransient<AuthService, AuthService>();
 
