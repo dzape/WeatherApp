@@ -73,13 +73,13 @@ export class SearchComponent implements OnInit {
       this.cityService.postFavCity(data).subscribe(
         (response) => {
           console.log(response);
-          if(response === "City already exist"){
-            this.openPopup();
-          }
         },
         (error) => {
+          if(error.status == 201){
+            this.openPopup();
+          }
           if(error.status == 200){
-            //window.location.reload();
+            window.location.reload();
           }
         }
       );

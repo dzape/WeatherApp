@@ -56,7 +56,7 @@ namespace WeatherApp.Api.Controllers
                 await _cityService.AddCity(city);
                 return Ok("City added to favourites");
             }
-            return Ok("City already exist.");
+            return StatusCode(201,"City exist");
         }
 
         [HttpDelete]
@@ -69,7 +69,6 @@ namespace WeatherApp.Api.Controllers
             var i = _cityService.GetCity(curentCity);
             _cityService.DeleteCity(i);
            
-
             return Ok("City was deleted.");
         }
     }
