@@ -7,6 +7,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
+import {CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { City } from 'src/app/data/models/city.model';
 
@@ -113,7 +114,32 @@ export class CityComponent implements AfterViewInit {
       }
     });
   }
-  
+ 
+  dropTable(event: CdkDragDrop<iWeather[]>) {
+    const prevIndex = this.dataSource.findIndex((d: any) => d === event.item.data);
+    moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
+    this.dataSource = [...this.dataSource];
+  }
+
+  drop(event: CdkDragDrop<iWeather[]>) {
+    moveItemInArray(this.dataSource, event.previousIndex, event.currentIndex);
+    this.dataSource = [...this.dataSource];
+    console.log("123");
+  }
+
+  dropd(event: CdkDragDrop<iWeather[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
+
   openPopup(city: string) {
     this.displayStyle = "block";
     this.city = city;

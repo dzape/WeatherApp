@@ -1,37 +1,38 @@
 <app-search></app-search>
 
-<div class="noselect example-container mat-elevation-z8">
-  <table matSort (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+<div  class="noselect example-container mat-elevation-z8" >
+  <table matSort (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"
+  cdkDropList
+  (cdkDropListDropped)="dropd($event)">
 
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="name">Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Temperature">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="temperature"> Temperature </th>
-      <td mat-cell *matCellDef="let element"> {{element.temperature}} C</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Humidity">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="humidity"> Humidity </th>
-      <td mat-cell *matCellDef="let element"> {{element.humidity}} %</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Delete">
-      <th mat-header-cell *matHeaderCellDef> Delete </th>
-      <td mat-cell *matCellDef="let element"><fa-icon (click)="openPopup(element.name)" [icon]="faTrash" onmouseover="" style="cursor: pointer;" ></fa-icon></td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
+      <ng-container matColumnDef="Name" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="name">Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Temperature">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="temperature"> Temperature </th>
+        <td mat-cell *matCellDef="let element"> {{element.temperature}} C</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Humidity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="humidity"> Humidity </th>
+        <td mat-cell *matCellDef="let element"> {{element.humidity}} %</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element"><fa-icon (click)="openPopup(element.name)" [icon]="faTrash" onmouseover="" style="cursor: pointer;" ></fa-icon></td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
+  </table> 
   <mat-paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
   
   <div
