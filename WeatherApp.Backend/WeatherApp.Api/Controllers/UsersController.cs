@@ -44,10 +44,10 @@ namespace WeatherApp.Api.Controllers
             if(ModelState.IsValid)
             {
                 UserAssets info = HttpContext.Session.Get<UserAssets>("info");
-                var updateUser = _userCrudService.GetUserByUsername(info.User.Username);
+                var updateUser = _userCrudService.GetUserByUsername(HttpContext.User.Identity.Name);
 
                 var authUser = new UserLogin();
-                authUser.Username = info.User.Username;
+                authUser.Username = updateUser.Username;
                 authUser.Password = user.Password;
                 if (_authService.Authenticate(authUser))
                 {

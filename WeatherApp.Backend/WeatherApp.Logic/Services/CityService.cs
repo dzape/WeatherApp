@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,19 +28,18 @@ namespace WeatherApp.Logic.Services
             _cityRepo = cityRepo;
         }
 
-        public IEnumerable<City> GetCitiesByUsername(string username)
+        public City GetCity(City city)
         {
-            var curentUser = _userRepo.GetByUsername(username);
-            return _cityRepo.GetCities()
-                            .Where(x => x.User.Id.Equals(curentUser.Id));
+            return _cityRepo.GetCities().Where(x => x.User != null).First();
+        }
+
+        public IEnumerable GetCitiesByUsername(User user)
+        {
+            return _cityRepo.GetCities().Where(x => x.User != null).Select(x => x.Name);
         }
 
         public async Task<City> AddCity(City city)
         {
-            if (!CityMatch(city))
-            {
-                return null;
-            }
             return await _cityRepo.AddCity(city);
         }
 
@@ -60,17 +60,23 @@ namespace WeatherApp.Logic.Services
         {
             try
             {
-                var match = _cityRepo.GetCities().Where(x => x.Name.Equals(city.Name)).ToList();
-                if(match.Count == 0)
+                var cities = GetCitiesByUsername(city.User);
+                foreach (var item in cities)
                 {
-                    return true;
+                    if(city.Name.ToString() == item.ToString())
+                    {
+                        return true;
+                        break;
+                    }
                 }
-                return false;
             }
-            catch (InvalidOperationException)
+            catch (System.Exception)
             {
+
                 return false;
+
             }
+            return false;
         }
     }
 }

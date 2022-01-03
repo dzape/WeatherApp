@@ -57,7 +57,7 @@ namespace WeatherApp.Api
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
-                    RequireExpirationTime = false
+                    RequireExpirationTime = true
                 };
             });
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -37,10 +38,10 @@ namespace WeatherApp.Api.Controllers
             => new string[] { "Hello", "Perro" };
 
         [HttpGet, Route("cities")]
-        public IEnumerable<City> GetCities()
+        public IEnumerable GetCities()
         {
             var user = _userCrudService.GetUserByUsername(HttpContext.User.Identity.Name);
-            return _cityService.GetCitiesByUsername(user.Username);
+            return _cityService.GetCitiesByUsername(user);
         }
 
         [HttpPost]
@@ -48,22 +49,26 @@ namespace WeatherApp.Api.Controllers
         {
             var curentUser = HttpContext.User;
             var user = _userCrudService.GetUserByUsername(curentUser.Identity.Name);
-            if (_cityService.CityMatch(city))
+            city.User = user;
+            if (!_cityService.CityMatch(city))
             {
                 city.User = user;
                 await _cityService.AddCity(city);
+                return Ok("City added to favourites");
             }
-
-            return Ok("City added to favourites");
+            return Ok("City already exist.");
         }
 
         [HttpDelete]
         public async Task<ActionResult<City>> DeleteCity(City city)
         {
-            if(city != null)
-            {
-                _cityService.DeleteCity(city);
-            }
+            var curentUser = _userCrudService.GetUserByUsername(HttpContext.User.Identity.Name);
+            var curentCity = city;
+            curentCity.User = curentUser;
+
+            var i = _cityService.GetCity(curentCity);
+            _cityService.DeleteCity(i);
+           
 
             return Ok("City was deleted.");
         }

@@ -12,7 +12,7 @@ import { OpenweatherapiService } from '../api/openweatherapi/openweatherapi.serv
 })
 export class CityService {
 
-  private weatherApiUrl = 'https://localhost:44322/api/city/';
+  private weatherApiUrl = 'https://localhost:44358/api/city/';
   constructor(private http: HttpClient,  private owapi: OpenweatherapiService) { }
 
   /* SessionStorage  */
@@ -22,7 +22,7 @@ export class CityService {
   headers = { "Authorization": 'Bearer ' + this.token }
   
   getFavouriteCities(): Observable<any>{
-    return this.http.get(this.weatherApiUrl,{ headers: this.header });
+    return this.http.get(this.weatherApiUrl + 'cities/', { headers: this.header });
   }
 
   postFavCity(cityData: City) {
@@ -39,6 +39,6 @@ export class CityService {
       }),
       body: body
     }
-    return this.http.delete('https://localhost:44322/api/city/', options);
+    return this.http.delete('https://localhost:44358/api/city/', options);
   }
 }

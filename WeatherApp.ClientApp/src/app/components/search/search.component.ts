@@ -72,13 +72,14 @@ export class SearchComponent implements OnInit {
       let data: City = { name: this.weather['name'], userusername: this.username};
       this.cityService.postFavCity(data).subscribe(
         (response) => {
-          if(response == null){
+          console.log(response);
+          if(response === "City already exist"){
             this.openPopup();
           }
         },
         (error) => {
           if(error.status == 200){
-            window.location.reload();
+            //window.location.reload();
           }
         }
       );
