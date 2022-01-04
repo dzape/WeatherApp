@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeatherApp.Data.DataContext;
-using WeatherApp.Data.Entities;
-
-namespace WeatherApp.Logic.Repository
+﻿namespace WeatherApp.Logic.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using WeatherApp.Data.DataContext;
+    using WeatherApp.Data.Entities;
+    
     public class RepositoryAssets : IAssetsRepository<UserAssets>
     {
         DatabaseContext _context;
         public RepositoryAssets(DatabaseContext context)
-        {
+         {
             _context = context;
         }
 

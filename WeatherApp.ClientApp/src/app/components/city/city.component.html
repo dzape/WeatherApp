@@ -33,7 +33,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
   </table> 
-  <mat-paginator [pageSizeOptions]="[5, 10, 15]" style="margin-bottom: 10px;"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]" style="margin-bottom: 20px;"></mat-paginator>
   
   <div
     class="modal"

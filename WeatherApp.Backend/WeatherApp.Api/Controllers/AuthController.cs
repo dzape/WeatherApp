@@ -1,10 +1,10 @@
 ﻿namespace WeatherApp.Api.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using SessionMvc.App.Utilities;
-    using System;
-    using System.Threading.Tasks;
     using WeatherApp.Data.Entities;
     using WeatherApp.Data.Helpers;
     using WeatherApp.Logic.Services;

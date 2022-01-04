@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Text.Json;
-
-namespace SessionMvc.App.Utilities
+﻿namespace SessionMvc.App.Utilities
 {
+    using Microsoft.AspNetCore.Http;
+    using System.Text.Json;
+
     public static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)

@@ -10,6 +10,7 @@
     using WeatherApp.Data.Entities;
     using WeatherApp.Data.Helpers;
     using BC = BCrypt.Net.BCrypt;
+
     public class AuthService
     {
         private readonly DatabaseContext _context;

@@ -1,20 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using WeatherApp.Data.Entities;
-using WeatherApp.Logic.IRepository;
-using WeatherApp.Logic.Services;
-using WeatherApp.Logic.Utilities;
-
-namespace WeatherApp.Api.Controllers
+﻿namespace WeatherApp.Api.Controllers
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using WeatherApp.Data.Entities;
+    using WeatherApp.Logic.IRepository;
+    using WeatherApp.Logic.Services;
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
