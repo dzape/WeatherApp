@@ -21,7 +21,7 @@
 
         public bool Authenticate(UserLogin user)
         {
-            var acc = _context.Users.SingleOrDefault(x => x.Username == user.Username);
+            var acc = _context.Users.FirstOrDefault(x => x.Username == user.Username);
 
             if (user == null || !BC.Verify(user.Password, acc.Password))
             {

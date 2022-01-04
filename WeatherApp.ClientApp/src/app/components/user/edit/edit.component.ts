@@ -12,9 +12,10 @@ import { UpdateAccModel } from '../../../data/models/user/updateacc.model';
 })
 export class EditComponent {
   
+  info: string = "";
   acc = new UpdateAccModel();
   username: any = localStorage.getItem("username");
-  userAvailable: boolean = false;
+  Ok: boolean = false;
 
   constructor ( private userService: UserService,   
                 private auth: AuthService) {}
@@ -33,14 +34,29 @@ export class EditComponent {
   updateProfile() {
     this.userService.updateUser(this.acc).subscribe(
       (data) => {
-        if(data != null){
-          console.log(data);
-        }
-        if(data === 200){
-          this.userAvailable = true;
+        console.log(data.status);
+      },
+      (err) => {
+        console.log(err.status);
+        
+        if(Number(err.status) === 200){
+          this.Ok = true;
+          this.info = "Username updated successfully"
           this.openPopup();
         }
-      })
+        if(Number(err.status) === 201){
+          this.info = "Your input is not valid"
+          this.openPopup();
+        }
+        if(Number(err.status) === 202){
+          this.info = "Username alreadu exist"
+          this.openPopup();
+        }
+        if(Number(err.status) === 401){
+          this.info = "Unauthorized"
+          this.openPopup();
+        }
+    })
   }
 
   deleteUser(){
@@ -59,7 +75,7 @@ export class EditComponent {
   
   closePopup() {
     this.displayStyle = "none";
-    if(this.userAvailable){
+    if(this.Ok){
       this.logOut();
       window.location.reload();
     }

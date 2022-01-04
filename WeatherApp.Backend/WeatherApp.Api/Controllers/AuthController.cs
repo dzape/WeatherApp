@@ -1,33 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SessionMvc.App.Utilities;
-using System;
-using System.Threading.Tasks;
-using WeatherApp.Data.Entities;
-using WeatherApp.Data.Helpers;
-using WeatherApp.Logic.Services;
-using WeatherApp.Logic.Utilities;
-
-namespace WeatherApp.Api.Controllers
+﻿namespace WeatherApp.Api.Controllers
 {
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using SessionMvc.App.Utilities;
+    using System;
+    using System.Threading.Tasks;
+    using WeatherApp.Data.Entities;
+    using WeatherApp.Data.Helpers;
+    using WeatherApp.Logic.Services;
+    using WeatherApp.Logic.Utilities;
+
     [Route("api/auth")]
     [ApiController]
-
     public class AuthController : ControllerBase
     {
         private readonly UserCrudService _userCrudService;
         private readonly AssetsService _assetsService;
         private readonly AuthService _authService;
-        private readonly AssetsService _assetService;
-        private readonly MailSender _mailService;
+        private readonly IMailSender _mailSender;
 
         public AuthController( UserCrudService userService,
                                AssetsService assetsService,
-                               AuthService authService )
+                               AuthService authService,
+                               IMailSender mailSender)
         {
             _userCrudService = userService;
             _assetsService = assetsService;
             _authService = authService;
+            _mailSender = mailSender;
         }
 
         [HttpPost, Route("login")]
@@ -58,9 +58,9 @@ namespace WeatherApp.Api.Controllers
                 if (_userCrudService.EmailMatch(user))
                 {
                     await _userCrudService.AddUser(user);
-                    await _assetService.CreateAssets(user);
+                    await _assetsService.CreateAssets(user);
 
-                    _mailService.SendEmailAsync(user.Email);
+                    _mailSender.SendEmailAsync(user.Email);
                     return Ok("User was created");
                 }
                 return Ok("Email exist.");

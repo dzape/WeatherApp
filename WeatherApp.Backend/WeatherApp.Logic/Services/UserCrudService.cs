@@ -30,9 +30,9 @@ namespace WeatherApp.Logic.Services
             return _userRepo.GetByEmail(email);
         }
         
-        public User GetUserByUsername(string email)
+        public User GetUserByUsername(string username)
         {
-            return _userRepo.GetByUsername(email);
+            return _userRepo.GetByUsername(username);
         }
 
         // Create User

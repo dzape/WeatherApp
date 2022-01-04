@@ -115,6 +115,7 @@ export class CityComponent implements AfterViewInit {
     });
   }
  
+  // Drag and drop
   dropTable(event: CdkDragDrop<iWeather[]>) {
     const prevIndex = this.dataSource.findIndex((d: any) => d === event.item.data);
     moveItemInArray(this.dataSource, prevIndex, event.currentIndex);

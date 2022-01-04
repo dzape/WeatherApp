@@ -44,6 +44,7 @@ namespace WeatherApp.Api.Controllers
             if(ModelState.IsValid)
             {
                 UserAssets info = HttpContext.Session.Get<UserAssets>("info");
+
                 var updateUser = _userCrudService.GetUserByUsername(HttpContext.User.Identity.Name);
 
                 var authUser = new UserLogin();
@@ -53,15 +54,15 @@ namespace WeatherApp.Api.Controllers
                 {
                     updateUser.Username = user.Username;
                     
-                    if (!_userCrudService.UpdateUser(updateUser).Equals(true))
+                    if (_userCrudService.UpdateUser(updateUser).Equals(true))
                     {
-                        return Ok("User was updated");
+                        return Ok("User was updated successfully.");
                     }
-                    return Ok("Username exist !");
+                    return StatusCode(202,"Username allready exist !");
                 }
                 return Unauthorized();
             }
-            return Ok("Check your input and try again !");
+            return StatusCode(201, "Check your input and try again.");
         }
 
         [HttpDelete]

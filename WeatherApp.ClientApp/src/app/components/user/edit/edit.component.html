@@ -10,21 +10,21 @@
       <button
       type="submit"
       class="form-control btn btn-lg btn-primary btn-block"
-      (click)="openPopup()"
       [disabled]="!editForm.valid">Save
       </button>
-        <div
+
+      <div
         class="modal"
         tabindex="-1"
         role="dialog"
         [ngStyle]="{'display':displayStyle}">
-          <div *ngIf="  " class="modal-dialog" role="document">
+          <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title">Account control</h4>
               </div>
             <div class="alert alert-success">
-              <p>Username changed successfully.</p>
+              <p>{{ info }}</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger"
@@ -32,21 +32,8 @@
             </div>
           </div>
         </div>
-        <div *ngIf="!userAvailable" class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Username Control</h4>
-            </div>
-            <div class="alert alert-danger">
-              <p>Username is not available.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger"
-                  (click)="closePopup()">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div> 
+        
 
     </div>
   </form>
