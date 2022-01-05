@@ -13,7 +13,6 @@ namespace WeatherApp.Data.Entities
         public int Id { get; set; }
         [Required]
         public Role Role { get; set; }
-        [Required]
         public Guid Guid { get; set; }
         public bool Verified { get; set; }
         public User User { get; set; }

@@ -3,6 +3,7 @@ namespace WeatherApp.Api
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,6 @@ namespace WeatherApp.Api
     using Microsoft.IdentityModel.Tokens;
     using System;
     using System.Text;
-    using System.Text.Json.Serialization;
     using WeatherApp.Data.DataContext;
     using WeatherApp.Data.Entities;
     using WeatherApp.Logic.IRepository;
@@ -30,7 +30,6 @@ namespace WeatherApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -64,7 +63,7 @@ namespace WeatherApp.Api
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(2);
-                options.Cookie.HttpOnly = true;
+                options.Cookie.HttpOnly = false;
                 options.Cookie.IsEssential = true;
             });
 
@@ -81,7 +80,6 @@ namespace WeatherApp.Api
             services.AddTransient<CityService, CityService>();
 
             services.AddTransient<AuthService, AuthService>();
-
             services.AddTransient<IMailSender, MailSender>();
 
             services.AddDistributedMemoryCache();

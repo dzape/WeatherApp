@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using SessionMvc.App.Utilities;
@@ -43,6 +44,7 @@
                         var asset = _assetsService.GetAssets(curentUser);
                         HttpContext.Session.Set<UserAssets>("info", asset);
                         var token = _authService.GenerateToken(curentUser);
+
                         return Ok(new { Token = token });
                     }
                 }
@@ -50,6 +52,7 @@
             }
             return Ok("Check your inputs.");
         }
+
         [HttpPost, Route("register")]
         public async Task<Object> AddUser([FromBody] User user)
         {
@@ -85,7 +88,13 @@
             try
             {
                 UserAssets info = HttpContext.Session.Get<UserAssets>("info");
-                return Content($"{info.User.Username} info fetched from session");
+
+                if(info.Role == Role.User)
+                {
+                    return Content("Hello user");
+                }
+
+                return Content($"{info.Role} info fetched from session");
             }
             catch (System.NullReferenceException)
             {

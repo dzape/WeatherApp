@@ -23,8 +23,6 @@ export class LoginComponent {
 
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-     
-      withCredentials: false, 
       observe: 'response' as 'response'
     };  
 
