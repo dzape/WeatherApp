@@ -53,6 +53,7 @@ namespace WeatherApp.Api
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey)),
+                    
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,

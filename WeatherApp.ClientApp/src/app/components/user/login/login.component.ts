@@ -28,10 +28,10 @@ export class LoginComponent {
 
     this.http.post(this.apiService.getApiUrl() + 'auth/login', credentials,  httpOptions)
       .subscribe(response => {
-        console.log(response)
+        console.log(response);
         const token = (<any>response).body.token;
         const username = credentials.username;
-        sessionStorage.setItem("jwt", token),
+        sessionStorage.setItem("jwt", token);
         sessionStorage.setItem("username", username);
         this.invalidLogin = false;
         this.router.navigate(["/"]);

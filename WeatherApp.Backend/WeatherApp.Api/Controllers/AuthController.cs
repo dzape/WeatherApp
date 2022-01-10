@@ -43,6 +43,7 @@
                     {
                         var asset = _assetsService.GetAssets(curentUser);
                         HttpContext.Session.Set<UserAssets>("info", asset);
+                        HttpContext.Session.SetString("info2", "info");
                         var token = _authService.GenerateToken(curentUser);
 
                         return Ok(new { Token = token });
@@ -83,6 +84,7 @@
         }
 
         [HttpGet, Route("fetch-from-session")]
+        [Authorize(Roles = "Admin")]
         public IActionResult FetchFromSession()
         {
             try

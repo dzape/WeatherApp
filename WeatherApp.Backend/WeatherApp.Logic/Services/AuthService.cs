@@ -14,10 +14,12 @@
     public class AuthService
     {
         private readonly DatabaseContext _context;
+        private readonly AssetsService _userAssets;
 
-        public AuthService(DatabaseContext context)
+        public AuthService(DatabaseContext context, AssetsService userAssets)
         {
             _context = context;
+            _userAssets = userAssets;
         }
 
         public bool Authenticate(UserLogin user)
@@ -33,6 +35,8 @@
 
         public string GenerateToken(User user)
         {
+            var assets = _userAssets.GetAssets(user);
+
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
             var key = Encoding.ASCII.GetBytes("superSecretKey@345");
@@ -42,6 +46,7 @@
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
+                    new Claim(ClaimTypes.Role, assets.Role.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(2),
@@ -53,6 +58,5 @@
 
             return jwtToken;
         }
-
     }
 }
