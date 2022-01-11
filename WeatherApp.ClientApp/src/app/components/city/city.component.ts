@@ -1,15 +1,17 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faChessBishop, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { iWeather } from '../../data/models/iweather';
 import { OpenweatherapiService } from '../../services/api/openweatherapi/openweatherapi.service';
 import { CityService } from '../../services/city/city.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
-import {CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {CdkDragDrop, DropListRef, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { City } from 'src/app/data/models/city.model';
+import { DataSource } from '@angular/cdk/collections';
+import { coerceStringArray } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'app-city',
@@ -26,9 +28,10 @@ export class CityComponent implements AfterViewInit {
   dataSource: any;
   sortedData: iWeather[] = [];
   displayedColumns: string[] = ['Name', 'Temperature', 'Humidity', 'Description',  'Delete'];
-  
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild("table") table!: MatTable<iWeather>;
 
   /* Var */
   cities: any = {};
@@ -39,7 +42,7 @@ export class CityComponent implements AfterViewInit {
 
   /* Icons */
   faTrash = faTrash;
-  
+
   /* SessionStorage */
   username: any = sessionStorage.getItem("username");
 
@@ -53,24 +56,24 @@ export class CityComponent implements AfterViewInit {
   }
   
   getFavouriteCity() {
-      this.cityService.getFavouriteCities().subscribe((res) => {
-        this.cities = res;
-        if (this.cities.length > 0) {
-          for (var i = 0; i <= this.cities.length - 1; i++) {
-            this.weatherApiService.getWeatherCity(this.cities[i]).subscribe((cityWeatherData) => {
-              let data: iWeather = {
-                name: cityWeatherData.name,
-                temperature: cityWeatherData['main'].temp,
-                humidity: cityWeatherData['main'].humidity,
-                description: cityWeatherData['weather'][0].description,
-              }
-              this.sortedData.push(data);
-              this.dataSource = new MatTableDataSource<iWeather>(this.sortedData);
-              this.dataSource.sort = this.sort;
-              this.dataSource.paginator = this.paginator;
-            })
-          }
+    this.cityService.getFavouriteCities().subscribe((res) => {
+      this.cities = res;
+      if (this.cities.length > 0) {
+        for (var i = 0; i <= this.cities.length - 1; i++) {
+          this.weatherApiService.getWeatherCity(this.cities[i]).subscribe((cityWeatherData) => {
+            let data: iWeather = {
+              name: cityWeatherData.name,
+              temperature: cityWeatherData['main'].temp,
+              humidity: cityWeatherData['main'].humidity,
+              description: cityWeatherData['weather'][0].description,
+            }
+            this.sortedData.push(data);
+            this.dataSource = new MatTableDataSource<iWeather>(this.sortedData);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+          })
         }
+      }
     });
   }
 
@@ -114,31 +117,11 @@ export class CityComponent implements AfterViewInit {
       }
     });
   }
- 
-  // Drag and drop
-  dropTable(event: CdkDragDrop<iWeather[]>) {
-    const prevIndex = this.dataSource.findIndex((d: any) => d === event.item.data);
-    moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
-    this.dataSource = [...this.dataSource];
-  }
 
   drop(event: CdkDragDrop<iWeather[]>) {
-    moveItemInArray(this.dataSource, event.previousIndex, event.currentIndex);
-    this.dataSource = [...this.dataSource];
-    console.log("123");
-  }
-
-  dropd(event: CdkDragDrop<iWeather[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
+    const previousIndex = this.dataSource.data.findIndex((row: any) => row === event.item.data);
+    moveItemInArray(this.dataSource.data,previousIndex, event.currentIndex);
+    this.dataSource.data = this.dataSource.data.slice();
   }
 
   openPopup(city: string) {

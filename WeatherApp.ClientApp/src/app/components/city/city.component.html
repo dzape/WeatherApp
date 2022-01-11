@@ -2,8 +2,10 @@
 
 <div  class="noselect example-container mat-elevation-z8" >
   <table matSort (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"
-  cdkDropList
-  (cdkDropListDropped)="dropd($event)">
+    mat-table
+    #table
+    cdkDropList
+    (cdkDropListDropped)="drop($event)">
 
       <ng-container matColumnDef="Name" >
         <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="name">Name</th>

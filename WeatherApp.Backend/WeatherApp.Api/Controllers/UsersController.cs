@@ -34,8 +34,6 @@
         public IEnumerable<string> Get()
             => new string[] { "Hello", "Name" };
 
-
-
         [HttpPut]
         public object UpdateUser([FromBody] UserUpdate user)
         {
