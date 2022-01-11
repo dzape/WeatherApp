@@ -69,4 +69,5 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 ![Screenshot 2021-11-24 at 14-23-21 LoginForm](https://user-images.githubusercontent.com/47067384/143246562-2cc3e5e1-793c-4b48-8f4e-73daab8ab4ad.png)
 
-![Screenshot 2021-11-24 at 14-23-50 LoginForm](https://user-images.githubusercontent.com/47067384/143246590-9ae89fd5-ce4b-408d-b798-7b55cc0382fd.png)
+![image](https://user-images.githubusercontent.com/47067384/148929966-64ec95f9-14a8-4cd4-be95-18b9e2516910.png)
+
